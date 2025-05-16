@@ -1,0 +1,61 @@
+{
+  "name": "n8n-nodes-octavehq",
+  "version": "0.1.1",
+  "description": "Octave is the AI-powered messaging brain for B2B go-to-market teams, helping articulate product value, synthesize customer interaction data, and deploy consistent, effective messaging across all channels.",
+  "keywords": [
+    "n8n-community-node-package",
+    "octave",
+    "gtm",
+    "gtm agents",
+    "vibe gtm"
+  ],
+  "license": "MIT",
+  "homepage": "",
+  "author": {
+    "name": "OctaveHQ",
+    "email": "support@octavehq.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/octavehq/n8n-nodes-octave.git"
+  },
+  "engines": {
+    "node": ">=20.11"
+  },
+  "main": "index.js",
+  "scripts": {
+    "build": "tsc && gulp build:icons",
+    "dev": "tsc --watch",
+    "format": "prettier nodes credentials --write",
+    "lint": "eslint nodes credentials package.json",
+    "lintfix": "eslint nodes credentials package.json --fix",
+    "prepublishOnly": "npm build && npm lint -c .eslintrc.prepublish.js nodes credentials package.json"
+  },
+  "files": [
+    "dist"
+  ],
+  "n8n": {
+    "n8nNodesApiVersion": 1,
+    "credentials": [
+      "dist/credentials/OctaveApi.credentials.js"
+    ],
+    "nodes": [
+      "dist/nodes/Octave/Octave.node.js"
+    ]
+  },
+  "devDependencies": {
+    "@types/request": "^2.48.12",
+    "@typescript-eslint/parser": "~8.32.0",
+    "eslint": "^8.57.0",
+    "eslint-plugin-n8n-nodes-base": "^1.16.3",
+    "gulp": "^5.0.0",
+    "prettier": "^3.5.3",
+    "typescript": "^5.8.2"
+  },
+  "peerDependencies": {
+    "n8n-workflow": "*"
+  },
+  "dependencies": {
+    "request": "^2.88.2"
+  }
+}

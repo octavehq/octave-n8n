@@ -1,0 +1,78 @@
+import { INodeProperties } from 'n8n-workflow';
+
+export const agentOperations: INodeProperties[] = [
+    {
+        displayName: 'Operation',
+        name: 'operation',
+        type: 'options',
+        noDataExpression: true,
+        displayOptions: {
+            show: {
+                resource: ['agent'],
+            },
+        },
+        options: [
+            {
+                name: 'Build Workspace',
+                value: 'buildWorkspace',
+                action: 'Build workspace',
+                description: 'Generate and build a Workspace',
+            },
+            {
+                name: 'Enrich Company',
+                value: 'enrichCompany',
+                action: 'Enrich a company',
+                description: 'Enrich a company',
+            },
+            {
+                name: 'Enrich Person',
+                value: 'enrichPerson',
+                action: 'Enrich a person',
+                description: 'Enrich a Person',
+            },
+            {
+                name: 'Generate Content',
+                value: 'generateContent',
+                action: 'Generate content',
+                description: 'Generate content for a person',
+            },
+            {
+                name: 'List',
+                value: 'list',
+                action: 'List agents',
+                description: 'List all agents',
+            },
+            {
+                name: 'Personalize Template',
+                value: 'personalizeTemplate',
+                action: 'Personalize a template',
+                description: 'Template Personalization Agent',
+            },
+            {
+                name: 'Qualify Company',
+                value: 'qualifyCompany',
+                action: 'Qualify a company',
+                description: 'Determine if a company is qualified for a given Product and/or Segment',
+            },
+            {
+                name: 'Qualify Person',
+                value: 'qualifyPerson',
+                action: 'Qualify a person',
+                description: 'Determine if a person is qualified for a given Product, Persona, and/or Segment',
+            },
+            {
+                name: 'Run Prospector',
+                value: 'runProspector',
+                action: 'Run a prospector agent',
+                description: 'Find relevant people at a company or lookalike companies',
+            },
+            {
+                name: 'Run Sequence',
+                value: 'runSequence',
+                action: 'Run an agent sequence',
+                description: 'Generate Emails for a person',
+            },
+        ],
+        default: 'list',
+    },
+];
