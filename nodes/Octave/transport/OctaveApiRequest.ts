@@ -1,12 +1,14 @@
-import { IExecuteFunctions, ILoadOptionsFunctions, IRequestOptions, NodeOperationError } from 'n8n-workflow';
-import { OptionsWithUri } from 'request';
+import { IDataObject, IExecuteFunctions, IHttpRequestMethods, ILoadOptionsFunctions, IRequestOptions, NodeOperationError } from 'n8n-workflow';
+
+// Use IHttpRequestMethods directly if it covers all needed methods, or define a subtype
+// Assuming IHttpRequestMethods covers GET, POST, PUT, DELETE, PATCH which are common.
 
 export async function octaveApiRequest(
     this: IExecuteFunctions | ILoadOptionsFunctions,
-    method: string,
-    endpoint: string, // Should be the full path like /api/v2/agents/list
-    body: object = {},
-    qs: object = {},
+    method: IHttpRequestMethods,
+    endpoint: string,
+    body: IDataObject = {},
+    qs: IDataObject = {},
 ): Promise<any> {
     const credentials = await this.getCredentials('octaveApi');
     if (!credentials) {
@@ -15,14 +17,14 @@ export async function octaveApiRequest(
 
     const baseUrl = (credentials.baseUrl as string).replace(/\/$/, ''); // Remove trailing slash
 
-    const options: OptionsWithUri = {
+    const options: IRequestOptions = {
         headers: {
             'Accept': 'application/json',
-            'api_key': `${credentials.apiKey}`, // Corrected header name from OpenAPI spec
+            'api_key': `${credentials.apiKey}`,
         },
         method,
         qs,
-        uri: `${baseUrl}${endpoint}`, // endpoint now includes /api/v2/
+        uri: `${baseUrl}${endpoint}`,
         json: true,
     };
 
@@ -35,7 +37,7 @@ export async function octaveApiRequest(
 
     // console.log(`Making Octave API Request: ${method} ${options.uri} QS: ${JSON.stringify(qs)} BODY: ${JSON.stringify(body)} Headers: ${JSON.stringify(options.headers)}`);
     try {
-        const responseData = await this.helpers.request(options as IRequestOptions);
+        const responseData = await this.helpers.request(options);
         // console.log('Octave API Response:', JSON.stringify(responseData, null, 2));
         return responseData;
     } catch (error) {
@@ -46,7 +48,7 @@ export async function octaveApiRequest(
 
 export async function octaveApiRequestListAll(
     this: IExecuteFunctions | ILoadOptionsFunctions,
-    method: string, // Should be 'GET' for list operations
+    method: 'GET', // Explicitly GET for list operations, which is compatible with IHttpRequestMethods
     endpoint: string,
     initialQs: Record<string, any> = {},
 ): Promise<any[]> {
