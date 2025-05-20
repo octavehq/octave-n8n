@@ -9,7 +9,7 @@ Octave is the AI-powered messaging brain for B2B go-to-market teams, helping you
 [Installation](#installation)
 [Operations](#operations)
 [Resources](#resources)
-[Version history](#version-history)  <!-- delete if not using this section -->
+[Version history](#version-history)
 
 ## Installation
 
@@ -104,3 +104,4 @@ Get your API key from the Octave settings page. We recommend naming the credenti
 
 ## Version history
 0.1.1 - Octave <> N8N. Let the games begin!
+1.0.1 - Add `x-request-source` header to indicate request came from n8n

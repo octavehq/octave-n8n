@@ -21,6 +21,7 @@ export async function octaveApiRequest(
         headers: {
             'Accept': 'application/json',
             'api_key': `${credentials.apiKey}`,
+            'x-request-source': 'n8n',
         },
         method,
         qs,
