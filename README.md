@@ -105,3 +105,4 @@ Get your API key from the Octave settings page. We recommend naming the credenti
 ## Version history
 0.1.1 - Octave <> N8N. Let the games begin!
 1.0.1 - Add `x-request-source` header to indicate request came from n8n
+1.0.2 - Add Credentials test + make Octave node usable by AI
