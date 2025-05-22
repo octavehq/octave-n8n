@@ -71,6 +71,7 @@ export class Octave implements INodeType {
         defaults: {
             name: 'Octave',
         },
+        usableAsTool: true,
         inputs: [NodeConnectionType.Main],
         outputs: [NodeConnectionType.Main],
         credentials: [

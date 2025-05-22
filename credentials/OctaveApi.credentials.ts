@@ -1,5 +1,5 @@
 
-import { ICredentialType, INodeProperties } from 'n8n-workflow';
+import type { IAuthenticateGeneric, ICredentialTestRequest, ICredentialType, INodeProperties } from 'n8n-workflow';
 
 export class OctaveApi implements ICredentialType {
     name = 'octaveApi';
@@ -23,4 +23,21 @@ export class OctaveApi implements ICredentialType {
             description: 'The base URL for the Octave API (e.g., https://app.octavehq.com)',
         },
     ];
+
+    authenticate: IAuthenticateGeneric = {
+		type: 'generic',
+		properties: {
+			headers: {
+				'api_key': '={{$credentials.apiKey}}',
+                'x-request-source': 'n8n',
+			},
+		},
+	};
+
+    test: ICredentialTestRequest = {
+		request: {
+			baseURL: '={{ $credentials.baseUrl.replace(new RegExp("/$"), "") }}',
+			url: '/api/v2/agents/list',
+		},
+	};
 }
