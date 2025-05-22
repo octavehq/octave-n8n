@@ -29,7 +29,7 @@ export class OctaveApi implements ICredentialType {
 		properties: {
 			headers: {
 				'api_key': '={{$credentials.apiKey}}',
-                'x-request-source': 'n8n',
+				'x-request-source': 'n8n',
 			},
 		},
 	};
