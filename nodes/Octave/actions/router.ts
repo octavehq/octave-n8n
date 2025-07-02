@@ -2,11 +2,11 @@ import { IExecuteFunctions, INodeExecutionData, NodeOperationError } from 'n8n-w
 
 // Agent Operations
 import * as agentBuildWorkspaceOp from './agent/buildWorkspace.operation';
+import * as agentCallPrepOp from './agent/callPrep.operation';
 import * as agentEnrichCompanyOp from './agent/enrichCompany.operation';
 import * as agentEnrichPersonOp from './agent/enrichPerson.operation';
 import * as agentGenerateContentOp from './agent/generateContent.operation';
 import * as agentListOp from './agent/list.operation';
-import * as agentPersonalizeTemplateOp from './agent/personalizeTemplate.operation';
 import * as agentQualifyCompanyOp from './agent/qualifyCompany.operation';
 import * as agentQualifyPersonOp from './agent/qualifyPerson.operation';
 import * as agentRunProspectorOp from './agent/runProspector.operation';
@@ -44,21 +44,32 @@ import * as asyncRunAgentOp from './async/runAgent.operation';
 // Headless Operations
 import * as headlessGenerateEmailsOp from './headless/generateEmails.operation';
 
+// Competitor Operations
+import * as competitorGetOp from './competitor/get.operation';
+import * as competitorListOp from './competitor/list.operation';
+
+// Segment Operations
+import * as segmentGetOp from './segment/get.operation';
+import * as segmentListOp from './segment/list.operation';
+
+// Experiment Operations
+import * as experimentCreateOp from './experiment/create.operation';
+
 export async function router(this: IExecuteFunctions, itemIndex: number): Promise<INodeExecutionData[][] | null> {
     const resource = this.getNodeParameter('resource', itemIndex) as string;
     const operation = this.getNodeParameter('operation', itemIndex) as string;
 
     if (resource === 'agent') {
         if (operation === 'list') return agentListOp.execute.call(this, itemIndex);
+        if (operation === 'buildWorkspace') return agentBuildWorkspaceOp.execute.call(this, itemIndex);
+        if (operation === 'callPrep') return agentCallPrepOp.execute.call(this, itemIndex);
         if (operation === 'enrichCompany') return agentEnrichCompanyOp.execute.call(this, itemIndex);
         if (operation === 'enrichPerson') return agentEnrichPersonOp.execute.call(this, itemIndex);
         if (operation === 'generateContent') return agentGenerateContentOp.execute.call(this, itemIndex);
         if (operation === 'runSequence') return agentRunSequenceOp.execute.call(this, itemIndex);
-        if (operation === 'personalizeTemplate') return agentPersonalizeTemplateOp.execute.call(this, itemIndex);
         if (operation === 'runProspector') return agentRunProspectorOp.execute.call(this, itemIndex);
         if (operation === 'qualifyCompany') return agentQualifyCompanyOp.execute.call(this, itemIndex);
         if (operation === 'qualifyPerson') return agentQualifyPersonOp.execute.call(this, itemIndex);
-        if (operation === 'buildWorkspace') return agentBuildWorkspaceOp.execute.call(this, itemIndex);
     }
     else if (resource === 'playbook') {
         if (operation === 'list') return playbookListOp.execute.call(this, itemIndex);
@@ -91,6 +102,17 @@ export async function router(this: IExecuteFunctions, itemIndex: number): Promis
     }
     else if (resource === 'headless') {
         if (operation === 'generateEmails') return headlessGenerateEmailsOp.execute.call(this, itemIndex);
+    }
+    else if (resource === 'competitor') {
+        if (operation === 'list') return competitorListOp.execute.call(this, itemIndex);
+        if (operation === 'get') return competitorGetOp.execute.call(this, itemIndex);
+    }
+    else if (resource === 'segment') {
+        if (operation === 'list') return segmentListOp.execute.call(this, itemIndex);
+        if (operation === 'get') return segmentGetOp.execute.call(this, itemIndex);
+    }
+    else if (resource === 'experiment') {
+        if (operation === 'create') return experimentCreateOp.execute.call(this, itemIndex);
     }
 
     throw new NodeOperationError(this.getNode(), `The combination of resource '${resource}' and operation '${operation}' is not supported for routing.`, { itemIndex });
