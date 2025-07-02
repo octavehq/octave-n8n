@@ -19,6 +19,12 @@ export const agentOperations: INodeProperties[] = [
                 description: 'Generate and build a Workspace',
             },
             {
+                name: 'Call Prep',
+                value: 'callPrep',
+                action: 'Generate call prep',
+                description: 'Generate call prep content including discovery questions, call scripts, and objection handling',
+            },
+            {
                 name: 'Enrich Company',
                 value: 'enrichCompany',
                 action: 'Enrich a company',
@@ -41,12 +47,6 @@ export const agentOperations: INodeProperties[] = [
                 value: 'list',
                 action: 'List agents',
                 description: 'List all agents',
-            },
-            {
-                name: 'Personalize Template',
-                value: 'personalizeTemplate',
-                action: 'Personalize a template',
-                description: 'Template Personalization Agent',
             },
             {
                 name: 'Qualify Company',

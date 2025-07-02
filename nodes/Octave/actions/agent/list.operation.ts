@@ -45,11 +45,11 @@ const properties: INodeProperties[] = [
         type: 'options',
         options: [
             { name: 'All', value: '' },
+            { name: 'Call Prep', value: 'CALL_PREP' },
             { name: 'Content', value: 'CONTENT' },
             { name: 'Email', value: 'EMAIL' },
             { name: 'Enrich Company', value: 'ENRICH_COMPANY' },
             { name: 'Enrich Person', value: 'ENRICH_PERSON' },
-            { name: 'Personalize Template', value: 'PERSONALIZE_TEMPLATE' },
             { name: 'Prospector', value: 'PROSPECTOR' },
             { name: 'Qualify Company', value: 'QUALIFY_COMPANY' },
             { name: 'Qualify Person', value: 'QUALIFY_PERSON' },

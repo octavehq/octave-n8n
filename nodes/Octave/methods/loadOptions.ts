@@ -21,7 +21,7 @@ export async function getAgents(this: ILoadOptionsFunctions): Promise<INodePrope
                 'enrichPerson': 'ENRICH_PERSON',
                 'generateContent': 'CONTENT',
                 'runSequence': 'EMAIL',
-                'personalizeTemplate': 'PERSONALIZE_TEMPLATE',
+                'callPrep': 'CALL_PREP',
                 'runProspector': 'PROSPECTOR',
                 'qualifyCompany': 'QUALIFY_COMPANY',
                 'qualifyPerson': 'QUALIFY_PERSON',

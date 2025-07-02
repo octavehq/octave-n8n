@@ -1,0 +1,109 @@
+import { IExecuteFunctions, INodeExecutionData, INodeProperties, NodeOperationError } from 'n8n-workflow';
+import { octaveApiRequest } from '../../transport/OctaveApiRequest';
+import { applyDisplayOptions, parseJsonParameter } from '../utils';
+
+const properties: INodeProperties[] = [
+	{
+		displayName: 'Agent OId Name or ID',
+		name: 'agentOId',
+		type: 'options',
+		required: true,
+		typeOptions: {
+			loadOptionsMethod: 'getAgents',
+		},
+		default: '',
+		description: 'The OId of the agent to run. Choose from the list, or specify an ID using an <a href="https://docs.n8n.io/code/expressions/">expression</a>.',
+	},
+	{
+		displayName: 'Email',
+		name: 'email',
+		type: 'string',
+		placeholder: 'name@email.com',
+		default: '',
+		description: 'Email of the person to build sales call prep materials for',
+	},
+	{
+		displayName: 'First Name',
+		name: 'firstName',
+		type: 'string',
+		default: '',
+		description: 'First name of the person to build sales call prep materials for',
+	},
+	{
+		displayName: 'Job Title',
+		name: 'jobTitle',
+		type: 'string',
+		default: '',
+		description: 'Job title of the person to build sales call prep materials for',
+	},
+	{
+		displayName: 'Company Name',
+		name: 'companyName',
+		type: 'string',
+		default: '',
+		description: 'The name of the company to build call prep materials for',
+	},
+	{
+		displayName: 'Company Domain',
+		name: 'companyDomain',
+		type: 'string',
+		default: '',
+		description: 'The domain of the company to build call prep materials for',
+	},
+	{
+		displayName: 'LinkedIn Profile',
+		name: 'linkedInProfile',
+		type: 'string',
+		default: '',
+		description: 'LinkedIn profile URL of the person to build sales call prep materials for',
+	},
+	{
+		displayName: 'Runtime Context (JSON)',
+		name: 'runtimeContext',
+		type: 'json',
+		default: '{}',
+		description: 'Runtime context for sales call prep materials',
+	},
+];
+
+const displayOptions = {
+	show: {
+		resource: ['agent'],
+		operation: ['callPrep'],
+	},
+};
+
+export const exportedProperties: INodeProperties[] = applyDisplayOptions(displayOptions, properties);
+
+export async function execute(this: IExecuteFunctions, itemIndex: number): Promise<INodeExecutionData[][] | null> {
+	const body: Record<string, any> = {};
+
+	const agentOId = this.getNodeParameter('agentOId', itemIndex) as string | undefined;
+	if (!agentOId) {
+		throw new NodeOperationError(this.getNode(), 'Agent OId is required for this operation.', { itemIndex });
+	}
+	body.agentOId = agentOId;
+
+	const runtimeContextString = this.getNodeParameter('runtimeContext', itemIndex, '{}') as string;
+	if (runtimeContextString && runtimeContextString.trim() !== '{}' && runtimeContextString.trim() !== '') {
+		body.runtimeContext = parseJsonParameter.call(this, 'runtimeContext', itemIndex, '{}');
+	}
+
+	body.email = this.getNodeParameter('email', itemIndex) as string | undefined;
+	body.firstName = this.getNodeParameter('firstName', itemIndex) as string | undefined;
+	body.jobTitle = this.getNodeParameter('jobTitle', itemIndex) as string | undefined;
+	body.companyName = this.getNodeParameter('companyName', itemIndex) as string | undefined;
+	body.companyDomain = this.getNodeParameter('companyDomain', itemIndex) as string | undefined;
+	body.linkedInProfile = this.getNodeParameter('linkedInProfile', itemIndex) as string | undefined;
+
+	Object.keys(body).forEach(key => (body[key] === undefined) && delete body[key]);
+
+	const responseDataOuter = await octaveApiRequest.call(this, 'POST', '/api/v2/agents/call-prep/run', body);
+	const responseDataInner = responseDataOuter?.data;
+
+	const executionData = this.helpers.constructExecutionMetaData(
+		this.helpers.returnJsonArray(responseDataInner || responseDataOuter || {}),
+		{ itemData: { item: itemIndex } },
+	);
+	return [executionData];
+}
