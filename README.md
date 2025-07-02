@@ -123,3 +123,4 @@ Get your API key from the Octave settings page. We recommend naming the credenti
 1.0.1 - Add `x-request-source` header to indicate request came from n8n
 1.0.2 - Add Credentials test + make Octave node usable by AI
 1.1.0 - Added Competitor, Segment, and Experiment resources; Added Call Prep agent; Removed Personalize Template agent; Improved modular architecture
+1.1.1 - Uses IHttpRequestOptions instead of deprecated IRequestOptions

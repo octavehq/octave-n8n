@@ -1,4 +1,4 @@
-import { IDataObject, IExecuteFunctions, IHttpRequestMethods, ILoadOptionsFunctions, IRequestOptions, NodeOperationError } from 'n8n-workflow';
+import { IDataObject, IExecuteFunctions, IHttpRequestMethods, ILoadOptionsFunctions, IHttpRequestOptions, NodeOperationError } from 'n8n-workflow';
 
 // Use IHttpRequestMethods directly if it covers all needed methods, or define a subtype
 // Assuming IHttpRequestMethods covers GET, POST, PUT, DELETE, PATCH which are common.
@@ -17,7 +17,7 @@ export async function octaveApiRequest(
 
     const baseUrl = (credentials.baseUrl as string).replace(/\/$/, ''); // Remove trailing slash
 
-    const options: IRequestOptions = {
+    const options: IHttpRequestOptions = {
         headers: {
             'Accept': 'application/json',
             'api_key': `${credentials.apiKey}`,
@@ -25,7 +25,7 @@ export async function octaveApiRequest(
         },
         method,
         qs,
-        uri: `${baseUrl}${endpoint}`,
+        url: `${baseUrl}${endpoint}`,
         json: true,
     };
 
@@ -36,9 +36,9 @@ export async function octaveApiRequest(
         options.headers!['Content-Type'] = 'application/json';
     }
 
-    // console.log(`Making Octave API Request: ${method} ${options.uri} QS: ${JSON.stringify(qs)} BODY: ${JSON.stringify(body)} Headers: ${JSON.stringify(options.headers)}`);
+    // console.log(`Making Octave API Request: ${method} ${options.url} QS: ${JSON.stringify(qs)} BODY: ${JSON.stringify(body)} Headers: ${JSON.stringify(options.headers)}`);
     try {
-        const responseData = await this.helpers.request(options);
+        const responseData = await this.helpers.httpRequest(options);
         // console.log('Octave API Response:', JSON.stringify(responseData, null, 2));
         return responseData;
     } catch (error) {
