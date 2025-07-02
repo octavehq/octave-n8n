@@ -1,6 +1,6 @@
 import { IExecuteFunctions, INodeExecutionData, INodeProperties } from 'n8n-workflow';
 import { octaveApiRequest, octaveApiRequestListAll } from '../../transport/OctaveApiRequest';
-import { applyDisplayOptions } from '../utils';
+import { applyDisplayOptions, sanitizeApiKeys } from '../utils';
 
 const properties: INodeProperties[] = [
     {
@@ -66,6 +66,16 @@ export async function execute(this: IExecuteFunctions, itemIndex: number): Promi
         responseDataInner = responseDataOuter?.data;
     }
 
+	// Sanitize for UI display only
+	const sanitizedData = sanitizeApiKeys(responseDataInner || []);
+	if (sanitizedData.length > 0) {
+		this.sendMessageToUI({
+			message: 'Sanitized API Keys (for display only)',
+			result: sanitizedData,
+		});
+	}
+
+	// Return the original, unsanitized data for the workflow
     const executionData = this.helpers.constructExecutionMetaData(
         this.helpers.returnJsonArray(responseDataInner || []),
         { itemData: { item: itemIndex } },

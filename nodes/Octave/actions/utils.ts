@@ -40,3 +40,23 @@ export function applyDisplayOptions(commonDisplayOptions: object, properties: IN
 		},
 	}));
 }
+
+
+/**
+ * Sanitizes the 'apiKey' field in an array of API key objects for UI display.
+ * @param apiKeys An array of API key objects.
+ * @returns A new array with the 'key' field redacted.
+ */
+export function sanitizeApiKeys(apiKeys: any[]): any[] {
+	if (!apiKeys || !Array.isArray(apiKeys)) {
+		return [];
+	}
+	return apiKeys.map(keyObj => {
+		const key = keyObj.apiKey as string;
+		const sanitizedKey = key && key.length > 4 ? `****-${key.slice(-4)}` : '****';
+		return {
+			...keyObj,
+			key: sanitizedKey,
+		};
+	});
+}
