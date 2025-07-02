@@ -30,7 +30,7 @@ export async function execute(this: IExecuteFunctions, itemIndex: number): Promi
     }
 
     const qs = { oId: personaOId };
-    const responseData = await octaveApiRequest.call(this, 'GET', '/api/v2/personas/get', {}, qs);
+    const responseData = await octaveApiRequest.call(this, 'GET', '/api/v2/persona/get', {}, qs);
 
     const executionData = this.helpers.constructExecutionMetaData(
         this.helpers.returnJsonArray([responseData]),

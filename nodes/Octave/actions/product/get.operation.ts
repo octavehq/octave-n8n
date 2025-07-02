@@ -30,8 +30,7 @@ export async function execute(this: IExecuteFunctions, itemIndex: number): Promi
     }
 
     const qs = { oId: productOId };
-    // Path confirmed to be /api/v2/products/get based on playbook pattern and general API design
-    const responseData = await octaveApiRequest.call(this, 'GET', '/api/v2/products/get', {}, qs);
+    const responseData = await octaveApiRequest.call(this, 'GET', '/api/v2/product/get', {}, qs);
 
     const executionData = this.helpers.constructExecutionMetaData(
         this.helpers.returnJsonArray([responseData]), // Assuming responseData is the product object
