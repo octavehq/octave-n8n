@@ -22,6 +22,10 @@ The Octave node supports the following operations, categorized by resource:
 **Resource: Agent**
 *   **List Agents**: List all agents
     *   Corresponds to `GET /api/v2/agents/list`
+*   **Build Workspace**: Generate and build a Workspace
+    *   Corresponds to `POST /api/v2/agents/workspace/build`
+*   **Call Prep**: Generate call prep content including discovery questions, call scripts, and objection handling
+    *   Corresponds to `POST /api/v2/agents/call-prep/run`
 *   **Enrich Company**: Enrich a company
     *   Corresponds to `POST /api/v2/agents/enrich-company/run`
 *   **Enrich Person**: Enrich a Person
@@ -30,16 +34,12 @@ The Octave node supports the following operations, categorized by resource:
     *   Corresponds to `POST /api/v2/agents/generate-content/run`
 *   **Run Sequence**: Generate Emails for a person
     *   Corresponds to `POST /api/v2/agents/sequence/run`
-*   **Personalize Template**: Template Personalization Agent
-    *   Corresponds to `POST /api/v2/agents/personalize-template/run`
 *   **Run Prospector**: Find relevant people at a company or lookalike companies
     *   Corresponds to `POST /api/v2/agents/prospector/run`
 *   **Qualify Company**: Determine if a company is qualified for a given Product and/or Segment
     *   Corresponds to `POST /api/v2/agents/qualify-company/run`
 *   **Qualify Person**: Determine if a person is qualified for a given Product, Persona, and/or Segment
     *   Corresponds to `POST /api/v2/agents/qualify-person/run`
-*   **Build Workspace**: Generate and build a Workspace
-    *   Corresponds to `POST /api/v2/agents/workspace/build`
 
 **Resource: API Key**
 *   **List API Keys**: Retrieves a list of API keys.
@@ -50,6 +50,16 @@ The Octave node supports the following operations, categorized by resource:
     *   Corresponds to `POST /api/v2/async/agent/run`
 *   **Generate Headless Emails Asynchronously**: Triggers headless email generation in the background.
     *   Corresponds to `POST /api/v2/async/headless/generate-emails`
+
+**Resource: Competitor**
+*   **List Competitors**: Retrieves a list of competitors with optional filtering.
+    *   Corresponds to `GET /api/v2/competitor/list`
+*   **Get Competitor**: Retrieves a specific competitor by its OId.
+    *   Corresponds to `GET /api/v2/competitor/get`
+
+**Resource: Experiment**
+*   **Create Experiment**: Creates a new agent experiment for A/B testing different agents.
+    *   Corresponds to `POST /api/v2/agents/experiment/create`
 
 **Resource: Headless**
 *   **Generate Emails**: Triggers email generation via the headless service.
@@ -83,6 +93,12 @@ The Octave node supports the following operations, categorized by resource:
 *   **Create Reference**: Creates a new reference.
     *   Corresponds to `POST /api/v2/reference/create`
 
+**Resource: Segment**
+*   **List Segments**: Retrieves a list of segments with optional filtering.
+    *   Corresponds to `GET /api/v2/segment/list`
+*   **Get Segment**: Retrieves a specific segment by its OId.
+    *   Corresponds to `GET /api/v2/segment/get`
+
 **Resource: Use Case**
 *   **List Use Cases**: Retrieves a list of use cases.
     *   Corresponds to `GET /api/v2/use-case/list`
@@ -106,3 +122,4 @@ Get your API key from the Octave settings page. We recommend naming the credenti
 0.1.1 - Octave <> N8N. Let the games begin!
 1.0.1 - Add `x-request-source` header to indicate request came from n8n
 1.0.2 - Add Credentials test + make Octave node usable by AI
+1.1.0 - Added Competitor, Segment, and Experiment resources; Added Call Prep agent; Removed Personalize Template agent; Improved modular architecture
