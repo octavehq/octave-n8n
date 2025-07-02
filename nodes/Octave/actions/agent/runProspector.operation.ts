@@ -76,6 +76,34 @@ const properties: INodeProperties[] = [
         description: 'Job titles to exclude from search results. Enter multiple titles separated by commas.',
     },
     {
+        displayName: 'Country Filters',
+        name: 'countryFilters',
+        type: 'string',
+        default: '',
+        description: 'Countries to include in search results (exact match). Enter multiple countries separated by commas.',
+    },
+    {
+        displayName: 'Country Exclude Filters',
+        name: 'countryExcludeFilters',
+        type: 'string',
+        default: '',
+        description: 'Countries to exclude from search results (exact match). Enter multiple countries separated by commas.',
+    },
+    {
+        displayName: 'Location Filters',
+        name: 'locationFilters',
+        type: 'string',
+        default: '',
+        description: 'Locations to include in search results (exact match). Enter multiple locations separated by commas.',
+    },
+    {
+        displayName: 'Location Exclude Filters',
+        name: 'locationExcludeFilters',
+        type: 'string',
+        default: '',
+        description: 'Locations to exclude from search results (exact match). Enter multiple locations separated by commas.',
+    },
+    {
         displayName: 'Additional Inputs (JSON)',
         name: 'additionalInputsJson',
         type: 'json',
@@ -127,6 +155,66 @@ export async function execute(this: IExecuteFunctions, itemIndex: number): Promi
     if (excludeTitlesRaw.trim() !== '') {
         const excludeTitlesArray = excludeTitlesRaw.split(',').map(s => s.trim()).filter(s => s !== '');
         if (excludeTitlesArray.length > 0) searchContext.excludeTitles = excludeTitlesArray;
+    }
+
+    // Handle Country Filters
+    const countryFiltersRaw = this.getNodeParameter('countryFilters', itemIndex, '') as string;
+    const countryExcludeFiltersRaw = this.getNodeParameter('countryExcludeFilters', itemIndex, '') as string;
+
+    if (countryFiltersRaw.trim() !== '' || countryExcludeFiltersRaw.trim() !== '') {
+        const personCountry: Record<string, any> = {};
+
+        if (countryFiltersRaw.trim() !== '') {
+            const countryFiltersArray = countryFiltersRaw.split(',').map(s => s.trim()).filter(s => s !== '');
+            if (countryFiltersArray.length > 0) {
+                personCountry.matches = { exact: countryFiltersArray };
+            }
+        }
+
+        if (countryExcludeFiltersRaw.trim() !== '') {
+            const countryExcludeFiltersArray = countryExcludeFiltersRaw.split(',').map(s => s.trim()).filter(s => s !== '');
+            if (countryExcludeFiltersArray.length > 0) {
+                personCountry.excludes = { exact: countryExcludeFiltersArray };
+            }
+        }
+
+        if (Object.keys(personCountry).length > 0) {
+            searchContext.personCountry = personCountry;
+        }
+    }
+
+    // Handle Location Filters
+    const locationFiltersRaw = this.getNodeParameter('locationFilters', itemIndex, '') as string;
+    const locationExcludeFiltersRaw = this.getNodeParameter('locationExcludeFilters', itemIndex, '') as string;
+
+    if (locationFiltersRaw.trim() !== '' || locationExcludeFiltersRaw.trim() !== '') {
+        const personLocation: Record<string, any> = {};
+
+        if (locationFiltersRaw.trim() !== '' || locationExcludeFiltersRaw.trim() !== '') {
+            const textFilter: Record<string, any> = {};
+
+            if (locationFiltersRaw.trim() !== '') {
+                const locationFiltersArray = locationFiltersRaw.split(',').map(s => s.trim()).filter(s => s !== '');
+                if (locationFiltersArray.length > 0) {
+                    textFilter.matches = { exact: locationFiltersArray };
+                }
+            }
+
+            if (locationExcludeFiltersRaw.trim() !== '') {
+                const locationExcludeFiltersArray = locationExcludeFiltersRaw.split(',').map(s => s.trim()).filter(s => s !== '');
+                if (locationExcludeFiltersArray.length > 0) {
+                    textFilter.excludes = { exact: locationExcludeFiltersArray };
+                }
+            }
+
+            if (Object.keys(textFilter).length > 0) {
+                personLocation.text = textFilter;
+            }
+        }
+
+        if (Object.keys(personLocation).length > 0) {
+            searchContext.personLocation = personLocation;
+        }
     }
 
     const body: Record<string, any> = { agentOId };
