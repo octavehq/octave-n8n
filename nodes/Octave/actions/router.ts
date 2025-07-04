@@ -17,9 +17,6 @@ import * as playbookCreateOp from './playbook/create.operation';
 import * as playbookGetOp from './playbook/get.operation';
 import * as playbookListOp from './playbook/list.operation';
 
-// ApiKey Operations
-import * as apiKeyListOp from './apiKey/list.operation';
-
 // Product Operations
 import * as productGetOp from './product/get.operation';
 import * as productListOp from './product/list.operation';
@@ -75,9 +72,6 @@ export async function router(this: IExecuteFunctions, itemIndex: number): Promis
         if (operation === 'list') return playbookListOp.execute.call(this, itemIndex);
         if (operation === 'get') return playbookGetOp.execute.call(this, itemIndex);
         if (operation === 'create') return playbookCreateOp.execute.call(this, itemIndex);
-    }
-    else if (resource === 'apiKey') {
-        if (operation === 'list') return apiKeyListOp.execute.call(this, itemIndex);
     }
     else if (resource === 'product') {
         if (operation === 'list') return productListOp.execute.call(this, itemIndex);

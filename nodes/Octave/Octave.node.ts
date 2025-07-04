@@ -13,7 +13,6 @@ import { getAgents, getPersonas, getPlaybooks } from './methods/loadOptions';
 
 // Description imports for Operations
 import { agentOperations } from './descriptions/AgentDescription';
-import { apiKeyOperations } from './descriptions/ApiKeyDescription';
 import { asyncOperations } from './descriptions/AsyncDescription';
 import { headlessOperations } from './descriptions/HeadlessDescription';
 import { personaOperations } from './descriptions/PersonaDescription';
@@ -41,8 +40,6 @@ import { exportedProperties as agentRunSequenceProperties } from './actions/agen
 import { exportedProperties as playbookCreateProperties } from './actions/playbook/create.operation';
 import { exportedProperties as playbookGetProperties } from './actions/playbook/get.operation';
 import { exportedProperties as playbookListProperties } from './actions/playbook/list.operation';
-// ApiKey
-import { exportedProperties as apiKeyListProperties } from './actions/apiKey/list.operation';
 // Product
 import { exportedProperties as productGetProperties } from './actions/product/get.operation';
 import { exportedProperties as productListProperties } from './actions/product/list.operation';
@@ -103,10 +100,6 @@ export class Octave implements INodeType {
                         value: 'agent',
                     },
                     {
-                        name: 'API Key',
-                        value: 'apiKey',
-                    },
-                    {
                         name: 'Async',
                         value: 'async',
                     },
@@ -152,7 +145,6 @@ export class Octave implements INodeType {
             // Operation Selectors
             ...agentOperations,
             ...playbookOperations,
-            ...apiKeyOperations,
             ...productOperations,
             ...personaOperations,
             ...referenceOperations,
@@ -176,7 +168,6 @@ export class Octave implements INodeType {
             ...playbookListProperties,
             ...playbookGetProperties,
             ...playbookCreateProperties,
-            ...apiKeyListProperties,
             ...productListProperties,
             ...productGetProperties,
             ...personaListProperties,

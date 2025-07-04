@@ -41,10 +41,6 @@ The Octave node supports the following operations, categorized by resource:
 *   **Qualify Person**: Determine if a person is qualified for a given Product, Persona, and/or Segment
     *   Corresponds to `POST /api/v2/agents/qualify-person/run`
 
-**Resource: API Key**
-*   **List API Keys**: Retrieves a list of API keys.
-    *   Corresponds to `GET /api/v2/api-key/list`
-
 **Resource: Async**
 *   **Run Agent Asynchronously**: Triggers an agent to run in the background.
     *   Corresponds to `POST /api/v2/async/agent/run`
@@ -125,3 +121,4 @@ Get your API key from the Octave settings page. We recommend naming the credenti
 1.1.0 - Added Competitor, Segment, and Experiment resources; Added Call Prep agent; Removed Personalize Template agent; Improved modular architecture
 1.1.1 - Uses IHttpRequestOptions instead of deprecated IRequestOptions
 1.1.2 - Uses httpRequestWithAuthentication instead of httpRequest to be more secure and maintainable
+1.2.0 - Removed List API Keys endpoint
