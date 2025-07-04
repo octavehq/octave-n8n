@@ -122,3 +122,4 @@ Get your API key from the Octave settings page. We recommend naming the credenti
 1.1.1 - Uses IHttpRequestOptions instead of deprecated IRequestOptions
 1.1.2 - Uses httpRequestWithAuthentication instead of httpRequest to be more secure and maintainable
 1.2.0 - Removed List API Keys endpoint
+1.2.1 - Rebuild to remove deprecated API files from build
