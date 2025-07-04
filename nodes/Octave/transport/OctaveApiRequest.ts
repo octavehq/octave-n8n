@@ -20,7 +20,6 @@ export async function octaveApiRequest(
     const options: IHttpRequestOptions = {
         headers: {
             'Accept': 'application/json',
-            'api_key': `${credentials.apiKey}`,
             'x-request-source': 'n8n',
         },
         method,
@@ -38,7 +37,7 @@ export async function octaveApiRequest(
 
     // console.log(`Making Octave API Request: ${method} ${options.url} QS: ${JSON.stringify(qs)} BODY: ${JSON.stringify(body)} Headers: ${JSON.stringify(options.headers)}`);
     try {
-        const responseData = await this.helpers.httpRequest(options);
+        const responseData = await this.helpers.httpRequestWithAuthentication.call(this, 'octaveApi', options);
         // console.log('Octave API Response:', JSON.stringify(responseData, null, 2));
         return responseData;
     } catch (error) {
