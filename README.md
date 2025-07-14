@@ -115,11 +115,11 @@ Get your API key from the Octave settings page. We recommend naming the credenti
 
 
 ## Version history
-0.1.1 - Octave <> N8N. Let the games begin!
-1.0.1 - Add `x-request-source` header to indicate request came from n8n
-1.0.2 - Add Credentials test + make Octave node usable by AI
-1.1.0 - Added Competitor, Segment, and Experiment resources; Added Call Prep agent; Removed Personalize Template agent; Improved modular architecture
-1.1.1 - Uses IHttpRequestOptions instead of deprecated IRequestOptions
-1.1.2 - Uses httpRequestWithAuthentication instead of httpRequest to be more secure and maintainable
-1.2.0 - Removed List API Keys endpoint
-1.2.1 - Rebuild to remove deprecated API files from build
+- 0.1.1 - Octave <> N8N. Let the games begin!
+- 1.0.1 - Add `x-request-source` header to indicate request came from n8n
+- 1.0.2 - Add Credentials test + make Octave node usable by AI
+- 1.1.0 - Added Competitor, Segment, and Experiment resources; Added Call Prep agent; Removed Personalize Template agent; Improved modular architecture
+- 1.1.1 - Uses IHttpRequestOptions instead of deprecated IRequestOptions
+- 1.1.2 - Uses httpRequestWithAuthentication instead of httpRequest to be more secure and maintainable
+- 1.2.0 - Removed List API Keys endpoint
+- 1.2.1 - Rebuild to remove deprecated API files from build
