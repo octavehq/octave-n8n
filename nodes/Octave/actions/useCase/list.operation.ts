@@ -44,18 +44,7 @@ const properties: INodeProperties[] = [
         default: '',
         description: 'Text search query for use cases',
     },
-    {
-        displayName: 'Query Type',
-        name: 'queryType',
-        type: 'options',
-        options: [
-            { name: 'All', value: 'ALL' },
-            { name: 'Team', value: 'TEAM' },
-            { name: 'Mine', value: 'MINE' },
-        ],
-        default: 'ALL',
-        description: 'Type of query to perform',
-    },
+
     {
         displayName: 'Product OID (Filter)',
         name: 'productOId',
@@ -87,7 +76,6 @@ export async function execute(this: IExecuteFunctions, itemIndex: number): Promi
 
     const returnAll = this.getNodeParameter('returnAll', itemIndex, true) as boolean;
     qs.text = this.getNodeParameter('text', itemIndex) as string | undefined;
-    qs.queryType = this.getNodeParameter('queryType', itemIndex, 'ALL') as string;
     qs.productOId = this.getNodeParameter('productOId', itemIndex) as string | undefined;
     qs.playbookOId = this.getNodeParameter('playbookOId', itemIndex) as string | undefined;
 

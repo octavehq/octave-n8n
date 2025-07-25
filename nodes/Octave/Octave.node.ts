@@ -23,6 +23,7 @@ import { useCaseOperations } from './descriptions/UseCaseDescription';
 import { competitorOperations } from './descriptions/CompetitorDescription';
 import { segmentOperations } from './descriptions/SegmentDescription';
 import { experimentOperations } from './descriptions/ExperimentDescription';
+import { proofPointDescription } from './descriptions/ProofPointDescription';
 
 // Operation Property imports
 // Agent
@@ -66,6 +67,12 @@ import { exportedProperties as segmentGetProperties } from './actions/segment/ge
 import { exportedProperties as segmentListProperties } from './actions/segment/list.operation';
 // Experiment
 import { exportedProperties as experimentCreateProperties } from './actions/experiment/create.operation';
+// Proof Point
+import { exportedProperties as proofPointCreateProperties } from './actions/proofPoint/create.operation';
+import { exportedProperties as proofPointGetProperties } from './actions/proofPoint/get.operation';
+import { exportedProperties as proofPointListProperties } from './actions/proofPoint/list.operation';
+import { exportedProperties as proofPointUpdateProperties } from './actions/proofPoint/update.operation';
+import { exportedProperties as proofPointGenerateProperties } from './actions/proofPoint/generate.operation';
 
 export class Octave implements INodeType {
     description: INodeTypeDescription = {
@@ -128,6 +135,10 @@ export class Octave implements INodeType {
                         value: 'product',
                     },
                     {
+                        name: 'Proof Point',
+                        value: 'proofPoint',
+                    },
+                    {
                         name: 'Reference',
                         value: 'reference',
                     },
@@ -147,6 +158,7 @@ export class Octave implements INodeType {
             ...playbookOperations,
             ...productOperations,
             ...personaOperations,
+            ...proofPointDescription,
             ...referenceOperations,
             ...useCaseOperations,
             ...asyncOperations,
@@ -185,6 +197,11 @@ export class Octave implements INodeType {
             ...segmentListProperties,
             ...segmentGetProperties,
             ...experimentCreateProperties,
+            ...proofPointListProperties,
+            ...proofPointGetProperties,
+            ...proofPointCreateProperties,
+            ...proofPointUpdateProperties,
+            ...proofPointGenerateProperties,
         ],
     };
 
