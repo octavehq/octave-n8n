@@ -15,12 +15,12 @@ const properties: INodeProperties[] = [
 		description: 'The OId of the agent to run. Choose from the list, or specify an ID using an <a href="https://docs.n8n.io/code/expressions/">expression</a>.',
 	},
 	{
-		displayName: 'Email',
-		name: 'email',
+		displayName: 'LinkedIn Profile URL',
+		name: 'linkedInProfile',
 		type: 'string',
-		placeholder: 'name@email.com',
 		default: '',
-		description: 'Email of the person to build sales call prep materials for',
+		description: 'LinkedIn profile URL of the person to build sales call prep materials for',
+		hint: 'LinkedIn profile is the preferred input method over email for better enrichment results'
 	},
 	{
 		displayName: 'First Name',
@@ -37,6 +37,14 @@ const properties: INodeProperties[] = [
 		description: 'Job title of the person to build sales call prep materials for',
 	},
 	{
+		displayName: 'Email',
+		name: 'email',
+		type: 'string',
+		placeholder: 'name@email.com',
+		default: '',
+		description: 'Email address of the person to build sales call prep materials for',
+	},
+	{
 		displayName: 'Company Name',
 		name: 'companyName',
 		type: 'string',
@@ -49,13 +57,6 @@ const properties: INodeProperties[] = [
 		type: 'string',
 		default: '',
 		description: 'The domain of the company to build call prep materials for',
-	},
-	{
-		displayName: 'LinkedIn Profile',
-		name: 'linkedInProfile',
-		type: 'string',
-		default: '',
-		description: 'LinkedIn profile URL of the person to build sales call prep materials for',
 	},
 	{
 		displayName: 'Runtime Context (JSON)',

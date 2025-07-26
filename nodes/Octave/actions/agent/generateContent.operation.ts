@@ -34,12 +34,12 @@ const properties: INodeProperties[] = [
         description: 'Name of the company (optional)',
     },
     {
-        displayName: 'Email',
-        name: 'email',
+        displayName: 'LinkedIn Profile URL',
+        name: 'linkedInProfile',
         type: 'string',
         default: '',
-        placeholder: 'name@example.com',
-        description: 'Email address of a relevant person (optional)',
+        description: 'LinkedIn profile URL of a relevant person (optional)',
+        hint: 'LinkedIn profile is the preferred input method over email for better enrichment results'
     },
     {
         displayName: 'First Name',
@@ -56,11 +56,12 @@ const properties: INodeProperties[] = [
         description: 'Job title of a relevant person (optional)',
     },
     {
-        displayName: 'LinkedIn Profile URL',
-        name: 'linkedInProfile',
+        displayName: 'Email',
+        name: 'email',
         type: 'string',
         default: '',
-        description: 'LinkedIn profile URL of a relevant person (optional)',
+        placeholder: 'name@example.com',
+        description: 'Email address of a relevant person (optional)',
     },
     {
         displayName: 'Runtime Context (JSON)',
