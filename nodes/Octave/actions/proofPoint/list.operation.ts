@@ -87,11 +87,11 @@ export async function execute(this: IExecuteFunctions, itemIndex: number): Promi
     if (returnAll) {
         qs.limit = this.getNodeParameter('limit', itemIndex, 100);
         qs.offset = this.getNodeParameter('offset', itemIndex, 0);
-        responseDataInner = await octaveApiRequestListAll.call(this, 'GET', '/api/v2/proof-points/list', qs);
+        responseDataInner = await octaveApiRequestListAll.call(this, 'GET', '/api/v2/proof-point/list', qs);
     } else {
         qs.limit = this.getNodeParameter('limit', itemIndex, 50) as number;
         qs.offset = this.getNodeParameter('offset', itemIndex, 0) as number;
-        const responseDataOuter = await octaveApiRequest.call(this, 'GET', '/api/v2/proof-points/list', {}, qs);
+        const responseDataOuter = await octaveApiRequest.call(this, 'GET', '/api/v2/proof-point/list', {}, qs);
         responseDataInner = responseDataOuter?.data;
     }
 

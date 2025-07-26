@@ -17,13 +17,7 @@ export const asyncOperations: INodeProperties[] = [
                 value: 'runAgent',
                 action: 'Run an agent asynchronously',
                 description: 'Triggers an agent to run in the background',
-            },
-            {
-                name: 'Generate Headless Emails',
-                value: 'generateHeadlessEmails',
-                action: 'Generate headless emails asynchronously',
-                description: 'Triggers headless email generation in the background',
-            },
+            }
         ],
         default: 'runAgent',
     },

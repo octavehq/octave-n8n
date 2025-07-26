@@ -37,6 +37,7 @@ import * as referenceCreateOp from './reference/create.operation';
 import * as referenceGetOp from './reference/get.operation';
 import * as referenceListOp from './reference/list.operation';
 import * as referenceUpdateOp from './reference/update.operation';
+import * as referenceGenerateOp from './reference/generate.operation';
 
 // UseCase Operations
 import * as useCaseCreateOp from './useCase/create.operation';
@@ -46,11 +47,7 @@ import * as useCaseUpdateOp from './useCase/update.operation';
 import * as useCaseGenerateOp from './useCase/generate.operation';
 
 // Async Operations
-import * as asyncGenerateHeadlessEmailsOp from './async/generateHeadlessEmails.operation';
 import * as asyncRunAgentOp from './async/runAgent.operation';
-
-// Headless Operations
-import * as headlessGenerateEmailsOp from './headless/generateEmails.operation';
 
 // Competitor Operations
 import * as competitorCreateOp from './competitor/create.operation';
@@ -117,6 +114,7 @@ export async function router(this: IExecuteFunctions, itemIndex: number): Promis
         if (operation === 'get') return referenceGetOp.execute.call(this, itemIndex);
         if (operation === 'create') return referenceCreateOp.execute.call(this, itemIndex);
         if (operation === 'update') return referenceUpdateOp.execute.call(this, itemIndex);
+        if (operation === 'generate') return referenceGenerateOp.execute.call(this, itemIndex);
     }
     else if (resource === 'useCase') {
         if (operation === 'list') return useCaseListOp.execute.call(this, itemIndex);
@@ -127,10 +125,6 @@ export async function router(this: IExecuteFunctions, itemIndex: number): Promis
     }
     else if (resource === 'async') {
         if (operation === 'runAgent') return asyncRunAgentOp.execute.call(this, itemIndex);
-        if (operation === 'generateHeadlessEmails') return asyncGenerateHeadlessEmailsOp.execute.call(this, itemIndex);
-    }
-    else if (resource === 'headless') {
-        if (operation === 'generateEmails') return headlessGenerateEmailsOp.execute.call(this, itemIndex);
     }
     else if (resource === 'competitor') {
         if (operation === 'list') return competitorListOp.execute.call(this, itemIndex);

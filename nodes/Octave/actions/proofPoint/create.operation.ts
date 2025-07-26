@@ -12,12 +12,14 @@ const properties: INodeProperties[] = [
         description: 'Name of the proof point',
     },
     {
-        displayName: 'Primary Offering OId',
+        displayName: 'Primary Offering Name or ID',
         name: 'primaryOfferingOId',
-        type: 'string',
-        required: true,
+        type: 'options',
+        typeOptions: {
+            loadOptionsMethod: 'getProducts',
+        },
         default: '',
-        description: 'Primary offering OId to associate with this proof point',
+        description: 'Primary offering to associate with this proof point (optional). Choose from the list, or specify an ID using an <a href="https://docs.n8n.io/code/expressions/">expression</a>.',
     },
     {
         displayName: 'Type',
@@ -74,12 +76,38 @@ const properties: INodeProperties[] = [
         typeOptions: { rows: 5 }
     },
     {
-        displayName: 'Linking Strategy (JSON)',
-        name: 'linkingStrategy',
-        type: 'json',
-        default: '{}',
-        description: 'Linking strategy configuration (optional)',
-        typeOptions: { rows: 3 }
+        displayName: 'Linking Strategy Mode',
+        name: 'linkingMode',
+        type: 'options',
+        options: [
+            {
+                name: 'All Products',
+                value: 'ALL',
+                description: 'Link to all active products in the workspace'
+            },
+            {
+                name: 'Specific Products',
+                value: 'SPECIFIC',
+                description: 'Link to specific products only'
+            }
+        ],
+        default: 'ALL',
+        description: 'Strategy for linking this proof point to products',
+    },
+    {
+        displayName: 'Product Names or IDs',
+        name: 'offeringOIds',
+        type: 'multiOptions',
+        typeOptions: {
+            loadOptionsMethod: 'getProducts',
+        },
+        default: [],
+        description: 'Products to link to (required when using Specific Products mode). Choose from the list, or specify IDs using an <a href="https://docs.n8n.io/code/expressions/">expression</a>.',
+        displayOptions: {
+            show: {
+                linkingMode: ['SPECIFIC']
+            }
+        }
     },
 ];
 
@@ -96,11 +124,11 @@ export async function execute(this: IExecuteFunctions, itemIndex: number): Promi
     const body: Record<string, any> = {};
 
     body.name = this.getNodeParameter('name', itemIndex) as string;
-    body.primaryOfferingOId = this.getNodeParameter('primaryOfferingOId', itemIndex) as string;
+    body.primaryOfferingOId = this.getNodeParameter('primaryOfferingOId', itemIndex) as string || undefined;
     body.type = this.getNodeParameter('type', itemIndex) as string;
 
-    if (!body.name || !body.primaryOfferingOId || !body.type) {
-        throw new NodeOperationError(this.getNode(), 'Name, Primary Offering OId, and Type are required to create a proof point.', { itemIndex });
+    if (!body.name || !body.type) {
+        throw new NodeOperationError(this.getNode(), 'Name and Type are required to create a proof point.', { itemIndex });
     }
 
     body.description = this.getNodeParameter('description', itemIndex) as string | undefined;
@@ -108,11 +136,24 @@ export async function execute(this: IExecuteFunctions, itemIndex: number): Promi
     body.howWeTalkAboutThis = parseJsonParameter.call(this, 'howWeTalkAboutThis', itemIndex, '[]');
     body.whyThisMatters = parseJsonParameter.call(this, 'whyThisMatters', itemIndex, '[]');
     body.customFields = parseJsonParameter.call(this, 'customFields', itemIndex, '[]');
-    body.linkingStrategy = parseJsonParameter.call(this, 'linkingStrategy', itemIndex, '{}');
+    // Build linking strategy
+    const linkingMode = this.getNodeParameter('linkingMode', itemIndex) as string;
+    if (linkingMode === 'ALL') {
+        body.linkingStrategy = { mode: 'ALL' };
+    } else if (linkingMode === 'SPECIFIC') {
+        const offeringOIds = this.getNodeParameter('offeringOIds', itemIndex) as string[];
+        if (!offeringOIds || offeringOIds.length === 0) {
+            throw new NodeOperationError(this.getNode(), 'Products are required when using Specific Products mode.', { itemIndex });
+        }
+        body.linkingStrategy = {
+            mode: 'SPECIFIC',
+            offeringOIds: offeringOIds
+        };
+    }
 
     Object.keys(body).forEach(key => (body[key] === undefined) && delete body[key]);
 
-    const responseData = await octaveApiRequest.call(this, 'POST', '/api/v2/proof-points/create', body);
+    const responseData = await octaveApiRequest.call(this, 'POST', '/api/v2/proof-point/create', body);
 
     const executionData = this.helpers.constructExecutionMetaData(
         this.helpers.returnJsonArray([responseData]),

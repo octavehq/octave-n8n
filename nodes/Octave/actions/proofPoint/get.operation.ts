@@ -28,7 +28,7 @@ export async function execute(this: IExecuteFunctions, itemIndex: number): Promi
         throw new NodeOperationError(this.getNode(), 'Proof Point OId is required.', { itemIndex });
     }
 
-    const responseData = await octaveApiRequest.call(this, 'GET', `/api/v2/proof-points/${oId}`);
+    const responseData = await octaveApiRequest.call(this, 'GET', `/api/v2/proof-point/${oId}`);
 
     const executionData = this.helpers.constructExecutionMetaData(
         this.helpers.returnJsonArray([responseData]),

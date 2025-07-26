@@ -12,11 +12,14 @@ const properties: INodeProperties[] = [
         description: 'Name of the persona',
     },
     {
-        displayName: 'Primary Offering OId',
+        displayName: 'Primary Offering Name or ID',
         name: 'primaryOfferingOId',
-        type: 'string',
+        type: 'options',
+        typeOptions: {
+            loadOptionsMethod: 'getProducts',
+        },
         default: '',
-        description: 'Primary offering OId to associate with this persona (optional)',
+        description: 'Primary offering to associate with this persona (optional). Choose from the list, or specify an ID using an <a href="https://docs.n8n.io/code/expressions/">expression</a>.',
     },
     {
         displayName: 'Description',
@@ -97,12 +100,38 @@ const properties: INodeProperties[] = [
         typeOptions: { rows: 5 }
     },
     {
-        displayName: 'Linking Strategy (JSON)',
-        name: 'linkingStrategy',
-        type: 'json',
-        default: '{}',
-        description: 'Linking strategy configuration (optional)',
-        typeOptions: { rows: 3 }
+        displayName: 'Linking Strategy Mode',
+        name: 'linkingMode',
+        type: 'options',
+        options: [
+            {
+                name: 'All Products',
+                value: 'ALL',
+                description: 'Link to all active products in the workspace'
+            },
+            {
+                name: 'Specific Products',
+                value: 'SPECIFIC',
+                description: 'Link to specific products only'
+            }
+        ],
+        default: 'ALL',
+        description: 'Strategy for linking this persona to products',
+    },
+    {
+        displayName: 'Product Names or IDs',
+        name: 'offeringOIds',
+        type: 'multiOptions',
+        typeOptions: {
+            loadOptionsMethod: 'getProducts',
+        },
+        default: [],
+        description: 'Products to link to (required when using Specific Products mode). Choose from the list, or specify IDs using an <a href="https://docs.n8n.io/code/expressions/">expression</a>.',
+        displayOptions: {
+            show: {
+                linkingMode: ['SPECIFIC']
+            }
+        }
     },
 ];
 
@@ -134,7 +163,20 @@ export async function execute(this: IExecuteFunctions, itemIndex: number): Promi
     body.whyTheyMatterToUs = parseJsonParameter.call(this, 'whyTheyMatterToUs', itemIndex, '[]');
     body.whyWeMatterToThem = parseJsonParameter.call(this, 'whyWeMatterToThem', itemIndex, '[]');
     body.customFields = parseJsonParameter.call(this, 'customFields', itemIndex, '[]');
-    body.linkingStrategy = parseJsonParameter.call(this, 'linkingStrategy', itemIndex, '{}');
+    // Build linking strategy
+    const linkingMode = this.getNodeParameter('linkingMode', itemIndex) as string;
+    if (linkingMode === 'ALL') {
+        body.linkingStrategy = { mode: 'ALL' };
+    } else if (linkingMode === 'SPECIFIC') {
+        const offeringOIds = this.getNodeParameter('offeringOIds', itemIndex) as string[];
+        if (!offeringOIds || offeringOIds.length === 0) {
+            throw new NodeOperationError(this.getNode(), 'Products are required when using Specific Products mode.', { itemIndex });
+        }
+        body.linkingStrategy = {
+            mode: 'SPECIFIC',
+            offeringOIds: offeringOIds
+        };
+    }
 
     Object.keys(body).forEach(key => (body[key] === undefined) && delete body[key]);
 

@@ -44,8 +44,6 @@ The Octave node supports the following operations, categorized by resource:
 **Resource: Async**
 *   **Run Agent Asynchronously**: Triggers an agent to run in the background.
     *   Corresponds to `POST /api/v2/async/agent/run`
-*   **Generate Headless Emails Asynchronously**: Triggers headless email generation in the background.
-    *   Corresponds to `POST /api/v2/async/headless/generate-emails`
 
 **Resource: Competitor**
 *   **List Competitors**: Retrieves a list of competitors with optional filtering.
@@ -56,10 +54,6 @@ The Octave node supports the following operations, categorized by resource:
 **Resource: Experiment**
 *   **Create Experiment**: Creates a new agent experiment for A/B testing different agents.
     *   Corresponds to `POST /api/v2/agents/experiment/create`
-
-**Resource: Headless**
-*   **Generate Emails**: Triggers email generation via the headless service.
-    *   Corresponds to `POST /api/v2/headless/generate-emails`
 
 **Resource: Persona**
 *   **List Personas**: Retrieves a list of personas.

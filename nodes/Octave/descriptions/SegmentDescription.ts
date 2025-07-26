@@ -13,6 +13,18 @@ export const segmentOperations: INodeProperties[] = [
 		},
 		options: [
 			{
+				name: 'Create',
+				value: 'create',
+				description: 'Create a new segment',
+				action: 'Create a segment',
+			},
+			{
+				name: 'Generate',
+				value: 'generate',
+				description: 'Generate segments from source materials using AI',
+				action: 'Generate segments',
+			},
+			{
 				name: 'Get',
 				value: 'get',
 				description: 'Get a segment by OId',
@@ -23,6 +35,12 @@ export const segmentOperations: INodeProperties[] = [
 				value: 'list',
 				description: 'List segments with optional filtering',
 				action: 'List segments',
+			},
+			{
+				name: 'Update',
+				value: 'update',
+				description: 'Update an existing segment',
+				action: 'Update a segment',
 			},
 		],
 		default: 'list',

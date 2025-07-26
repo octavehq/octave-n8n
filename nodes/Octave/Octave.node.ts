@@ -9,12 +9,11 @@ import {
 import { router } from './actions/router';
 // Remove direct import of octaveApiRequestListAll if no longer used here directly
 // import { octaveApiRequestListAll } from './transport/OctaveApiRequest';
-import { getAgents, getPersonas, getPlaybooks } from './methods/loadOptions';
+import { getAgents, getPersonas, getPlaybooks, getProducts } from './methods/loadOptions';
 
 // Description imports for Operations
 import { agentOperations } from './descriptions/AgentDescription';
 import { asyncOperations } from './descriptions/AsyncDescription';
-import { headlessOperations } from './descriptions/HeadlessDescription';
 import { personaOperations } from './descriptions/PersonaDescription';
 import { playbookOperations } from './descriptions/PlaybookDescription';
 import { productOperations } from './descriptions/ProductDescription';
@@ -41,30 +40,45 @@ import { exportedProperties as agentRunSequenceProperties } from './actions/agen
 import { exportedProperties as playbookCreateProperties } from './actions/playbook/create.operation';
 import { exportedProperties as playbookGetProperties } from './actions/playbook/get.operation';
 import { exportedProperties as playbookListProperties } from './actions/playbook/list.operation';
+import { exportedProperties as playbookUpdateProperties } from './actions/playbook/update.operation';
 // Product
 import { exportedProperties as productGetProperties } from './actions/product/get.operation';
 import { exportedProperties as productListProperties } from './actions/product/list.operation';
+import { exportedProperties as productCreateProperties } from './actions/product/create.operation';
+import { exportedProperties as productUpdateProperties } from './actions/product/update.operation';
+import { exportedProperties as productGenerateProperties } from './actions/product/generate.operation';
 // Persona
 import { exportedProperties as personaGetProperties } from './actions/persona/get.operation';
 import { exportedProperties as personaListProperties } from './actions/persona/list.operation';
+import { exportedProperties as personaCreateProperties } from './actions/persona/create.operation';
+import { exportedProperties as personaUpdateProperties } from './actions/persona/update.operation';
+import { exportedProperties as personaGenerateProperties } from './actions/persona/generate.operation';
 // Reference
 import { exportedProperties as referenceCreateProperties } from './actions/reference/create.operation';
 import { exportedProperties as referenceGetProperties } from './actions/reference/get.operation';
 import { exportedProperties as referenceListProperties } from './actions/reference/list.operation';
+import { exportedProperties as referenceUpdateProperties } from './actions/reference/update.operation';
+import { exportedProperties as referenceGenerateProperties } from './actions/reference/generate.operation';
 // UseCase
 import { exportedProperties as useCaseGetProperties } from './actions/useCase/get.operation';
 import { exportedProperties as useCaseListProperties } from './actions/useCase/list.operation';
+import { exportedProperties as useCaseCreateProperties } from './actions/useCase/create.operation';
+import { exportedProperties as useCaseUpdateProperties } from './actions/useCase/update.operation';
+import { exportedProperties as useCaseGenerateProperties } from './actions/useCase/generate.operation';
 // Async
-import { exportedProperties as asyncGenerateHeadlessEmailsProperties } from './actions/async/generateHeadlessEmails.operation';
 import { exportedProperties as asyncRunAgentProperties } from './actions/async/runAgent.operation';
-// Headless
-import { exportedProperties as headlessGenerateEmailsProperties } from './actions/headless/generateEmails.operation';
 // Competitor
 import { exportedProperties as competitorGetProperties } from './actions/competitor/get.operation';
 import { exportedProperties as competitorListProperties } from './actions/competitor/list.operation';
+import { exportedProperties as competitorCreateProperties } from './actions/competitor/create.operation';
+import { exportedProperties as competitorUpdateProperties } from './actions/competitor/update.operation';
+import { exportedProperties as competitorGenerateProperties } from './actions/competitor/generate.operation';
 // Segment
 import { exportedProperties as segmentGetProperties } from './actions/segment/get.operation';
 import { exportedProperties as segmentListProperties } from './actions/segment/list.operation';
+import { exportedProperties as segmentCreateProperties } from './actions/segment/create.operation';
+import { exportedProperties as segmentUpdateProperties } from './actions/segment/update.operation';
+import { exportedProperties as segmentGenerateProperties } from './actions/segment/generate.operation';
 // Experiment
 import { exportedProperties as experimentCreateProperties } from './actions/experiment/create.operation';
 // Proof Point
@@ -119,10 +133,6 @@ export class Octave implements INodeType {
                         value: 'experiment',
                     },
                     {
-                        name: 'Headless',
-                        value: 'headless',
-                    },
-                    {
                         name: 'Persona',
                         value: 'persona',
                     },
@@ -162,7 +172,6 @@ export class Octave implements INodeType {
             ...referenceOperations,
             ...useCaseOperations,
             ...asyncOperations,
-            ...headlessOperations,
             ...competitorOperations,
             ...segmentOperations,
             ...experimentOperations,
@@ -180,22 +189,38 @@ export class Octave implements INodeType {
             ...playbookListProperties,
             ...playbookGetProperties,
             ...playbookCreateProperties,
+            ...playbookUpdateProperties,
             ...productListProperties,
             ...productGetProperties,
+            ...productCreateProperties,
+            ...productUpdateProperties,
+            ...productGenerateProperties,
             ...personaListProperties,
             ...personaGetProperties,
+            ...personaCreateProperties,
+            ...personaUpdateProperties,
+            ...personaGenerateProperties,
             ...referenceListProperties,
             ...referenceGetProperties,
             ...referenceCreateProperties,
+            ...referenceUpdateProperties,
+            ...referenceGenerateProperties,
             ...useCaseListProperties,
             ...useCaseGetProperties,
+            ...useCaseCreateProperties,
+            ...useCaseUpdateProperties,
+            ...useCaseGenerateProperties,
             ...asyncRunAgentProperties,
-            ...asyncGenerateHeadlessEmailsProperties,
-            ...headlessGenerateEmailsProperties,
             ...competitorListProperties,
             ...competitorGetProperties,
+            ...competitorCreateProperties,
+            ...competitorUpdateProperties,
+            ...competitorGenerateProperties,
             ...segmentListProperties,
             ...segmentGetProperties,
+            ...segmentCreateProperties,
+            ...segmentUpdateProperties,
+            ...segmentGenerateProperties,
             ...experimentCreateProperties,
             ...proofPointListProperties,
             ...proofPointGetProperties,
@@ -210,6 +235,7 @@ export class Octave implements INodeType {
             getAgents,
             getPlaybooks,
             getPersonas,
+            getProducts,
         },
     };
 

@@ -69,7 +69,7 @@ export const agentOperations: INodeProperties[] = [
             {
                 name: 'Run Sequence',
                 value: 'runSequence',
-                action: 'Run an agent sequence',
+                action: 'Run a sequence agent',
                 description: 'Generate Emails for a person',
             },
         ],

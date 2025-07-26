@@ -4,37 +4,69 @@ import { applyDisplayOptions, parseJsonParameter } from '../utils';
 
 const properties: INodeProperties[] = [
     {
-        displayName: 'Primary Offering OId',
+        displayName: 'Primary Offering Name or ID',
         name: 'primaryOfferingOId',
-        type: 'string',
-        required: true,
+        type: 'options',
+        typeOptions: {
+            loadOptionsMethod: 'getProducts',
+        },
         default: '',
-        description: 'Primary offering OId to associate with generated personas',
+        description: 'Primary offering to associate with generated personas (optional). Choose from the list, or specify an ID using an <a href="https://docs.n8n.io/code/expressions/">expression</a>.',
+        hint: "Primary Offering to use as context when generating personas. If not provided, the primary company attached to the Workspace will be used."
     },
     {
-        displayName: 'Playbook OId',
+        displayName: 'Playbook OId Name or ID',
         name: 'playbookOId',
-        type: 'string',
+        type: 'options',
+        typeOptions: {
+            loadOptionsMethod: 'getPlaybooks',
+        },
         default: '',
-        description: 'Playbook OId to associate with generated personas (optional)',
+        description: 'Playbook OId to associate with generated personas (optional). Choose from the list, or specify an ID using an <a href="https://docs.n8n.io/code/expressions/">expression</a>.',
     },
     {
         displayName: 'Personas (JSON)',
         name: 'personas',
         type: 'json',
         required: true,
-        default: '[]',
-        description: 'JSON configuration for generating personas',
+        default: '',
+        description: 'Array of persona generation requests. Each object can have an optional "name" and required "sources" array with type (TEXT/URL) and value.',
         typeOptions: { rows: 10 }
     },
     {
-        displayName: 'Linking Strategy (JSON)',
-        name: 'linkingStrategy',
-        type: 'json',
-        default: '{}',
-        description: 'Linking strategy configuration (optional)',
-        typeOptions: { rows: 3 }
+        displayName: 'Linking Strategy Mode',
+        name: 'linkingMode',
+        type: 'options',
+        options: [
+            {
+                name: 'All Products',
+                value: 'ALL',
+                description: 'Link to all active products in the workspace'
+            },
+            {
+                name: 'Specific Products',
+                value: 'SPECIFIC',
+                description: 'Link to specific products only'
+            }
+        ],
+        default: 'ALL',
+        description: 'Strategy for linking generated personas to products',
     },
+    {
+        displayName: 'Product Names or IDs',
+        name: 'offeringOIds',
+        type: 'multiOptions',
+        typeOptions: {
+            loadOptionsMethod: 'getProducts',
+        },
+        default: [],
+        description: 'Products to link to (required when using Specific Products mode). Choose from the list, or specify IDs using an <a href="https://docs.n8n.io/code/expressions/">expression</a>.',
+        displayOptions: {
+            show: {
+                linkingMode: ['SPECIFIC']
+            }
+        }
+    }
 ];
 
 const displayOptions = {
@@ -49,14 +81,25 @@ export const exportedProperties: INodeProperties[] = applyDisplayOptions(display
 export async function execute(this: IExecuteFunctions, itemIndex: number): Promise<INodeExecutionData[][] | null> {
     const body: Record<string, any> = {};
 
-    body.primaryOfferingOId = this.getNodeParameter('primaryOfferingOId', itemIndex) as string;
-    if (!body.primaryOfferingOId) {
-        throw new NodeOperationError(this.getNode(), 'Primary Offering OId is required to generate personas.', { itemIndex });
-    }
+    body.primaryOfferingOId = this.getNodeParameter('primaryOfferingOId', itemIndex) as string || undefined;
 
     body.playbookOId = this.getNodeParameter('playbookOId', itemIndex) as string | undefined;
     body.personas = parseJsonParameter.call(this, 'personas', itemIndex, '[]');
-    body.linkingStrategy = parseJsonParameter.call(this, 'linkingStrategy', itemIndex, '{}');
+
+    // Build linking strategy
+    const linkingMode = this.getNodeParameter('linkingMode', itemIndex) as string;
+    if (linkingMode === 'ALL') {
+        body.linkingStrategy = { mode: 'ALL' };
+    } else if (linkingMode === 'SPECIFIC') {
+        const offeringOIds = this.getNodeParameter('offeringOIds', itemIndex) as string[];
+        if (!offeringOIds || offeringOIds.length === 0) {
+            throw new NodeOperationError(this.getNode(), 'Products are required when using Specific Products mode.', { itemIndex });
+        }
+        body.linkingStrategy = {
+            mode: 'SPECIFIC',
+            offeringOIds: offeringOIds
+        };
+    }
 
     Object.keys(body).forEach(key => (body[key] === undefined) && delete body[key]);
 

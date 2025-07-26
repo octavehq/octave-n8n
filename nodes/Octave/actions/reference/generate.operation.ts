@@ -11,16 +11,16 @@ const properties: INodeProperties[] = [
             loadOptionsMethod: 'getProducts',
         },
         default: '',
-        description: 'Primary offering to associate with generated use cases (optional). Choose from the list, or specify an ID using an <a href="https://docs.n8n.io/code/expressions/">expression</a>.',
-        hint: "Primary Offering to use as context when generating use cases. If not provided, the primary company attached to the Workspace will be used."
+        description: 'Primary offering to associate with generated references (optional). Choose from the list, or specify an ID using an <a href="https://docs.n8n.io/code/expressions/">expression</a>.',
+        hint: "Primary Offering to use as context when generating references. If not provided, the primary company attached to the Workspace will be used."
     },
     {
-        displayName: 'Use Cases (JSON)',
-        name: 'useCases',
+        displayName: 'References (JSON)',
+        name: 'references',
         type: 'json',
         required: true,
         default: '',
-        description: 'Array of use case generation requests. Each object can have an optional "name" and required "sources" array with type (TEXT/URL) and value.',
+        description: 'Array of reference generation requests. Each object can have an optional "name" and required "sources" array with type (TEXT/URL) and value.',
         typeOptions: { rows: 10 }
     },
     {
@@ -40,7 +40,7 @@ const properties: INodeProperties[] = [
             }
         ],
         default: 'ALL',
-        description: 'Strategy for linking generated use cases to products',
+        description: 'Strategy for linking generated references to products',
     },
     {
         displayName: 'Product Names or IDs',
@@ -61,7 +61,7 @@ const properties: INodeProperties[] = [
 
 const displayOptions = {
     show: {
-        resource: ['useCase'],
+        resource: ['reference'],
         operation: ['generate'],
     },
 };
@@ -73,7 +73,7 @@ export async function execute(this: IExecuteFunctions, itemIndex: number): Promi
 
     body.primaryOfferingOId = this.getNodeParameter('primaryOfferingOId', itemIndex) as string || undefined;
 
-    body.useCases = parseJsonParameter.call(this, 'useCases', itemIndex, '[]');
+    body.references = parseJsonParameter.call(this, 'references', itemIndex, '[]');
 
     // Build linking strategy
     const linkingMode = this.getNodeParameter('linkingMode', itemIndex) as string;
@@ -92,7 +92,7 @@ export async function execute(this: IExecuteFunctions, itemIndex: number): Promi
 
     Object.keys(body).forEach(key => (body[key] === undefined) && delete body[key]);
 
-    const responseData = await octaveApiRequest.call(this, 'POST', '/api/v2/use-case/generate', body);
+    const responseData = await octaveApiRequest.call(this, 'POST', '/api/v2/reference/generate', body);
 
     const executionData = this.helpers.constructExecutionMetaData(
         this.helpers.returnJsonArray([responseData]),

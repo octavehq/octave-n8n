@@ -109,7 +109,7 @@ export async function execute(this: IExecuteFunctions, itemIndex: number): Promi
 
     Object.keys(body).forEach(key => (body[key] === undefined) && delete body[key]);
 
-    const responseData = await octaveApiRequest.call(this, 'PUT', '/api/v2/use-cases/update', body);
+    const responseData = await octaveApiRequest.call(this, 'PUT', '/api/v2/use-case/update', body);
 
     const executionData = this.helpers.constructExecutionMetaData(
         this.helpers.returnJsonArray([responseData]),
