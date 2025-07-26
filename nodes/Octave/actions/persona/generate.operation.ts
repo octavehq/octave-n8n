@@ -1,6 +1,6 @@
 import { IExecuteFunctions, INodeExecutionData, INodeProperties, NodeOperationError } from 'n8n-workflow';
 import { octaveApiRequest } from '../../transport/OctaveApiRequest';
-import { applyDisplayOptions, parseJsonParameter } from '../utils';
+import { applyDisplayOptions } from '../utils';
 
 const properties: INodeProperties[] = [
     {
@@ -25,13 +25,68 @@ const properties: INodeProperties[] = [
         description: 'Playbook OId to associate with generated personas (optional). Choose from the list, or specify an ID using an <a href="https://docs.n8n.io/code/expressions/">expression</a>.',
     },
     {
-        displayName: 'Personas (JSON)',
+        displayName: 'Persona Generation Requests',
         name: 'personas',
-        type: 'json',
-        required: true,
-        default: '',
-        description: 'Array of persona generation requests. Each object can have an optional "name" and required "sources" array with type (TEXT/URL) and value.',
-        typeOptions: { rows: 10 }
+        type: 'collection',
+        placeholder: 'Add Persona',
+        typeOptions: {
+            multipleValues: true,
+        },
+        default: [{}],
+        description: 'Array of persona generation requests. Each generates one persona.',
+        options: [
+            {
+                displayName: 'Name',
+                name: 'name',
+                type: 'string',
+                default: '',
+                description: 'Optional name for the persona - if provided, will be used as the entity name',
+                placeholder: 'Enterprise Sales Leader'
+            },
+            {
+                displayName: 'Sources',
+                name: 'sources',
+                type: 'collection',
+                placeholder: 'Add Source',
+                typeOptions: {
+                    multipleValues: true,
+                },
+                default: [{}],
+                description: 'Source materials to generate the persona from (at least one required)',
+                options: [
+                    {
+                        displayName: 'Type',
+                        name: 'type',
+                        type: 'options',
+                        options: [
+                            {
+                                name: 'Text',
+                                value: 'TEXT',
+                                description: 'Text-based source material'
+                            },
+                            {
+                                name: 'URL',
+                                value: 'URL',
+                                description: 'URL-based source material'
+                            }
+                        ],
+                        default: 'TEXT',
+                        description: 'The type of source material'
+                    },
+                    {
+                        displayName: 'Value',
+                        name: 'value',
+                        type: 'string',
+                        default: '',
+                        description: 'The source content (text or URL)',
+                        placeholder: 'VP of Sales professionals who manage enterprise deals...',
+                        typeOptions: {
+                            rows: 3
+                        }
+                    }
+                ]
+            }
+        ]
     },
     {
         displayName: 'Linking Strategy Mode',
@@ -84,7 +139,10 @@ export async function execute(this: IExecuteFunctions, itemIndex: number): Promi
     body.primaryOfferingOId = this.getNodeParameter('primaryOfferingOId', itemIndex) as string || undefined;
 
     body.playbookOId = this.getNodeParameter('playbookOId', itemIndex) as string | undefined;
-    body.personas = parseJsonParameter.call(this, 'personas', itemIndex, '[]');
+    body.personas = this.getNodeParameter('personas', itemIndex) as Array<{
+        name?: string;
+        sources: Array<{ type: 'TEXT' | 'URL'; value: string }>;
+    }>;
 
     // Build linking strategy
     const linkingMode = this.getNodeParameter('linkingMode', itemIndex) as string;

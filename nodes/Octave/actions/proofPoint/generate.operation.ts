@@ -1,6 +1,6 @@
 import { IExecuteFunctions, INodeExecutionData, INodeProperties, NodeOperationError } from 'n8n-workflow';
 import { octaveApiRequest } from '../../transport/OctaveApiRequest';
-import { applyDisplayOptions, parseJsonParameter } from '../utils';
+import { applyDisplayOptions } from '../utils';
 
 const properties: INodeProperties[] = [
     {
@@ -15,13 +15,68 @@ const properties: INodeProperties[] = [
         hint: "Primary Offering to use as context when generating proof points. If not provided, the primary company attached to the Workspace will be used."
     },
     {
-        displayName: 'Proof Points (JSON)',
+        displayName: 'Proof Point Generation Requests',
         name: 'proofPoints',
-        type: 'json',
-        required: true,
-        default: '',
-        description: 'Array of proof point generation requests. Each object can have an optional "name" and required "sources" array with type (TEXT/URL) and value.',
-        typeOptions: { rows: 10 }
+        type: 'collection',
+        placeholder: 'Add Proof Point',
+        typeOptions: {
+            multipleValues: true,
+        },
+        default: [{}],
+        description: 'Array of proof point generation requests. Each generates one proof point.',
+        options: [
+            {
+                displayName: 'Name',
+                name: 'name',
+                type: 'string',
+                default: '',
+                description: 'Optional name for the proof point - if provided, will be used as the entity name',
+                placeholder: '50% Sales Improvement Case Study'
+            },
+            {
+                displayName: 'Sources',
+                name: 'sources',
+                type: 'collection',
+                placeholder: 'Add Source',
+                typeOptions: {
+                    multipleValues: true,
+                },
+                default: [{}],
+                description: 'Source materials to generate the proof point from (at least one required)',
+                options: [
+                    {
+                        displayName: 'Type',
+                        name: 'type',
+                        type: 'options',
+                        options: [
+                            {
+                                name: 'Text',
+                                value: 'TEXT',
+                                description: 'Text-based source material'
+                            },
+                            {
+                                name: 'URL',
+                                value: 'URL',
+                                description: 'URL-based source material'
+                            }
+                        ],
+                        default: 'TEXT',
+                        description: 'The type of source material'
+                    },
+                    {
+                        displayName: 'Value',
+                        name: 'value',
+                        type: 'string',
+                        default: '',
+                        description: 'The source content (text or URL)',
+                        placeholder: 'Case study showing 50% improvement in sales conversion',
+                        typeOptions: {
+                            rows: 3
+                        }
+                    }
+                ]
+            }
+        ]
     },
     {
         displayName: 'Linking Strategy Mode',
@@ -73,7 +128,10 @@ export async function execute(this: IExecuteFunctions, itemIndex: number): Promi
 
     body.primaryOfferingOId = this.getNodeParameter('primaryOfferingOId', itemIndex) as string || undefined;
 
-    body.proofPoints = parseJsonParameter.call(this, 'proofPoints', itemIndex, '[]');
+    body.proofPoints = this.getNodeParameter('proofPoints', itemIndex) as Array<{
+        name?: string;
+        sources: Array<{ type: 'TEXT' | 'URL'; value: string }>;
+    }>;
 
     // Build linking strategy
     const linkingMode = this.getNodeParameter('linkingMode', itemIndex) as string;
