@@ -23,6 +23,37 @@ export function parseJsonParameter(this: IExecuteFunctions, paramName: string, i
 }
 
 /**
+ * Deeply merges two objects.
+ * - Arrays are merged and deduplicated.
+ * - Plain objects are recursively merged.
+ * - Primitives in source override target.
+ */
+export function deepMerge<T>(target: Partial<T>, source: Partial<T>): T {
+	const isObject = (val: unknown): val is Record<string, unknown> =>
+		val !== null && typeof val === 'object' && !Array.isArray(val);
+
+	const merged = { ...target } as Record<string, any>;
+
+	for (const key in source) {
+		const targetValue = merged[key];
+		const sourceValue = source[key];
+
+		if (Array.isArray(targetValue) && Array.isArray(sourceValue)) {
+			// Merge arrays and deduplicate
+			merged[key] = Array.from(new Set([...targetValue, ...sourceValue]));
+		} else if (isObject(targetValue) && isObject(sourceValue)) {
+			// Recursively merge objects
+			merged[key] = deepMerge(targetValue, sourceValue);
+		} else {
+			// Override with source
+			merged[key] = sourceValue;
+		}
+	}
+
+	return merged as T;
+}
+
+/**
  * Merges common displayOptions into an array of node properties.
  * Each property will have the commonDisplayOptions applied under its own displayOptions.
  * If a property already has displayOptions, they will be merged; otherwise, they will be set.
@@ -31,12 +62,12 @@ export function parseJsonParameter(this: IExecuteFunctions, paramName: string, i
  * @param properties The array of INodeProperties to update.
  * @returns A new array of INodeProperties with updated displayOptions.
  */
-export function applyDisplayOptions(commonDisplayOptions: object, properties: INodeProperties[]): INodeProperties[] {
+export function applyDisplayOptions(
+	commonDisplayOptions: Partial<INodeProperties['displayOptions']>,
+	properties: INodeProperties[],
+): INodeProperties[] {
 	return properties.map(prop => ({
 		...prop,
-		displayOptions: {
-			...(prop.displayOptions || {}),
-			...commonDisplayOptions,
-		},
+		displayOptions: deepMerge(prop.displayOptions ?? {}, commonDisplayOptions),
 	}));
 }
