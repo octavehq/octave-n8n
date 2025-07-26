@@ -13,10 +13,16 @@ export const referenceOperations: INodeProperties[] = [
         },
         options: [
             {
-                name: 'List',
-                value: 'list',
-                action: 'List references',
-                description: 'List references in the workspace',
+                name: 'Create',
+                value: 'create',
+                action: 'Create a reference',
+                description: 'Create a new reference',
+            },
+            {
+                name: 'Generate',
+                value: 'generate',
+                action: 'Generate references',
+                description: 'Generate references from source materials using AI',
             },
             {
                 name: 'Get',
@@ -25,10 +31,16 @@ export const referenceOperations: INodeProperties[] = [
                 description: 'Get a specific reference by OId',
             },
             {
-                name: 'Create',
-                value: 'create',
-                action: 'Create a reference',
-                description: 'Create a new reference',
+                name: 'List',
+                value: 'list',
+                action: 'List references',
+                description: 'List references in the workspace',
+            },
+            {
+                name: 'Update',
+                value: 'update',
+                action: 'Update a reference',
+                description: 'Update an existing reference',
             },
         ],
         default: 'list',

@@ -39,12 +39,11 @@ const properties: INodeProperties[] = [
     },
     {
         displayName: 'Text Search',
-        name: 'text',
+        name: 'textSearchQuery',
         type: 'string',
         default: '',
-        description: 'Text search query for personas',
+        description: 'Text search query for proof points',
     },
-
     {
         displayName: 'Product OID (Filter)',
         name: 'productOId',
@@ -53,17 +52,17 @@ const properties: INodeProperties[] = [
         description: 'Filter list by a specific Product OId (optional)',
     },
     {
-        displayName: 'Playbook OID (Filter)',
-        name: 'playbookOId',
+        displayName: 'OIds (Filter)',
+        name: 'oIds',
         type: 'string',
         default: '',
-        description: 'Filter list by a specific Playbook OId (optional)',
+        description: 'Comma-separated list of proof point OIds to filter by (optional)',
     },
 ];
 
 const displayOptions = {
     show: {
-        resource: ['persona'],
+        resource: ['proofPoint'],
         operation: ['list'],
     },
 };
@@ -75,20 +74,24 @@ export async function execute(this: IExecuteFunctions, itemIndex: number): Promi
     let responseDataInner: any;
 
     const returnAll = this.getNodeParameter('returnAll', itemIndex, true) as boolean;
-    qs.text = this.getNodeParameter('text', itemIndex) as string | undefined;
+    qs.textSearchQuery = this.getNodeParameter('textSearchQuery', itemIndex) as string | undefined;
     qs.productOId = this.getNodeParameter('productOId', itemIndex) as string | undefined;
-    qs.playbookOId = this.getNodeParameter('playbookOId', itemIndex) as string | undefined;
+
+    const oIdsString = this.getNodeParameter('oIds', itemIndex) as string | undefined;
+    if (oIdsString && oIdsString.trim()) {
+        qs.oIds = oIdsString.split(',').map((id: string) => id.trim());
+    }
 
     Object.keys(qs).forEach(key => (qs[key] === undefined) && delete qs[key]);
 
     if (returnAll) {
         qs.limit = this.getNodeParameter('limit', itemIndex, 100);
         qs.offset = this.getNodeParameter('offset', itemIndex, 0);
-        responseDataInner = await octaveApiRequestListAll.call(this, 'GET', '/api/v2/persona/list', qs);
+        responseDataInner = await octaveApiRequestListAll.call(this, 'GET', '/api/v2/proof-point/list', qs);
     } else {
         qs.limit = this.getNodeParameter('limit', itemIndex, 50) as number;
         qs.offset = this.getNodeParameter('offset', itemIndex, 0) as number;
-        const responseDataOuter = await octaveApiRequest.call(this, 'GET', '/api/v2/persona/list', {}, qs);
+        const responseDataOuter = await octaveApiRequest.call(this, 'GET', '/api/v2/proof-point/list', {}, qs);
         responseDataInner = responseDataOuter?.data;
     }
 

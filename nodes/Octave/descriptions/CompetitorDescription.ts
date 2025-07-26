@@ -13,6 +13,18 @@ export const competitorOperations: INodeProperties[] = [
 		},
 		options: [
 			{
+				name: 'Create',
+				value: 'create',
+				description: 'Create a new competitor',
+				action: 'Create a competitor',
+			},
+			{
+				name: 'Generate',
+				value: 'generate',
+				description: 'Generate competitors from source materials using AI',
+				action: 'Generate competitors',
+			},
+			{
 				name: 'Get',
 				value: 'get',
 				description: 'Get a competitor by OId',
@@ -23,6 +35,12 @@ export const competitorOperations: INodeProperties[] = [
 				value: 'list',
 				description: 'List competitors with optional filtering',
 				action: 'List competitors',
+			},
+			{
+				name: 'Update',
+				value: 'update',
+				description: 'Update an existing competitor',
+				action: 'Update a competitor',
 			},
 		],
 		default: 'list',

@@ -13,16 +13,34 @@ export const productOperations: INodeProperties[] = [
         },
         options: [
             {
-                name: 'List',
-                value: 'list',
-                action: 'List products',
-                description: 'List products in the workspace',
+                name: 'Create',
+                value: 'create',
+                action: 'Create a product',
+                description: 'Create a new product',
+            },
+            {
+                name: 'Generate',
+                value: 'generate',
+                action: 'Generate products',
+                description: 'Generate products from source materials using AI',
             },
             {
                 name: 'Get',
                 value: 'get',
                 action: 'Get a product',
                 description: 'Get a specific product by OId',
+            },
+            {
+                name: 'List',
+                value: 'list',
+                action: 'List products',
+                description: 'List products in the workspace',
+            },
+            {
+                name: 'Update',
+                value: 'update',
+                action: 'Update a product',
+                description: 'Update an existing product',
             },
         ],
         default: 'list',

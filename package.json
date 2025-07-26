@@ -1,6 +1,6 @@
 {
   "name": "n8n-nodes-octavehq",
-  "version": "1.2.1",
+  "version": "1.3.0",
   "description": "Octave is the AI-powered messaging brain for B2B go-to-market teams, helping articulate product value, synthesize customer interaction data, and deploy consistent, effective messaging across all channels.",
   "keywords": [
     "n8n-community-node-package",
@@ -15,7 +15,11 @@
     "qualify",
     "sequence",
     "personalize",
-    "call prep"
+    "call prep",
+    "mcp",
+    "positioning",
+    "messaging",
+    "go to market"
   ],
   "license": "MIT",
   "homepage": "https://octavehq.com",

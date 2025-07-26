@@ -13,16 +13,34 @@ export const personaOperations: INodeProperties[] = [
         },
         options: [
             {
-                name: 'List',
-                value: 'list',
-                action: 'List personas',
-                description: 'List personas in the workspace',
+                name: 'Create',
+                value: 'create',
+                action: 'Create a persona',
+                description: 'Create a new persona',
+            },
+            {
+                name: 'Generate',
+                value: 'generate',
+                action: 'Generate personas',
+                description: 'Generate personas from source materials using AI',
             },
             {
                 name: 'Get',
                 value: 'get',
                 action: 'Get a persona',
                 description: 'Get a specific persona by OId',
+            },
+            {
+                name: 'List',
+                value: 'list',
+                action: 'List personas',
+                description: 'List personas in the workspace',
+            },
+            {
+                name: 'Update',
+                value: 'update',
+                action: 'Update a persona',
+                description: 'Update an existing persona',
             },
         ],
         default: 'list',
