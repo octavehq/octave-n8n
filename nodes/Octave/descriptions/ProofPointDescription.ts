@@ -2,19 +2,6 @@ import { INodeProperties } from 'n8n-workflow';
 
 export const proofPointDescription: INodeProperties[] = [
 	{
-		displayName: 'Resource',
-		name: 'resource',
-		type: 'options',
-		noDataExpression: true,
-		options: [
-			{
-				name: 'Proof Point',
-				value: 'proofPoint',
-			},
-		],
-		default: 'proofPoint',
-	},
-	{
 		displayName: 'Operation',
 		name: 'operation',
 		type: 'options',
