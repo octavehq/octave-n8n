@@ -36,18 +36,6 @@ const properties: INodeProperties[] = [
         description: 'Text to search for in playbooks (optional)',
     },
     {
-        displayName: 'Query Type',
-        name: 'queryType',
-        type: 'options',
-        options: [
-            { name: 'All', value: 'ALL'},
-            { name: 'Team', value: 'TEAM'},
-            { name: 'Mine', value: 'MINE'},
-        ],
-        default: 'ALL',
-        description: 'Scope of the playbook search (optional)',
-    },
-    {
         displayName: 'Product OId (Filter)',
         name: 'productOId',
         type: 'string',

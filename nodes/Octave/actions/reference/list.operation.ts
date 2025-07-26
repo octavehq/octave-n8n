@@ -45,18 +45,6 @@ const properties: INodeProperties[] = [
         description: 'Text search query for references',
     },
     {
-        displayName: 'Query Type',
-        name: 'queryType',
-        type: 'options',
-        options: [
-            { name: 'All', value: 'ALL' },
-            { name: 'Team', value: 'TEAM' },
-            { name: 'Mine', value: 'MINE' },
-        ],
-        default: 'ALL',
-        description: 'Type of query to perform',
-    },
-    {
         displayName: 'Product OID (Filter)',
         name: 'productOId',
         type: 'string',
