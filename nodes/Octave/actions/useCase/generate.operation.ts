@@ -36,43 +36,49 @@ const properties: INodeProperties[] = [
             {
                 displayName: 'Sources',
                 name: 'sources',
-                type: 'collection',
+                type: 'fixedCollection',
                 placeholder: 'Add Source',
                 typeOptions: {
                     multipleValues: true,
                 },
-                default: [{}],
+                default: {},
                 description: 'Source materials to generate the use case from (at least one required)',
                 options: [
                     {
-                        displayName: 'Type',
-                        name: 'type',
-                        type: 'options',
-                        options: [
+                        displayName: 'Source',
+                        name: 'source',
+                        values: [
                             {
-                                name: 'Text',
-                                value: 'TEXT',
-                                description: 'Text-based source material'
+                                displayName: 'Type',
+                                name: 'type',
+                                type: 'options',
+                                options: [
+                                    {
+                                        name: 'Text',
+                                        value: 'TEXT',
+                                        description: 'Text-based source material'
+                                    },
+                                    {
+                                        name: 'URL',
+                                        value: 'URL',
+                                        description: 'URL-based source material'
+                                    }
+                                ],
+                                default: 'TEXT',
+                                description: 'The type of source material'
                             },
                             {
-                                name: 'URL',
-                                value: 'URL',
-                                description: 'URL-based source material'
+                                displayName: 'Value',
+                                name: 'value',
+                                type: 'string',
+                                default: '',
+                                description: 'The source content (text or URL)',
+                                placeholder: 'Lead generation and qualification for enterprise sales',
+                                typeOptions: {
+                                    rows: 3
+                                }
                             }
-                        ],
-                        default: 'TEXT',
-                        description: 'The type of source material'
-                    },
-                    {
-                        displayName: 'Value',
-                        name: 'value',
-                        type: 'string',
-                        default: '',
-                        description: 'The source content (text or URL)',
-                        placeholder: 'Lead generation and qualification for enterprise sales',
-                        typeOptions: {
-                            rows: 3
-                        }
+                        ]
                     }
                 ]
             }
@@ -128,10 +134,16 @@ export async function execute(this: IExecuteFunctions, itemIndex: number): Promi
 
     body.primaryOfferingOId = this.getNodeParameter('primaryOfferingOId', itemIndex) as string || undefined;
 
-    body.useCases = this.getNodeParameter('useCases', itemIndex) as Array<{
+    // Process use cases and fix sources structure from fixedCollection
+    const useCasesRaw = this.getNodeParameter('useCases', itemIndex) as Array<{
         name?: string;
-        sources: Array<{ type: 'TEXT' | 'URL'; value: string }>;
+        sources: { source?: Array<{ type: 'TEXT' | 'URL'; value: string }> };
     }>;
+
+    body.useCases = useCasesRaw.map(useCase => ({
+        name: useCase.name,
+        sources: useCase.sources?.source || []
+    }));
 
     // Build linking strategy
     const linkingMode = this.getNodeParameter('linkingMode', itemIndex) as string;

@@ -46,43 +46,49 @@ const properties: INodeProperties[] = [
             {
                 displayName: 'Sources',
                 name: 'sources',
-                type: 'collection',
+                type: 'fixedCollection',
                 placeholder: 'Add Source',
                 typeOptions: {
                     multipleValues: true,
                 },
-                default: [{}],
+                default: {},
                 description: 'Source materials to generate the persona from (at least one required)',
                 options: [
                     {
-                        displayName: 'Type',
-                        name: 'type',
-                        type: 'options',
-                        options: [
+                        displayName: 'Source',
+                        name: 'source',
+                        values: [
                             {
-                                name: 'Text',
-                                value: 'TEXT',
-                                description: 'Text-based source material'
+                                displayName: 'Type',
+                                name: 'type',
+                                type: 'options',
+                                options: [
+                                    {
+                                        name: 'Text',
+                                        value: 'TEXT',
+                                        description: 'Text-based source material'
+                                    },
+                                    {
+                                        name: 'URL',
+                                        value: 'URL',
+                                        description: 'URL-based source material'
+                                    }
+                                ],
+                                default: 'TEXT',
+                                description: 'The type of source material'
                             },
                             {
-                                name: 'URL',
-                                value: 'URL',
-                                description: 'URL-based source material'
+                                displayName: 'Value',
+                                name: 'value',
+                                type: 'string',
+                                default: '',
+                                description: 'The source content (text or URL)',
+                                placeholder: 'VP of Sales professionals who manage enterprise deals...',
+                                typeOptions: {
+                                    rows: 3
+                                }
                             }
-                        ],
-                        default: 'TEXT',
-                        description: 'The type of source material'
-                    },
-                    {
-                        displayName: 'Value',
-                        name: 'value',
-                        type: 'string',
-                        default: '',
-                        description: 'The source content (text or URL)',
-                        placeholder: 'VP of Sales professionals who manage enterprise deals...',
-                        typeOptions: {
-                            rows: 3
-                        }
+                        ]
                     }
                 ]
             }
@@ -139,10 +145,16 @@ export async function execute(this: IExecuteFunctions, itemIndex: number): Promi
     body.primaryOfferingOId = this.getNodeParameter('primaryOfferingOId', itemIndex) as string || undefined;
 
     body.playbookOId = this.getNodeParameter('playbookOId', itemIndex) as string | undefined;
-    body.personas = this.getNodeParameter('personas', itemIndex) as Array<{
+    // Process personas and fix sources structure from fixedCollection
+    const personasRaw = this.getNodeParameter('personas', itemIndex) as Array<{
         name?: string;
-        sources: Array<{ type: 'TEXT' | 'URL'; value: string }>;
+        sources: { source?: Array<{ type: 'TEXT' | 'URL'; value: string }> };
     }>;
+
+    body.personas = personasRaw.map(persona => ({
+        name: persona.name,
+        sources: persona.sources?.source || []
+    }));
 
     // Build linking strategy
     const linkingMode = this.getNodeParameter('linkingMode', itemIndex) as string;

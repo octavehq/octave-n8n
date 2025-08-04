@@ -39,43 +39,49 @@ const properties: INodeProperties[] = [
             {
                 displayName: 'Sources',
                 name: 'sources',
-                type: 'collection',
+                type: 'fixedCollection',
                 placeholder: 'Add Source',
                 typeOptions: {
                     multipleValues: true,
                 },
-                default: [{}],
+                default: {},
                 description: 'Source materials to generate the product from (at least one required)',
                 options: [
                     {
-                        displayName: 'Type',
-                        name: 'type',
-                        type: 'options',
-                        options: [
+                        displayName: 'Source',
+                        name: 'source',
+                        values: [
                             {
-                                name: 'Text',
-                                value: 'TEXT',
-                                description: 'Text-based source material'
+                                displayName: 'Type',
+                                name: 'type',
+                                type: 'options',
+                                options: [
+                                    {
+                                        name: 'Text',
+                                        value: 'TEXT',
+                                        description: 'Text-based source material'
+                                    },
+                                    {
+                                        name: 'URL',
+                                        value: 'URL',
+                                        description: 'URL-based source material'
+                                    }
+                                ],
+                                default: 'TEXT',
+                                description: 'The type of source material'
                             },
                             {
-                                name: 'URL',
-                                value: 'URL',
-                                description: 'URL-based source material'
+                                displayName: 'Value',
+                                name: 'value',
+                                type: 'string',
+                                default: '',
+                                description: 'The source content (text or URL)',
+                                placeholder: 'Lead generation and qualification for enterprise sales',
+                                typeOptions: {
+                                    rows: 3
+                                }
                             }
-                        ],
-                        default: 'TEXT',
-                        description: 'The type of source material'
-                    },
-                    {
-                        displayName: 'Value',
-                        name: 'value',
-                        type: 'string',
-                        default: '',
-                        description: 'The source content (text or URL)',
-                        placeholder: 'Lead generation and qualification for enterprise sales',
-                        typeOptions: {
-                            rows: 3
-                        }
+                        ]
                     }
                 ]
             }
@@ -97,10 +103,16 @@ export async function execute(this: IExecuteFunctions, itemIndex: number): Promi
 
     body.statusQuoInput = this.getNodeParameter('statusQuoInput', itemIndex) as string | undefined;
     body.differentiatedValueInput = this.getNodeParameter('differentiatedValueInput', itemIndex) as string | undefined;
-    body.products = this.getNodeParameter('products', itemIndex) as Array<{
+    // Process products and fix sources structure from fixedCollection
+    const productsRaw = this.getNodeParameter('products', itemIndex) as Array<{
         name?: string;
-        sources: Array<{ type: 'TEXT' | 'URL'; value: string }>;
+        sources: { source?: Array<{ type: 'TEXT' | 'URL'; value: string }> };
     }>;
+
+    body.products = productsRaw.map(product => ({
+        name: product.name,
+        sources: product.sources?.source || []
+    }));
 
     Object.keys(body).forEach(key => (body[key] === undefined) && delete body[key]);
 
