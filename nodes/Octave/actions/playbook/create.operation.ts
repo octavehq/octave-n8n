@@ -39,14 +39,15 @@ const properties: INodeProperties[] = [
         name: 'playbookTypeCreate', // Maps to 'type' in API
         type: 'options',
         options: [
+            { name: 'Account', value: 'ACCOUNT' },
             { name: 'Competitive', value: 'COMPETITIVE' },
             { name: 'Custom', value: 'CUSTOM' },
-            { name: 'Segment', value: 'SEGMENT' },
-            { name: 'Signal', value: 'SIGNAL' },
+            { name: 'Milestone', value: 'MILESTONE' },
+            { name: 'Practitioner', value: 'PRACTITIONER' },
+            { name: 'Sector', value: 'SECTOR' },
             { name: 'Solution', value: 'SOLUTION' },
-            { name: 'Specialist', value: 'SPECIALIST' },
         ],
-        default: 'CUSTOM',
+        default: 'SOLUTION',
         description: 'Type of the playbook (optional)',
     },
     {
