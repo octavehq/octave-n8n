@@ -109,16 +109,36 @@ export async function execute(this: IExecuteFunctions, itemIndex: number): Promi
         qs.limit = this.getNodeParameter('limit', itemIndex, 100); // Base limit for listAll
         qs.offset = this.getNodeParameter('offset', itemIndex, 0);
         responseDataInner = await octaveApiRequestListAll.call(this, 'GET', '/api/v2/agents/list', qs);
+
+        // For returnAll, we don't have access to _metadata from octaveApiRequestListAll
+        // So we create a response structure with the data and a note about metadata
+        const responseWithMetadata = {
+            data: responseDataInner,
+            _metadata: {
+                message: "Metadata not available for returnAll operations - data aggregated from multiple API calls"
+            }
+        };
+
+        const executionData = this.helpers.constructExecutionMetaData(
+            this.helpers.returnJsonArray(responseWithMetadata),
+            { itemData: { item: itemIndex } },
+        );
+        return [executionData];
     } else {
         qs.limit = this.getNodeParameter('limit', itemIndex, 10) as number;
         qs.offset = this.getNodeParameter('offset', itemIndex, 0) as number;
         responseDataOuter = await octaveApiRequest.call(this, 'GET', '/api/v2/agents/list', {}, qs);
-        responseDataInner = responseDataOuter?.data;
-    }
 
-    const executionData = this.helpers.constructExecutionMetaData(
-        this.helpers.returnJsonArray(responseDataInner || responseDataOuter || {}),
-        { itemData: { item: itemIndex } },
-    );
-    return [executionData];
+        // Preserve both data and _metadata for single page requests with fallback
+        const responseWithMetadata = {
+            data: responseDataOuter?.data !== undefined ? responseDataOuter.data : responseDataOuter,
+            _metadata: responseDataOuter?._metadata
+        };
+
+        const executionData = this.helpers.constructExecutionMetaData(
+            this.helpers.returnJsonArray(responseWithMetadata),
+            { itemData: { item: itemIndex } },
+        );
+        return [executionData];
+    }
 }

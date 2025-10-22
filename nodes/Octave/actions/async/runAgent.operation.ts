@@ -55,11 +55,20 @@ export async function execute(this: IExecuteFunctions, itemIndex: number): Promi
         inputs,
     };
 
-    const responseData = await octaveApiRequest.call(this, 'POST', '/api/v2/async/agents/run', body);
+    const responseData = await octaveApiRequest.call(this, 'POST', '/api/v2/async/agent/run', body);
+
+    // Async operations have a different response structure than regular agents
+    // Async response: { status: "pending", message: "Additional information", requestId: "requestId" }
+    // Regular agents: { data: {...}, _metadata: {...} }
+    // Use fallback pattern to handle both structures
+    const responseWithMetadata = {
+        data: responseData?.data !== undefined ? responseData.data : responseData,
+        _metadata: responseData?._metadata
+    };
 
     // Async operations usually return a task ID or a message indicating the task has started.
     const executionData = this.helpers.constructExecutionMetaData(
-        this.helpers.returnJsonArray([responseData]),
+        this.helpers.returnJsonArray(responseWithMetadata),
         { itemData: { item: itemIndex } },
     );
     return [executionData];

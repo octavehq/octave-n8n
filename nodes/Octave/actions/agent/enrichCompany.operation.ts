@@ -67,10 +67,15 @@ export async function execute(this: IExecuteFunctions, itemIndex: number): Promi
     Object.keys(body).forEach(key => (body[key] === undefined) && delete body[key]);
 
     const responseDataOuter = await octaveApiRequest.call(this, 'POST', '/api/v2/agents/enrich-company/run', body);
-    const responseDataInner = responseDataOuter?.data;
+
+    // Preserve both data and _metadata with fallback for responses without .data property
+    const responseWithMetadata = {
+        data: responseDataOuter?.data !== undefined ? responseDataOuter.data : responseDataOuter,
+        _metadata: responseDataOuter?._metadata
+    };
 
     const executionData = this.helpers.constructExecutionMetaData(
-        this.helpers.returnJsonArray(responseDataInner || responseDataOuter || {}),
+        this.helpers.returnJsonArray(responseWithMetadata),
         { itemData: { item: itemIndex } },
     );
     return [executionData];

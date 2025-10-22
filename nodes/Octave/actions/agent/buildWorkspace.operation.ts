@@ -127,15 +127,15 @@ export async function execute(this: IExecuteFunctions, itemIndex: number): Promi
     Object.keys(offering).forEach(key => (offering[key] === undefined) && delete offering[key]);
 
     const responseDataOuter = await octaveApiRequest.call(this, 'POST', '/api/v2/agents/workspace/build', body);
-    // The response structure for buildWorkspace might be different, assuming it has a .data field or is the data itself.
-    // Original code: responseDataInner = responseDataOuter?.data; but buildWorkspace usually returns a more direct object or message.
-    // Let's assume the API returns the significant data directly or within a .data property.
-    // For now, to be safe, mirror the general pattern and adjust if openapi.json suggests otherwise.
-    const responseDataInner = responseDataOuter?.data !== undefined ? responseDataOuter.data : responseDataOuter;
 
+    // Preserve both data and _metadata
+    const responseWithMetadata = {
+        data: responseDataOuter?.data !== undefined ? responseDataOuter.data : responseDataOuter,
+        _metadata: responseDataOuter?._metadata
+    };
 
     const executionData = this.helpers.constructExecutionMetaData(
-        this.helpers.returnJsonArray(responseDataInner || responseDataOuter || {}),
+        this.helpers.returnJsonArray(responseWithMetadata),
         { itemData: { item: itemIndex } },
     );
     return [executionData];
