@@ -55,7 +55,7 @@ export async function execute(this: IExecuteFunctions, itemIndex: number): Promi
         inputs,
     };
 
-    const responseData = await octaveApiRequest.call(this, 'POST', '/api/v2/async/agents/run', body);
+    const responseData = await octaveApiRequest.call(this, 'POST', '/api/v2/async/agent/run', body);
 
     // Preserve both data and _metadata for async operations
     const responseWithMetadata = {
