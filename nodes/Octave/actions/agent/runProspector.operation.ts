@@ -250,10 +250,15 @@ export async function execute(this: IExecuteFunctions, itemIndex: number): Promi
     });
 
     const responseDataOuter = await octaveApiRequest.call(this, 'POST', '/api/v2/agents/prospector/run', body);
-    const responseDataInner = responseDataOuter?.data;
+
+    // Preserve both data and _metadata
+    const responseWithMetadata = {
+        data: responseDataOuter?.data,
+        _metadata: responseDataOuter?._metadata
+    };
 
     const executionData = this.helpers.constructExecutionMetaData(
-        this.helpers.returnJsonArray(responseDataInner || responseDataOuter || {}),
+        this.helpers.returnJsonArray(responseWithMetadata),
         { itemData: { item: itemIndex } },
     );
     return [executionData];

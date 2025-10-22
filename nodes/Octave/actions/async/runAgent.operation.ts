@@ -57,9 +57,15 @@ export async function execute(this: IExecuteFunctions, itemIndex: number): Promi
 
     const responseData = await octaveApiRequest.call(this, 'POST', '/api/v2/async/agents/run', body);
 
+    // Preserve both data and _metadata for async operations
+    const responseWithMetadata = {
+        data: responseData?.data,
+        _metadata: responseData?._metadata
+    };
+
     // Async operations usually return a task ID or a message indicating the task has started.
     const executionData = this.helpers.constructExecutionMetaData(
-        this.helpers.returnJsonArray([responseData]),
+        this.helpers.returnJsonArray(responseWithMetadata),
         { itemData: { item: itemIndex } },
     );
     return [executionData];

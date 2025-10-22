@@ -19,6 +19,26 @@ Follow the [installation guide](https://docs.n8n.io/integrations/community-nodes
 
 The Octave node supports the following operations, categorized by resource:
 
+### Response Format
+
+All agent operations now return responses that include both the data and API metadata:
+
+```json
+{
+  "data": {
+    // Actual response data from the operation
+  },
+  "_metadata": {
+    "requestId": "unique-request-identifier",
+    "timestamp": "2021-01-01T00:00:00.000Z",
+    "usage": 0,
+    "message": "Additional information about the request"
+  }
+}
+```
+
+The `_metadata` field provides valuable information for tracking, debugging, and monitoring API usage.
+
 **Resource: Agent**
 *   **List Agents**: List all agents
     *   Corresponds to `GET /api/v2/agents/list`
@@ -168,3 +188,4 @@ Get your API key from the Octave settings page. We recommend naming the credenti
 * 1.3.0 - Major expansion: Added full CRUD support (create, update, generate) for all resources; Added new Proof Point resource; Enhanced UX with native collection inputs for generate operations; Improved agent field ordering with LinkedIn Profile prioritization; Enhanced runtime context handling for sequences
 * 1.3.1 - Fixed UI issue in generate operations where "Add Source" button was not displaying Type and Value fields properly
 * 1.3.2 - Update Playbook types
+* 1.4.0 - Enhanced response format: All agent operations now include API metadata (`_metadata`) alongside data, providing request IDs, timestamps, usage information, and additional context for better tracking and debugging
