@@ -57,9 +57,12 @@ export async function execute(this: IExecuteFunctions, itemIndex: number): Promi
 
     const responseData = await octaveApiRequest.call(this, 'POST', '/api/v2/async/agent/run', body);
 
-    // Preserve both data and _metadata for async operations
+    // Async operations have a different response structure than regular agents
+    // Async response: { status: "pending", message: "Additional information", requestId: "requestId" }
+    // Regular agents: { data: {...}, _metadata: {...} }
+    // Use fallback pattern to handle both structures
     const responseWithMetadata = {
-        data: responseData?.data,
+        data: responseData?.data !== undefined ? responseData.data : responseData,
         _metadata: responseData?._metadata
     };
 
