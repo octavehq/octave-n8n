@@ -107,9 +107,9 @@ export async function execute(this: IExecuteFunctions, itemIndex: number): Promi
 
     const responseDataOuter = await octaveApiRequest.call(this, 'POST', '/api/v2/agents/generate-content/run', body);
 
-    // Preserve both data and _metadata
+    // Preserve both data and _metadata with fallback for responses without .data property
     const responseWithMetadata = {
-        data: responseDataOuter?.data,
+        data: responseDataOuter?.data !== undefined ? responseDataOuter.data : responseDataOuter,
         _metadata: responseDataOuter?._metadata
     };
 

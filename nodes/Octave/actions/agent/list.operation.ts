@@ -129,9 +129,9 @@ export async function execute(this: IExecuteFunctions, itemIndex: number): Promi
         qs.offset = this.getNodeParameter('offset', itemIndex, 0) as number;
         responseDataOuter = await octaveApiRequest.call(this, 'GET', '/api/v2/agents/list', {}, qs);
 
-        // Preserve both data and _metadata for single page requests
+        // Preserve both data and _metadata for single page requests with fallback
         const responseWithMetadata = {
-            data: responseDataOuter?.data,
+            data: responseDataOuter?.data !== undefined ? responseDataOuter.data : responseDataOuter,
             _metadata: responseDataOuter?._metadata
         };
 
