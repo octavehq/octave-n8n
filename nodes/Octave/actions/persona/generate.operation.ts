@@ -102,7 +102,7 @@ const properties: INodeProperties[] = [
             {
                 name: 'All Products',
                 value: 'ALL',
-                description: 'Link to all active products in the workspace'
+                description: 'Link to all active offerings (products/services) in the workspace'
             },
             {
                 name: 'Specific Products',

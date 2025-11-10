@@ -189,3 +189,4 @@ Get your API key from the Octave settings page. We recommend naming the credenti
 * 1.3.1 - Fixed UI issue in generate operations where "Add Source" button was not displaying Type and Value fields properly
 * 1.3.2 - Update Playbook types
 * 1.4.0 - Enhanced response format: All agent operations now include API metadata (`_metadata`) alongside data, providing request IDs, timestamps, usage information, and additional context for better tracking and debugging
+* 1.5.0 - Added `generate` route to references. Updated documentation.
