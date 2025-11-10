@@ -92,7 +92,7 @@ const properties: INodeProperties[] = [
             {
                 name: 'All Products',
                 value: 'ALL',
-                description: 'Link to all active products in the workspace'
+                description: 'Link to all active offerings (products/services) in the workspace'
             },
             {
                 name: 'Specific Products',
@@ -117,6 +117,13 @@ const properties: INodeProperties[] = [
                 linkingMode: ['SPECIFIC']
             }
         }
+    },
+    {
+        displayName: 'Brand Voice OID',
+        name: 'brandVoiceOId',
+        type: 'string',
+        default: '',
+        description: 'Brand voice OId to apply to generated references (optional)',
     }
 ];
 
@@ -133,6 +140,7 @@ export async function execute(this: IExecuteFunctions, itemIndex: number): Promi
     const body: Record<string, any> = {};
 
     body.primaryOfferingOId = this.getNodeParameter('primaryOfferingOId', itemIndex) as string || undefined;
+    body.brandVoiceOId = this.getNodeParameter('brandVoiceOId', itemIndex) as string || undefined;
 
     // Process references and fix sources structure from fixedCollection
     const referencesRaw = this.getNodeParameter('references', itemIndex) as Array<{
