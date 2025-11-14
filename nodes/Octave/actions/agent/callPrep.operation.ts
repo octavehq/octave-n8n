@@ -59,11 +59,11 @@ const properties: INodeProperties[] = [
 		description: 'The domain of the company to build call prep materials for',
 	},
 	{
-		displayName: 'Runtime Context (JSON)',
+		displayName: 'Runtime Context',
 		name: 'runtimeContext',
-		type: 'json',
-		default: '{}',
-		description: 'Runtime context for sales call prep materials',
+		type: 'string',
+		default: '',
+		description: 'Additional context as a string (optional)',
 	},
 ];
 
@@ -85,9 +85,9 @@ export async function execute(this: IExecuteFunctions, itemIndex: number): Promi
 	}
 	body.agentOId = agentOId;
 
-	const runtimeContextString = this.getNodeParameter('runtimeContext', itemIndex, '{}') as string;
-	if (runtimeContextString && runtimeContextString.trim() !== '{}' && runtimeContextString.trim() !== '') {
-		body.runtimeContext = parseJsonParameter.call(this, 'runtimeContext', itemIndex, '{}');
+	const runtimeContext = this.getNodeParameter('runtimeContext', itemIndex, '') as string;
+	if (runtimeContext && runtimeContext.trim() !== '') {
+		body.runtimeContext = runtimeContext;
 	}
 
 	body.email = this.getNodeParameter('email', itemIndex) as string | undefined;

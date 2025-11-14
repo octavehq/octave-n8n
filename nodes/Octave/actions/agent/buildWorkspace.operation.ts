@@ -74,11 +74,11 @@ const properties: INodeProperties[] = [
     },
     // Runtime Context
     {
-        displayName: 'Runtime Context (JSON for Build Workspace)',
+        displayName: 'Runtime Context',
         name: 'buildWorkspaceRuntimeContext',
-        type: 'json',
-        default: '{}',
-        description: 'Optional JSON runtime context for the workspace build process (optional)',
+        type: 'string',
+        default: '',
+        description: 'Additional context as a string (optional)',
     },
 ];
 
@@ -116,9 +116,9 @@ export async function execute(this: IExecuteFunctions, itemIndex: number): Promi
     body.workspace = workspace;
     body.offering = offering;
 
-    const buildWorkspaceRuntimeContextString = this.getNodeParameter('buildWorkspaceRuntimeContext', itemIndex, '{}') as string;
-    if (buildWorkspaceRuntimeContextString && buildWorkspaceRuntimeContextString.trim() !== '{}' && buildWorkspaceRuntimeContextString.trim() !== '') {
-        body.runtimeContext = parseJsonParameter.call(this, 'buildWorkspaceRuntimeContext', itemIndex, '{}');
+    const buildWorkspaceRuntimeContext = this.getNodeParameter('buildWorkspaceRuntimeContext', itemIndex, '') as string;
+    if (buildWorkspaceRuntimeContext && buildWorkspaceRuntimeContext.trim() !== '') {
+        body.runtimeContext = buildWorkspaceRuntimeContext;
     }
 
     Object.keys(body).forEach(key => (body[key] === undefined) && delete body[key]);
