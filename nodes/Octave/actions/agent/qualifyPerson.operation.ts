@@ -57,11 +57,11 @@ const properties: INodeProperties[] = [
         description: 'Email address of the person to qualify (optional)',
     },
     {
-        displayName: 'Runtime Context (JSON)',
+        displayName: 'Runtime Context',
         name: 'runtimeContext',
-        type: 'json',
-        default: '{}',
-        description: 'Additional JSON context (optional)',
+        type: 'string',
+        default: '',
+        description: 'Additional context as a string (optional)',
     },
     {
         displayName: 'Additional Inputs (JSON)',
@@ -91,9 +91,9 @@ export async function execute(this: IExecuteFunctions, itemIndex: number): Promi
     }
     body.agentOId = agentOId;
 
-    const runtimeContextString = this.getNodeParameter('runtimeContext', itemIndex, '{}') as string;
-    if (runtimeContextString && runtimeContextString.trim() !== '{}' && runtimeContextString.trim() !== '') {
-        body.runtimeContext = parseJsonParameter.call(this, 'runtimeContext', itemIndex, '{}');
+    const runtimeContext = this.getNodeParameter('runtimeContext', itemIndex, '') as string;
+    if (runtimeContext && runtimeContext.trim() !== '') {
+        body.runtimeContext = runtimeContext;
     }
 
     const additionalInputs = parseJsonParameter.call(this, 'additionalInputsJson', itemIndex, '{}');

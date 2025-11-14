@@ -190,3 +190,4 @@ Get your API key from the Octave settings page. We recommend naming the credenti
 * 1.3.2 - Update Playbook types
 * 1.4.0 - Enhanced response format: All agent operations now include API metadata (`_metadata`) alongside data, providing request IDs, timestamps, usage information, and additional context for better tracking and debugging
 * 1.5.0 - Added `generate` route to references. Updated documentation.
+* 1.5.1 - Fixed runtime context handling: All agent operations (except Run Sequence) now correctly accept runtime context as a string instead of JSON. Run Sequence continues to use an object structure with step-specific keys.
