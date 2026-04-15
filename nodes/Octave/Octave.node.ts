@@ -14,28 +14,38 @@ import { getAgents, getPersonas, getPlaybooks, getProducts } from './methods/loa
 // Description imports for Operations
 import { agentOperations } from './descriptions/AgentDescription';
 import { asyncOperations } from './descriptions/AsyncDescription';
+import { brandVoiceOperations } from './descriptions/BrandVoiceDescription';
+import { buyingTriggerOperations } from './descriptions/BuyingTriggerDescription';
 import { personaOperations } from './descriptions/PersonaDescription';
 import { playbookOperations } from './descriptions/PlaybookDescription';
 import { productOperations } from './descriptions/ProductDescription';
 import { referenceOperations } from './descriptions/ReferenceDescription';
+import { resourceOperations } from './descriptions/ResourceDescription';
+import { solutionOperations } from './descriptions/SolutionDescription';
 import { useCaseOperations } from './descriptions/UseCaseDescription';
 import { competitorOperations } from './descriptions/CompetitorDescription';
 import { segmentOperations } from './descriptions/SegmentDescription';
 import { experimentOperations } from './descriptions/ExperimentDescription';
 import { proofPointDescription } from './descriptions/ProofPointDescription';
+import { workflowOperations } from './descriptions/WorkflowDescription';
 
 // Operation Property imports
 // Agent
 import { exportedProperties as agentBuildWorkspaceProperties } from './actions/agent/buildWorkspace.operation';
 import { exportedProperties as agentCallPrepProperties } from './actions/agent/callPrep.operation';
+import { exportedProperties as agentCreateProperties } from './actions/agent/create.operation';
+import { exportedProperties as agentDeleteProperties } from './actions/agent/delete.operation';
 import { exportedProperties as agentEnrichCompanyProperties } from './actions/agent/enrichCompany.operation';
 import { exportedProperties as agentEnrichPersonProperties } from './actions/agent/enrichPerson.operation';
 import { exportedProperties as agentGenerateContentProperties } from './actions/agent/generateContent.operation';
+import { exportedProperties as agentGetProperties } from './actions/agent/get.operation';
 import { exportedProperties as agentListProperties } from './actions/agent/list.operation';
 import { exportedProperties as agentQualifyCompanyProperties } from './actions/agent/qualifyCompany.operation';
 import { exportedProperties as agentQualifyPersonProperties } from './actions/agent/qualifyPerson.operation';
+import { exportedProperties as agentRunContextProperties } from './actions/agent/runContext.operation';
 import { exportedProperties as agentRunProspectorProperties } from './actions/agent/runProspector.operation';
 import { exportedProperties as agentRunSequenceProperties } from './actions/agent/runSequence.operation';
+import { exportedProperties as agentUpdateProperties } from './actions/agent/update.operation';
 // Playbook
 import { exportedProperties as playbookCreateProperties } from './actions/playbook/create.operation';
 import { exportedProperties as playbookGetProperties } from './actions/playbook/get.operation';
@@ -67,6 +77,7 @@ import { exportedProperties as useCaseUpdateProperties } from './actions/useCase
 import { exportedProperties as useCaseGenerateProperties } from './actions/useCase/generate.operation';
 // Async
 import { exportedProperties as asyncRunAgentProperties } from './actions/async/runAgent.operation';
+import { exportedProperties as asyncRunAgentStatusProperties } from './actions/async/runAgentStatus.operation';
 // Competitor
 import { exportedProperties as competitorGetProperties } from './actions/competitor/get.operation';
 import { exportedProperties as competitorListProperties } from './actions/competitor/list.operation';
@@ -87,6 +98,38 @@ import { exportedProperties as proofPointGetProperties } from './actions/proofPo
 import { exportedProperties as proofPointListProperties } from './actions/proofPoint/list.operation';
 import { exportedProperties as proofPointUpdateProperties } from './actions/proofPoint/update.operation';
 import { exportedProperties as proofPointGenerateProperties } from './actions/proofPoint/generate.operation';
+// Brand Voice
+import { exportedProperties as brandVoiceListProperties } from './actions/brandVoice/list.operation';
+import { exportedProperties as brandVoiceGetProperties } from './actions/brandVoice/get.operation';
+import { exportedProperties as brandVoiceCreateProperties } from './actions/brandVoice/create.operation';
+import { exportedProperties as brandVoiceUpdateProperties } from './actions/brandVoice/update.operation';
+import { exportedProperties as brandVoiceGenerateProperties } from './actions/brandVoice/generate.operation';
+import { exportedProperties as brandVoiceApplyProperties } from './actions/brandVoice/apply.operation';
+import { exportedProperties as brandVoiceToggleDefaultProperties } from './actions/brandVoice/toggleDefault.operation';
+// Buying Trigger
+import { exportedProperties as buyingTriggerListProperties } from './actions/buyingTrigger/list.operation';
+import { exportedProperties as buyingTriggerGetProperties } from './actions/buyingTrigger/get.operation';
+import { exportedProperties as buyingTriggerCreateProperties } from './actions/buyingTrigger/create.operation';
+import { exportedProperties as buyingTriggerUpdateProperties } from './actions/buyingTrigger/update.operation';
+import { exportedProperties as buyingTriggerGenerateProperties } from './actions/buyingTrigger/generate.operation';
+import { exportedProperties as buyingTriggerDeleteProperties } from './actions/buyingTrigger/delete.operation';
+// Solution
+import { exportedProperties as solutionListProperties } from './actions/solution/list.operation';
+import { exportedProperties as solutionGetProperties } from './actions/solution/get.operation';
+import { exportedProperties as solutionCreateProperties } from './actions/solution/create.operation';
+import { exportedProperties as solutionUpdateProperties } from './actions/solution/update.operation';
+import { exportedProperties as solutionGenerateProperties } from './actions/solution/generate.operation';
+import { exportedProperties as solutionDeleteProperties } from './actions/solution/delete.operation';
+// Resource
+import { exportedProperties as resourceListProperties } from './actions/resource/list.operation';
+import { exportedProperties as resourceGetProperties } from './actions/resource/get.operation';
+import { exportedProperties as resourceCreateProperties } from './actions/resource/create.operation';
+import { exportedProperties as resourceDeleteProperties } from './actions/resource/delete.operation';
+import { exportedProperties as resourceSearchProperties } from './actions/resource/search.operation';
+import { exportedProperties as resourceStatusProperties } from './actions/resource/status.operation';
+// Workflow
+import { exportedProperties as workflowRunProperties } from './actions/workflow/run.operation';
+import { exportedProperties as workflowRunStatusProperties } from './actions/workflow/runStatus.operation';
 
 export class Octave implements INodeType {
     description: INodeTypeDescription = {
@@ -125,6 +168,14 @@ export class Octave implements INodeType {
                         value: 'async',
                     },
                     {
+                        name: 'Brand Voice',
+                        value: 'brandVoice',
+                    },
+                    {
+                        name: 'Buying Trigger',
+                        value: 'buyingTrigger',
+                    },
+                    {
                         name: 'Competitor',
                         value: 'competitor',
                     },
@@ -153,12 +204,24 @@ export class Octave implements INodeType {
                         value: 'reference',
                     },
                     {
+                        name: 'Resource',
+                        value: 'resource',
+                    },
+                    {
                         name: 'Segment',
                         value: 'segment',
                     },
                     {
+                        name: 'Solution',
+                        value: 'solution',
+                    },
+                    {
                         name: 'Use Case',
                         value: 'useCase',
+                    },
+                    {
+                        name: 'Workflow',
+                        value: 'workflow',
                     },
                 ],
                 default: 'agent',
@@ -175,8 +238,17 @@ export class Octave implements INodeType {
             ...competitorOperations,
             ...segmentOperations,
             ...experimentOperations,
+            ...brandVoiceOperations,
+            ...buyingTriggerOperations,
+            ...solutionOperations,
+            ...resourceOperations,
+            ...workflowOperations,
             // Resource Fields (now from individual operation files)
             ...agentListProperties,
+            ...agentGetProperties,
+            ...agentCreateProperties,
+            ...agentUpdateProperties,
+            ...agentDeleteProperties,
             ...agentBuildWorkspaceProperties,
             ...agentCallPrepProperties,
             ...agentEnrichCompanyProperties,
@@ -184,6 +256,7 @@ export class Octave implements INodeType {
             ...agentGenerateContentProperties,
             ...agentRunSequenceProperties,
             ...agentRunProspectorProperties,
+            ...agentRunContextProperties,
             ...agentQualifyCompanyProperties,
             ...agentQualifyPersonProperties,
             ...playbookListProperties,
@@ -211,6 +284,7 @@ export class Octave implements INodeType {
             ...useCaseUpdateProperties,
             ...useCaseGenerateProperties,
             ...asyncRunAgentProperties,
+            ...asyncRunAgentStatusProperties,
             ...competitorListProperties,
             ...competitorGetProperties,
             ...competitorCreateProperties,
@@ -227,6 +301,33 @@ export class Octave implements INodeType {
             ...proofPointCreateProperties,
             ...proofPointUpdateProperties,
             ...proofPointGenerateProperties,
+            ...brandVoiceListProperties,
+            ...brandVoiceGetProperties,
+            ...brandVoiceCreateProperties,
+            ...brandVoiceUpdateProperties,
+            ...brandVoiceGenerateProperties,
+            ...brandVoiceApplyProperties,
+            ...brandVoiceToggleDefaultProperties,
+            ...buyingTriggerListProperties,
+            ...buyingTriggerGetProperties,
+            ...buyingTriggerCreateProperties,
+            ...buyingTriggerUpdateProperties,
+            ...buyingTriggerGenerateProperties,
+            ...buyingTriggerDeleteProperties,
+            ...solutionListProperties,
+            ...solutionGetProperties,
+            ...solutionCreateProperties,
+            ...solutionUpdateProperties,
+            ...solutionGenerateProperties,
+            ...solutionDeleteProperties,
+            ...resourceListProperties,
+            ...resourceGetProperties,
+            ...resourceCreateProperties,
+            ...resourceDeleteProperties,
+            ...resourceSearchProperties,
+            ...resourceStatusProperties,
+            ...workflowRunProperties,
+            ...workflowRunStatusProperties,
         ],
     };
 

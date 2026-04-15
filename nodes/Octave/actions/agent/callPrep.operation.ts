@@ -1,6 +1,6 @@
 import { IExecuteFunctions, INodeExecutionData, INodeProperties, NodeOperationError } from 'n8n-workflow';
 import { octaveApiRequest } from '../../transport/OctaveApiRequest';
-import { applyDisplayOptions, parseJsonParameter } from '../utils';
+import { applyDisplayOptions } from '../utils';
 
 const properties: INodeProperties[] = [
 	{

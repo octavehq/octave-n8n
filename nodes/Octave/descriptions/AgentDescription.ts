@@ -25,6 +25,18 @@ export const agentOperations: INodeProperties[] = [
                 description: 'Generate call prep content including discovery questions, call scripts, and objection handling',
             },
             {
+                name: 'Create',
+                value: 'create',
+                action: 'Create an agent',
+                description: 'Create a new agent',
+            },
+            {
+                name: 'Delete',
+                value: 'delete',
+                action: 'Delete an agent',
+                description: 'Delete an agent by OId',
+            },
+            {
                 name: 'Enrich Company',
                 value: 'enrichCompany',
                 action: 'Enrich a company',
@@ -41,6 +53,18 @@ export const agentOperations: INodeProperties[] = [
                 value: 'generateContent',
                 action: 'Generate content',
                 description: 'Generate content for a person',
+            },
+            {
+                name: 'Get',
+                value: 'get',
+                action: 'Get an agent',
+                description: 'Get an agent by OId',
+            },
+            {
+                name: 'Languages',
+                value: 'languages',
+                action: 'List supported languages',
+                description: 'List the languages supported by agents',
             },
             {
                 name: 'List',
@@ -61,6 +85,12 @@ export const agentOperations: INodeProperties[] = [
                 description: 'Determine if a person is qualified for a given Product, Persona, and/or Segment',
             },
             {
+                name: 'Run Context',
+                value: 'runContext',
+                action: 'Run a context agent',
+                description: 'Fetch context using a CONTEXT-type agent',
+            },
+            {
                 name: 'Run Prospector',
                 value: 'runProspector',
                 action: 'Run a prospector agent',
@@ -71,6 +101,12 @@ export const agentOperations: INodeProperties[] = [
                 value: 'runSequence',
                 action: 'Run a sequence agent',
                 description: 'Generate Emails for a person',
+            },
+            {
+                name: 'Update',
+                value: 'update',
+                action: 'Update an agent',
+                description: 'Update an existing agent',
             },
         ],
         default: 'list',

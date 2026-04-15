@@ -17,7 +17,13 @@ export const asyncOperations: INodeProperties[] = [
                 value: 'runAgent',
                 action: 'Run an agent asynchronously',
                 description: 'Triggers an agent to run in the background',
-            }
+            },
+            {
+                name: 'Run Agent Status',
+                value: 'runAgentStatus',
+                action: 'Get async agent run status',
+                description: 'Check the status of an async agent run by request ID',
+            },
         ],
         default: 'runAgent',
     },
