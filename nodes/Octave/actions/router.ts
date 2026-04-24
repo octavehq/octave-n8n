@@ -105,6 +105,14 @@ import * as solutionUpdateOp from './solution/update.operation';
 import * as solutionGenerateOp from './solution/generate.operation';
 import * as solutionDeleteOp from './solution/delete.operation';
 
+// Service Operations
+import * as serviceListOp from './service/list.operation';
+import * as serviceGetOp from './service/get.operation';
+import * as serviceCreateOp from './service/create.operation';
+import * as serviceUpdateOp from './service/update.operation';
+import * as serviceGenerateOp from './service/generate.operation';
+import * as serviceDeleteOp from './service/delete.operation';
+
 // Resource Operations
 import * as resourceListOp from './resource/list.operation';
 import * as resourceGetOp from './resource/get.operation';
@@ -225,6 +233,14 @@ export async function router(this: IExecuteFunctions, itemIndex: number): Promis
         if (operation === 'update') return solutionUpdateOp.execute.call(this, itemIndex);
         if (operation === 'generate') return solutionGenerateOp.execute.call(this, itemIndex);
         if (operation === 'delete') return solutionDeleteOp.execute.call(this, itemIndex);
+    }
+    else if (resource === 'service') {
+        if (operation === 'list') return serviceListOp.execute.call(this, itemIndex);
+        if (operation === 'get') return serviceGetOp.execute.call(this, itemIndex);
+        if (operation === 'create') return serviceCreateOp.execute.call(this, itemIndex);
+        if (operation === 'update') return serviceUpdateOp.execute.call(this, itemIndex);
+        if (operation === 'generate') return serviceGenerateOp.execute.call(this, itemIndex);
+        if (operation === 'delete') return serviceDeleteOp.execute.call(this, itemIndex);
     }
     else if (resource === 'resource') {
         if (operation === 'list') return resourceListOp.execute.call(this, itemIndex);

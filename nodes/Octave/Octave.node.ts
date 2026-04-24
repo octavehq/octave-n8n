@@ -22,6 +22,7 @@ import { productOperations } from './descriptions/ProductDescription';
 import { referenceOperations } from './descriptions/ReferenceDescription';
 import { resourceOperations } from './descriptions/ResourceDescription';
 import { solutionOperations } from './descriptions/SolutionDescription';
+import { serviceOperations } from './descriptions/ServiceDescription';
 import { useCaseOperations } from './descriptions/UseCaseDescription';
 import { competitorOperations } from './descriptions/CompetitorDescription';
 import { segmentOperations } from './descriptions/SegmentDescription';
@@ -120,6 +121,13 @@ import { exportedProperties as solutionCreateProperties } from './actions/soluti
 import { exportedProperties as solutionUpdateProperties } from './actions/solution/update.operation';
 import { exportedProperties as solutionGenerateProperties } from './actions/solution/generate.operation';
 import { exportedProperties as solutionDeleteProperties } from './actions/solution/delete.operation';
+// Service
+import { exportedProperties as serviceListProperties } from './actions/service/list.operation';
+import { exportedProperties as serviceGetProperties } from './actions/service/get.operation';
+import { exportedProperties as serviceCreateProperties } from './actions/service/create.operation';
+import { exportedProperties as serviceUpdateProperties } from './actions/service/update.operation';
+import { exportedProperties as serviceGenerateProperties } from './actions/service/generate.operation';
+import { exportedProperties as serviceDeleteProperties } from './actions/service/delete.operation';
 // Resource
 import { exportedProperties as resourceListProperties } from './actions/resource/list.operation';
 import { exportedProperties as resourceGetProperties } from './actions/resource/get.operation';
@@ -212,6 +220,10 @@ export class Octave implements INodeType {
                         value: 'segment',
                     },
                     {
+                        name: 'Service',
+                        value: 'service',
+                    },
+                    {
                         name: 'Solution',
                         value: 'solution',
                     },
@@ -241,6 +253,7 @@ export class Octave implements INodeType {
             ...brandVoiceOperations,
             ...buyingTriggerOperations,
             ...solutionOperations,
+            ...serviceOperations,
             ...resourceOperations,
             ...workflowOperations,
             // Resource Fields (now from individual operation files)
@@ -320,6 +333,12 @@ export class Octave implements INodeType {
             ...solutionUpdateProperties,
             ...solutionGenerateProperties,
             ...solutionDeleteProperties,
+            ...serviceListProperties,
+            ...serviceGetProperties,
+            ...serviceCreateProperties,
+            ...serviceUpdateProperties,
+            ...serviceGenerateProperties,
+            ...serviceDeleteProperties,
             ...resourceListProperties,
             ...resourceGetProperties,
             ...resourceCreateProperties,
