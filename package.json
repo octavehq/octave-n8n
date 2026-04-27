@@ -37,7 +37,7 @@
   "main": "index.js",
   "scripts": {
     "start": "npx n8n start",
-    "build": "tsc && gulp build:icons",
+    "build": "tsc && gulp build",
     "dev": "tsc --watch",
     "format": "prettier nodes credentials --write",
     "lint": "eslint nodes credentials package.json",

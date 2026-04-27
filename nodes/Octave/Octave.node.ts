@@ -372,7 +372,11 @@ export class Octave implements INodeType {
                 const result = await router.call(this, i);
 
                 if (result && result.length > 0 && result[0].length > 0) {
-                    returnData.push(...result[0]);
+                    const executionData = this.helpers.constructExecutionMetaData(
+                        result[0],
+                        { itemData: { item: i } },
+                    );
+                    returnData.push(...executionData);
                 }
 
             } catch (error) {
@@ -392,7 +396,7 @@ export class Octave implements INodeType {
                     } else if (error.cause) { // Include cause if present (e.g. from NodeOperationError)
                         errorJson.cause = error.cause;
                     }
-                    returnData.push({ json: errorJson, pairedItem: i });
+                    returnData.push({ json: errorJson, pairedItem: { item: i } });
                     continue;
                 }
                 throw error;

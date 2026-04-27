@@ -5,6 +5,7 @@ export class OctaveApi implements ICredentialType {
     name = 'octaveApi';
     displayName = 'Octave API';
     documentationUrl = 'https://docs.octavehq.com/'; // Replace if different
+    icon = 'file:octave.svg' as const;
     properties: INodeProperties[] = [
         {
             displayName: 'API Key',
