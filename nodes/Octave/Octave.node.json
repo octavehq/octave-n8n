@@ -1,0 +1,18 @@
+{
+	"node": "n8n-nodes-base.octave",
+	"nodeVersion": "1.0",
+	"codexVersion": "1.0",
+	"categories": ["Sales", "AI", "Marketing"],
+	"resources": {
+		"primaryDocumentation": [
+			{
+				"url": "https://docs.octavehq.com/"
+			}
+		],
+		"credentialDocumentation": [
+			{
+				"url": "https://docs.octavehq.com/"
+			}
+		]
+	}
+}
