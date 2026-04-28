@@ -3,7 +3,6 @@ import {
     INodeExecutionData,
     INodeType,
     INodeTypeDescription,
-    NodeConnectionType
 } from 'n8n-workflow';
 
 import { router } from './actions/router';
@@ -144,7 +143,7 @@ export class Octave implements INodeType {
         displayName: 'Octave',
         name: 'octave',
         icon: 'file:octave.svg',
-        group: ['ai'],
+        group: ['transform'],
         version: 1,
         subtitle: '={{$parameter["operation"].replace(/([A-Z])/g, " $1").replace(/^./, c => c.toUpperCase()) }}',
         description: 'Interact with the Octave V2 API',
@@ -152,8 +151,8 @@ export class Octave implements INodeType {
             name: 'Octave',
         },
         usableAsTool: true,
-        inputs: [NodeConnectionType.Main],
-        outputs: [NodeConnectionType.Main],
+        inputs: ['main'],
+        outputs: ['main'],
         credentials: [
             {
                 name: 'octaveApi',
