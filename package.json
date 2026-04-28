@@ -43,7 +43,6 @@
     "lint": "eslint nodes credentials package.json",
     "lintfix": "eslint nodes credentials package.json --fix",
     "test": "node test-runner.js",
-    "test:env": "node --env-file=.env test-runner.js",
     "prepublishOnly": "npm run build && npm run lint -- -c .eslintrc.prepublish.js nodes credentials package.json"
   },
   "files": [

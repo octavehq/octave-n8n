@@ -24,6 +24,41 @@
  * Exits 1 on any failure.
  */
 
+// Node's --env-file does not override existing process.env values, so a
+// stale OCTAVE_API_KEY in the shell will silently shadow .env. Parse .env
+// ourselves, prefer its values, and warn loudly on any mismatch so the
+// source of each value is unambiguous.
+const fs = require('node:fs');
+const path = require('node:path');
+
+function loadDotenv(envPath) {
+	if (!fs.existsSync(envPath)) return {};
+	const parsed = {};
+	const text = fs.readFileSync(envPath, 'utf8');
+	for (const rawLine of text.split(/\r?\n/)) {
+		const line = rawLine.trim();
+		if (!line || line.startsWith('#')) continue;
+		const eq = line.indexOf('=');
+		if (eq <= 0) continue;
+		const key = line.slice(0, eq).trim();
+		let value = line.slice(eq + 1).trim();
+		if ((value.startsWith('"') && value.endsWith('"')) || (value.startsWith("'") && value.endsWith("'"))) {
+			value = value.slice(1, -1);
+		}
+		parsed[key] = value;
+	}
+	return parsed;
+}
+
+const dotenv = loadDotenv(path.join(process.cwd(), '.env'));
+for (const key of ['OCTAVE_API_KEY', 'OCTAVE_BASE_URL']) {
+	if (dotenv[key] === undefined) continue;
+	if (process.env[key] && process.env[key] !== dotenv[key]) {
+		console.warn(`⚠️  ${key} in shell env differs from .env — using the .env value. Run \`unset ${key}\` to silence this warning.`);
+	}
+	process.env[key] = dotenv[key];
+}
+
 const API_KEY = process.env.OCTAVE_API_KEY;
 const BASE_URL = (process.env.OCTAVE_BASE_URL || 'https://app.octavehq.com').replace(/\/$/, '');
 const DEBUG = process.env.DEBUG === 'true';
