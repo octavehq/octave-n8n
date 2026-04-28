@@ -1,0 +1,16 @@
+version: 2
+updates:
+  - package-ecosystem: "npm"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    open-pull-requests-limit: 10
+    ignore:
+      # uuid <14 (GHSA-w5hq-g745-h8pq) is pulled in transitively by
+      # n8n-workflow, which currently pins uuid@10. There is no patched
+      # version reachable until n8n upgrades the dependency upstream,
+      # and uuid is not bundled into our published dist/ tarball
+      # (n8n-workflow is a peerDependency, so consumers receive
+      # whatever uuid n8n itself ships).
+      - dependency-name: "uuid"
+        versions: ["<14.0.0"]
