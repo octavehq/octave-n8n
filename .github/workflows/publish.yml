@@ -24,7 +24,10 @@ jobs:
           registry-url: 'https://registry.npmjs.org'
 
       - name: Install dependencies
-        run: npm ci
+        # --ignore-scripts skips native gyp builds for transitive deps of
+        # n8n-workflow (e.g. isolated-vm) that we never execute during
+        # build/lint/publish. We only need the TypeScript declarations.
+        run: npm ci --ignore-scripts
 
       - name: Build
         run: npm run build
