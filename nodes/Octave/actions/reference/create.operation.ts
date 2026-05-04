@@ -48,7 +48,7 @@ const properties: INodeProperties[] = [
         type: 'json',
         default: '{}',
         description: 'JSON object containing reference data (optional). Refer to Octave API docs for schema.',
-        placeholder: '{\n  "howTheyMakeMoney": "Subscription-based cloud storage...",\n  "howTheyUseProduct": "Uses our API for integration...",\n  "howTheyBenefitFromProduct": "Improved reliability...",\n  "howWeImpactedTheirBusiness": ["50% cost reduction", "99.9% uptime"],\n  "keyStats": ["100M+ users", "$2B ARR"],\n  "customFields": [{ "title": "Industry", "value": ["SaaS", "Cloud Storage"] }]\n}',
+        placeholder: '{\n  "businessModel": "SaaS platform with subscription revenue model",\n  "theirChallenge": "Manual onboarding bottlenecks were forcing them to cap new-customer growth.",\n  "howTheyUseUs": "Uses our API to integrate with their customer onboarding flow",\n  "whyTheyChoseUs": "Evaluated three vendors but chose us for the API depth and real-time event streaming.",\n  "impactTheySaw": ["Reduced customer onboarding time by 60%", "Cut operational costs by 30%"],\n  "stakeholdersInvolved": ["VP of Customer Success — owned the onboarding KPI", "Head of Engineering — needed an API-first solution"],\n  "customFields": [{ "title": "Industry", "value": ["SaaS", "Cloud Storage"] }]\n}',
         typeOptions: {
             rows: 8,
         },

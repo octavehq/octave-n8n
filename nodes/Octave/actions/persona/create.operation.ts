@@ -92,6 +92,14 @@ const properties: INodeProperties[] = [
         typeOptions: { rows: 3 },
     },
     {
+        displayName: 'Buying Role (JSON Array)',
+        name: 'buyingRole',
+        type: 'json',
+        default: '[]',
+        description: 'JSON array describing the function this persona plays in a purchase decision (e.g. economic buyer, champion, technical evaluator, end user, influencer, blocker), along with their level of sophistication (newcomer, experienced, expert) (optional)',
+        typeOptions: { rows: 3 },
+    },
+    {
         displayName: 'Custom Fields (JSON Array)',
         name: 'customFields',
         type: 'json',
@@ -162,6 +170,7 @@ export async function execute(this: IExecuteFunctions, itemIndex: number): Promi
     body.primaryResponsibilities = parseJsonParameter.call(this, 'primaryResponsibilities', itemIndex, '[]');
     body.whyTheyMatterToUs = parseJsonParameter.call(this, 'whyTheyMatterToUs', itemIndex, '[]');
     body.whyWeMatterToThem = parseJsonParameter.call(this, 'whyWeMatterToThem', itemIndex, '[]');
+    body.buyingRole = parseJsonParameter.call(this, 'buyingRole', itemIndex, '[]');
     body.customFields = parseJsonParameter.call(this, 'customFields', itemIndex, '[]');
     // Build linking strategy
     const linkingMode = this.getNodeParameter('linkingMode', itemIndex) as string;

@@ -43,8 +43,8 @@ const properties: INodeProperties[] = [
 		typeOptions: { rows: 3 },
 	},
 	{
-		displayName: 'What\'s the Cost of Inaction (JSON Array)',
-		name: 'whatsTheCostOfInaction',
+		displayName: 'Cost of Inaction (JSON Array)',
+		name: 'costOfInaction',
 		type: 'json',
 		default: '[]',
 		description: 'String array — consequences of waiting while this trigger is in play',
@@ -122,7 +122,7 @@ export async function execute(this: IExecuteFunctions, itemIndex: number): Promi
 	const description = this.getNodeParameter('description', itemIndex) as string;
 	if (description) body.description = description;
 
-	const arrFields = ['whyThisCreatesUrgency', 'whoFeelsThisMost', 'whatsTheCostOfInaction', 'howWeHelpInThisMoment'];
+	const arrFields = ['whyThisCreatesUrgency', 'whoFeelsThisMost', 'costOfInaction', 'howWeHelpInThisMoment'];
 	for (const f of arrFields) {
 		const v = parseJsonParameter.call(this, f, itemIndex, '[]');
 		if (Array.isArray(v) && v.length > 0) body[f] = v;

@@ -51,11 +51,19 @@ const properties: INodeProperties[] = [
         description: 'Primary URL for the product (optional)',
     },
     {
-        displayName: 'Capabilities (JSON Array)',
-        name: 'capabilities',
+        displayName: 'Distinct Capabilities (JSON Array)',
+        name: 'distinctCapabilities',
         type: 'json',
         default: '[]',
-        description: 'JSON array of product capabilities (optional)',
+        description: 'JSON array — what the product does at the functional level: outcome-oriented capabilities, not mechanisms (mechanisms live in keyFeatures) (optional)',
+        typeOptions: { rows: 3 },
+    },
+    {
+        displayName: 'Key Features (JSON Array)',
+        name: 'keyFeatures',
+        type: 'json',
+        default: '[]',
+        description: 'JSON array — specific, named, often branded components of the product worth highlighting; the "how" behind the capabilities (optional)',
         typeOptions: { rows: 3 },
     },
     {
@@ -122,7 +130,8 @@ export async function execute(this: IExecuteFunctions, itemIndex: number): Promi
     body.summary = this.getNodeParameter('summary', itemIndex) as string | undefined;
     body.internalName = this.getNodeParameter('internalName', itemIndex) as string | undefined;
     body.primaryUrl = this.getNodeParameter('primaryUrl', itemIndex) as string | undefined;
-    body.capabilities = parseJsonParameter.call(this, 'capabilities', itemIndex, '[]');
+    body.distinctCapabilities = parseJsonParameter.call(this, 'distinctCapabilities', itemIndex, '[]');
+    body.keyFeatures = parseJsonParameter.call(this, 'keyFeatures', itemIndex, '[]');
     body.challengesAddressed = parseJsonParameter.call(this, 'challengesAddressed', itemIndex, '[]');
     body.customerBenefits = parseJsonParameter.call(this, 'customerBenefits', itemIndex, '[]');
     body.differentiatedValue = parseJsonParameter.call(this, 'differentiatedValue', itemIndex, '[]');

@@ -71,6 +71,14 @@ const properties: INodeProperties[] = [
         typeOptions: { rows: 3 },
     },
     {
+        displayName: 'Strategic Impact (JSON Array)',
+        name: 'strategicImpact',
+        type: 'json',
+        default: '[]',
+        description: 'JSON array — strategic, business-level benefit realized when this use case is solved well: quantifiable impact on revenue, cost, risk, and/or efficiency, and the broader value to the company (optional)',
+        typeOptions: { rows: 3 },
+    },
+    {
         displayName: 'Custom Fields (JSON Array)',
         name: 'customFields',
         type: 'json',
@@ -105,6 +113,7 @@ export async function execute(this: IExecuteFunctions, itemIndex: number): Promi
     body.businessDrivers = parseJsonParameter.call(this, 'businessDrivers', itemIndex, '[]');
     body.desiredOutcomes = parseJsonParameter.call(this, 'desiredOutcomes', itemIndex, '[]');
     body.scenarios = parseJsonParameter.call(this, 'scenarios', itemIndex, '[]');
+    body.strategicImpact = parseJsonParameter.call(this, 'strategicImpact', itemIndex, '[]');
     body.customFields = parseJsonParameter.call(this, 'customFields', itemIndex, '[]');
 
     Object.keys(body).forEach(key => (body[key] === undefined) && delete body[key]);

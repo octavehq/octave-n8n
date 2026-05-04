@@ -16,7 +16,7 @@ const properties: INodeProperties[] = [
 		name: 'solutionData',
 		type: 'json',
 		default: '{}',
-		description: 'Optional additional fields: internalName, summary, description, capabilities, keyOutcomes, customerBenefits, challengesAddressed, statusQuo, differentiatedValue, customFields',
+		description: 'Optional additional fields: internalName, summary, description, distinctCapabilities, keyComponents, customerBenefits, challengesAddressed, statusQuo, differentiatedValue, customFields',
 		typeOptions: { rows: 6 },
 	},
 	{
