@@ -33,34 +33,43 @@ const properties: INodeProperties[] = [
         description: 'Internal name of the segment (optional)',
     },
     {
-        displayName: 'Fit Explanation',
-        name: 'fitExplanation',
-        type: 'string',
-        default: '',
-        description: 'Explanation of the fit for this segment (optional)',
-    },
-    {
-        displayName: 'Key Considerations (JSON Array)',
-        name: 'keyConsiderations',
+        displayName: 'Strategic Fit (JSON Array)',
+        name: 'strategicFit',
         type: 'json',
         default: '[]',
-        description: 'JSON array of key considerations (optional)',
+        description: 'JSON array — why this segment matters to us: the fit between what we offer and what they need, and the unique attributes of this segment that align to our offering (optional)',
         typeOptions: { rows: 3 },
     },
     {
-        displayName: 'Key Priorities (JSON Array)',
-        name: 'keyPriorities',
+        displayName: 'Operating Characteristics (JSON Array)',
+        name: 'operatingCharacteristics',
         type: 'json',
         default: '[]',
-        description: 'JSON array of key priorities (optional)',
+        description: 'JSON array — internal, qualitative, often inferred traits that distinguish this segment: org structure, maturity, operating model, culture (optional)',
         typeOptions: { rows: 3 },
     },
     {
-        displayName: 'Unique Approach (JSON Array)',
-        name: 'uniqueApproach',
+        displayName: 'Buying Dynamics (JSON Array)',
+        name: 'buyingDynamics',
         type: 'json',
         default: '[]',
-        description: 'JSON array of unique approach elements (optional)',
+        description: 'JSON array — how this segment makes and acts on purchasing decisions: what drives evaluation, who is involved, how the process runs, and what signals a likely buyer (optional)',
+        typeOptions: { rows: 3 },
+    },
+    {
+        displayName: 'Strategic Priorities (JSON Array)',
+        name: 'strategicPriorities',
+        type: 'json',
+        default: '[]',
+        description: 'JSON array of strategic priorities this segment is pursuing (optional)',
+        typeOptions: { rows: 3 },
+    },
+    {
+        displayName: 'Market Pressures (JSON Array)',
+        name: 'marketPressures',
+        type: 'json',
+        default: '[]',
+        description: 'JSON array of market pressures affecting this segment (optional)',
         typeOptions: { rows: 3 },
     },
     {
@@ -68,7 +77,7 @@ const properties: INodeProperties[] = [
         name: 'firmographics',
         type: 'json',
         default: '{}',
-        description: 'Firmographics data (optional)',
+        description: 'Firmographics object: { industry, businessModel, geography, revenue, employees } — supports custom keys (optional)',
         typeOptions: { rows: 3 }
     },
     {
@@ -101,10 +110,11 @@ export async function execute(this: IExecuteFunctions, itemIndex: number): Promi
     body.name = this.getNodeParameter('name', itemIndex) as string | undefined;
     body.description = this.getNodeParameter('description', itemIndex) as string | undefined;
     body.internalName = this.getNodeParameter('internalName', itemIndex) as string | undefined;
-    body.fitExplanation = this.getNodeParameter('fitExplanation', itemIndex) as string | undefined;
-    body.keyConsiderations = parseJsonParameter.call(this, 'keyConsiderations', itemIndex, '[]');
-    body.keyPriorities = parseJsonParameter.call(this, 'keyPriorities', itemIndex, '[]');
-    body.uniqueApproach = parseJsonParameter.call(this, 'uniqueApproach', itemIndex, '[]');
+    body.strategicFit = parseJsonParameter.call(this, 'strategicFit', itemIndex, '[]');
+    body.operatingCharacteristics = parseJsonParameter.call(this, 'operatingCharacteristics', itemIndex, '[]');
+    body.buyingDynamics = parseJsonParameter.call(this, 'buyingDynamics', itemIndex, '[]');
+    body.strategicPriorities = parseJsonParameter.call(this, 'strategicPriorities', itemIndex, '[]');
+    body.marketPressures = parseJsonParameter.call(this, 'marketPressures', itemIndex, '[]');
     body.firmographics = parseJsonParameter.call(this, 'firmographics', itemIndex, '{}');
     body.customFields = parseJsonParameter.call(this, 'customFields', itemIndex, '[]');
 

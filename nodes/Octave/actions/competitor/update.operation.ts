@@ -33,35 +33,35 @@ const properties: INodeProperties[] = [
         description: 'Internal name of the competitor (optional)',
     },
     {
-        displayName: 'Business Model (JSON Array)',
-        name: 'businessModel',
+        displayName: 'How They Position (JSON Array)',
+        name: 'howTheyPosition',
         type: 'json',
         default: '[]',
-        description: 'JSON array of business model descriptions (optional)',
+        description: 'JSON array — how the competitor positions themselves: their narrative, messaging, and market story; the pitch they take to market (optional)',
         typeOptions: { rows: 3 },
     },
     {
-        displayName: 'Comparative Strengths (JSON Array)',
-        name: 'comparativeStrengths',
+        displayName: 'Our Key Differentiators (JSON Array)',
+        name: 'ourKeyDifferentiators',
         type: 'json',
         default: '[]',
-        description: 'JSON array of comparative strengths (optional)',
+        description: 'JSON array — concrete, observable, tactical points of differentiation we lead with against this competitor (optional)',
         typeOptions: { rows: 3 },
     },
     {
-        displayName: 'Comparative Weaknesses (JSON Array)',
-        name: 'comparativeWeaknesses',
+        displayName: 'Competitor Strengths (JSON Array)',
+        name: 'competitorStrengths',
         type: 'json',
         default: '[]',
-        description: 'JSON array of comparative weaknesses (optional)',
+        description: 'JSON array — where this competitor genuinely excels (optional)',
         typeOptions: { rows: 3 },
     },
     {
-        displayName: 'Key Differentiators (JSON Array)',
-        name: 'keyDifferentiators',
+        displayName: 'Competitor Weaknesses (JSON Array)',
+        name: 'competitorWeaknesses',
         type: 'json',
         default: '[]',
-        description: 'JSON array of key differentiators (optional)',
+        description: 'JSON array — where this competitor falls short (optional)',
         typeOptions: { rows: 3 },
     },
     {
@@ -73,19 +73,11 @@ const properties: INodeProperties[] = [
         typeOptions: { rows: 3 },
     },
     {
-        displayName: 'Customers We Won (JSON Array)',
-        name: 'customersWeWon',
+        displayName: 'Reasons We Lose (JSON Array)',
+        name: 'reasonsWeLose',
         type: 'json',
         default: '[]',
-        description: 'JSON array of customers we won from this competitor (optional)',
-        typeOptions: { rows: 3 },
-    },
-    {
-        displayName: 'Customers We Switched (JSON Array)',
-        name: 'customersWeSwitched',
-        type: 'json',
-        default: '[]',
-        description: 'JSON array of customers we switched to this competitor (optional)',
+        description: 'JSON array — deal-level dynamics for why customers might choose them when both are evaluated (optional)',
         typeOptions: { rows: 3 },
     },
     {
@@ -118,13 +110,12 @@ export async function execute(this: IExecuteFunctions, itemIndex: number): Promi
     body.name = this.getNodeParameter('name', itemIndex) as string | undefined;
     body.description = this.getNodeParameter('description', itemIndex) as string | undefined;
     body.internalName = this.getNodeParameter('internalName', itemIndex) as string | undefined;
-    body.businessModel = parseJsonParameter.call(this, 'businessModel', itemIndex, '[]');
-    body.comparativeStrengths = parseJsonParameter.call(this, 'comparativeStrengths', itemIndex, '[]');
-    body.comparativeWeaknesses = parseJsonParameter.call(this, 'comparativeWeaknesses', itemIndex, '[]');
-    body.keyDifferentiators = parseJsonParameter.call(this, 'keyDifferentiators', itemIndex, '[]');
+    body.howTheyPosition = parseJsonParameter.call(this, 'howTheyPosition', itemIndex, '[]');
+    body.ourKeyDifferentiators = parseJsonParameter.call(this, 'ourKeyDifferentiators', itemIndex, '[]');
+    body.competitorStrengths = parseJsonParameter.call(this, 'competitorStrengths', itemIndex, '[]');
+    body.competitorWeaknesses = parseJsonParameter.call(this, 'competitorWeaknesses', itemIndex, '[]');
     body.reasonsWeWin = parseJsonParameter.call(this, 'reasonsWeWin', itemIndex, '[]');
-    body.customersWeWon = parseJsonParameter.call(this, 'customersWeWon', itemIndex, '[]');
-    body.customersWeSwitched = parseJsonParameter.call(this, 'customersWeSwitched', itemIndex, '[]');
+    body.reasonsWeLose = parseJsonParameter.call(this, 'reasonsWeLose', itemIndex, '[]');
     body.customFields = parseJsonParameter.call(this, 'customFields', itemIndex, '[]');
 
     Object.keys(body).forEach(key => (body[key] === undefined) && delete body[key]);

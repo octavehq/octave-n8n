@@ -17,7 +17,7 @@ const properties: INodeProperties[] = [
 		type: 'json',
 		required: true,
 		default: '{}',
-		description: 'Solution data fields to update (name, internalName, description, qualifyingQuestions, data: {summary, capabilities, keyOutcomes, customerBenefits, challengesAddressed, statusQuo, differentiatedValue, customFields})',
+		description: 'Solution data fields to update (name, internalName, description, qualifyingQuestions, data: {summary, distinctCapabilities, keyComponents, customerBenefits, challengesAddressed, statusQuo, differentiatedValue, customFields})',
 		typeOptions: { rows: 10 },
 	},
 ];

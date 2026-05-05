@@ -48,6 +48,22 @@ const properties: INodeProperties[] = [
         description: 'Internal name of the proof point (optional)',
     },
     {
+        displayName: 'The Proof (JSON Array)',
+        name: 'theProof',
+        type: 'json',
+        default: '[]',
+        description: 'JSON array — the complete evidence statement: the actual fact, statistic, claim, metric, achievement or recognition AND where it comes from and when (if available) (optional)',
+        typeOptions: { rows: 3 },
+    },
+    {
+        displayName: 'What It Supports (JSON Array)',
+        name: 'whatItSupports',
+        type: 'json',
+        default: '[]',
+        description: 'JSON array — the specific value claims, differentiators, or message this proof point backs up; what links the proof into the broader value story (optional)',
+        typeOptions: { rows: 3 },
+    },
+    {
         displayName: 'How We Talk About This (JSON Array)',
         name: 'howWeTalkAboutThis',
         type: 'json',
@@ -56,11 +72,11 @@ const properties: INodeProperties[] = [
         typeOptions: { rows: 3 },
     },
     {
-        displayName: 'Why This Matters (JSON Array)',
-        name: 'whyThisMatters',
+        displayName: 'Why It Matters (JSON Array)',
+        name: 'whyItMatters',
         type: 'json',
         default: '[]',
-        description: 'JSON array of why this proof point matters (optional)',
+        description: 'JSON array — the strategic frame for why this proof point is compelling: what objection it neutralizes, what doubt it removes, what conviction it builds (optional)',
         typeOptions: { rows: 3 },
     },
     {
@@ -94,8 +110,10 @@ export async function execute(this: IExecuteFunctions, itemIndex: number): Promi
     body.type = this.getNodeParameter('type', itemIndex) as string | undefined;
     body.description = this.getNodeParameter('description', itemIndex) as string | undefined;
     body.internalName = this.getNodeParameter('internalName', itemIndex) as string | undefined;
+    body.theProof = parseJsonParameter.call(this, 'theProof', itemIndex, '[]');
+    body.whatItSupports = parseJsonParameter.call(this, 'whatItSupports', itemIndex, '[]');
     body.howWeTalkAboutThis = parseJsonParameter.call(this, 'howWeTalkAboutThis', itemIndex, '[]');
-    body.whyThisMatters = parseJsonParameter.call(this, 'whyThisMatters', itemIndex, '[]');
+    body.whyItMatters = parseJsonParameter.call(this, 'whyItMatters', itemIndex, '[]');
     body.customFields = parseJsonParameter.call(this, 'customFields', itemIndex, '[]');
 
     Object.keys(body).forEach(key => (body[key] === undefined) && delete body[key]);
