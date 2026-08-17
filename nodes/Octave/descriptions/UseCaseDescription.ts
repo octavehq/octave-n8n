@@ -19,6 +19,12 @@ export const useCaseOperations: INodeProperties[] = [
                 description: 'Create a new use case',
             },
             {
+                name: 'Delete',
+                value: 'delete',
+                action: 'Delete a use case',
+                description: 'Delete a use case',
+            },
+            {
                 name: 'Generate',
                 value: 'generate',
                 action: 'Generate use cases',

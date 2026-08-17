@@ -76,19 +76,19 @@ const HEADERS = {
 
 const RESOURCES = [
 	{ name: 'agent', listPath: '/api/v2/agents/list', getPath: '/api/v2/agents/get' },
-	{ name: 'brandVoice', listPath: '/api/v2/brand-voice/list' },
-	{ name: 'buyingTrigger', listPath: '/api/v2/buying-trigger/list' },
-	{ name: 'competitor', listPath: '/api/v2/competitor/list' },
-	{ name: 'persona', listPath: '/api/v2/persona/list' },
-	{ name: 'playbook', listPath: '/api/v2/playbook/list' },
-	{ name: 'product', listPath: '/api/v2/product/list' },
-	{ name: 'proofPoint', listPath: '/api/v2/proof-point/list' },
-	{ name: 'reference', listPath: '/api/v2/reference/list' },
-	{ name: 'resource', listPath: '/api/v2/resource/list' },
-	{ name: 'segment', listPath: '/api/v2/segment/list' },
-	{ name: 'service', listPath: '/api/v2/service/list' },
-	{ name: 'solution', listPath: '/api/v2/solution/list' },
-	{ name: 'useCase', listPath: '/api/v2/use-case/list' },
+	{ name: 'brandVoice', listPath: '/api/v2/brand-voice/list', getPath: '/api/v2/brand-voice/get' },
+	{ name: 'buyingTrigger', listPath: '/api/v2/buying-trigger/list', getPath: '/api/v2/buying-trigger/get' },
+	{ name: 'competitor', listPath: '/api/v2/competitor/list', getPath: '/api/v2/competitor/get' },
+	{ name: 'persona', listPath: '/api/v2/persona/list', getPath: '/api/v2/persona/get' },
+	{ name: 'playbook', listPath: '/api/v2/playbook/list', getPath: '/api/v2/playbook/get' },
+	{ name: 'product', listPath: '/api/v2/product/list', getPath: '/api/v2/product/get' },
+	{ name: 'proofPoint', listPath: '/api/v2/proof-point/list', getPath: '/api/v2/proof-point/get' },
+	{ name: 'reference', listPath: '/api/v2/reference/list', getPath: '/api/v2/reference/get' },
+	{ name: 'resource', listPath: '/api/v2/resource/list', getPath: '/api/v2/resource/get' },
+	{ name: 'segment', listPath: '/api/v2/segment/list', getPath: '/api/v2/segment/get' },
+	{ name: 'service', listPath: '/api/v2/service/list', getPath: '/api/v2/service/get' },
+	{ name: 'solution', listPath: '/api/v2/solution/list', getPath: '/api/v2/solution/get' },
+	{ name: 'useCase', listPath: '/api/v2/use-case/list', getPath: '/api/v2/use-case/get' },
 ];
 
 const results = { passed: 0, failed: 0, tests: [] };

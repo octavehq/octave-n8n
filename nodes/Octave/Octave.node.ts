@@ -57,24 +57,28 @@ import { exportedProperties as productListProperties } from './actions/product/l
 import { exportedProperties as productCreateProperties } from './actions/product/create.operation';
 import { exportedProperties as productUpdateProperties } from './actions/product/update.operation';
 import { exportedProperties as productGenerateProperties } from './actions/product/generate.operation';
+import { exportedProperties as productDeleteProperties } from './actions/product/delete.operation';
 // Persona
 import { exportedProperties as personaGetProperties } from './actions/persona/get.operation';
 import { exportedProperties as personaListProperties } from './actions/persona/list.operation';
 import { exportedProperties as personaCreateProperties } from './actions/persona/create.operation';
 import { exportedProperties as personaUpdateProperties } from './actions/persona/update.operation';
 import { exportedProperties as personaGenerateProperties } from './actions/persona/generate.operation';
+import { exportedProperties as personaDeleteProperties } from './actions/persona/delete.operation';
 // Reference
 import { exportedProperties as referenceCreateProperties } from './actions/reference/create.operation';
 import { exportedProperties as referenceGetProperties } from './actions/reference/get.operation';
 import { exportedProperties as referenceListProperties } from './actions/reference/list.operation';
 import { exportedProperties as referenceUpdateProperties } from './actions/reference/update.operation';
 import { exportedProperties as referenceGenerateProperties } from './actions/reference/generate.operation';
+import { exportedProperties as referenceDeleteProperties } from './actions/reference/delete.operation';
 // UseCase
 import { exportedProperties as useCaseGetProperties } from './actions/useCase/get.operation';
 import { exportedProperties as useCaseListProperties } from './actions/useCase/list.operation';
 import { exportedProperties as useCaseCreateProperties } from './actions/useCase/create.operation';
 import { exportedProperties as useCaseUpdateProperties } from './actions/useCase/update.operation';
 import { exportedProperties as useCaseGenerateProperties } from './actions/useCase/generate.operation';
+import { exportedProperties as useCaseDeleteProperties } from './actions/useCase/delete.operation';
 // Async
 import { exportedProperties as asyncRunAgentProperties } from './actions/async/runAgent.operation';
 import { exportedProperties as asyncRunAgentStatusProperties } from './actions/async/runAgentStatus.operation';
@@ -84,12 +88,14 @@ import { exportedProperties as competitorListProperties } from './actions/compet
 import { exportedProperties as competitorCreateProperties } from './actions/competitor/create.operation';
 import { exportedProperties as competitorUpdateProperties } from './actions/competitor/update.operation';
 import { exportedProperties as competitorGenerateProperties } from './actions/competitor/generate.operation';
+import { exportedProperties as competitorDeleteProperties } from './actions/competitor/delete.operation';
 // Segment
 import { exportedProperties as segmentGetProperties } from './actions/segment/get.operation';
 import { exportedProperties as segmentListProperties } from './actions/segment/list.operation';
 import { exportedProperties as segmentCreateProperties } from './actions/segment/create.operation';
 import { exportedProperties as segmentUpdateProperties } from './actions/segment/update.operation';
 import { exportedProperties as segmentGenerateProperties } from './actions/segment/generate.operation';
+import { exportedProperties as segmentDeleteProperties } from './actions/segment/delete.operation';
 // Experiment
 import { exportedProperties as experimentCreateProperties } from './actions/experiment/create.operation';
 // Proof Point
@@ -98,6 +104,7 @@ import { exportedProperties as proofPointGetProperties } from './actions/proofPo
 import { exportedProperties as proofPointListProperties } from './actions/proofPoint/list.operation';
 import { exportedProperties as proofPointUpdateProperties } from './actions/proofPoint/update.operation';
 import { exportedProperties as proofPointGenerateProperties } from './actions/proofPoint/generate.operation';
+import { exportedProperties as proofPointDeleteProperties } from './actions/proofPoint/delete.operation';
 // Brand Voice
 import { exportedProperties as brandVoiceListProperties } from './actions/brandVoice/list.operation';
 import { exportedProperties as brandVoiceGetProperties } from './actions/brandVoice/get.operation';
@@ -280,21 +287,25 @@ export class Octave implements INodeType {
             ...productCreateProperties,
             ...productUpdateProperties,
             ...productGenerateProperties,
+            ...productDeleteProperties,
             ...personaListProperties,
             ...personaGetProperties,
             ...personaCreateProperties,
             ...personaUpdateProperties,
             ...personaGenerateProperties,
+            ...personaDeleteProperties,
             ...referenceListProperties,
             ...referenceGetProperties,
             ...referenceCreateProperties,
             ...referenceUpdateProperties,
             ...referenceGenerateProperties,
+            ...referenceDeleteProperties,
             ...useCaseListProperties,
             ...useCaseGetProperties,
             ...useCaseCreateProperties,
             ...useCaseUpdateProperties,
             ...useCaseGenerateProperties,
+            ...useCaseDeleteProperties,
             ...asyncRunAgentProperties,
             ...asyncRunAgentStatusProperties,
             ...competitorListProperties,
@@ -302,17 +313,20 @@ export class Octave implements INodeType {
             ...competitorCreateProperties,
             ...competitorUpdateProperties,
             ...competitorGenerateProperties,
+            ...competitorDeleteProperties,
             ...segmentListProperties,
             ...segmentGetProperties,
             ...segmentCreateProperties,
             ...segmentUpdateProperties,
             ...segmentGenerateProperties,
+            ...segmentDeleteProperties,
             ...experimentCreateProperties,
             ...proofPointListProperties,
             ...proofPointGetProperties,
             ...proofPointCreateProperties,
             ...proofPointUpdateProperties,
             ...proofPointGenerateProperties,
+            ...proofPointDeleteProperties,
             ...brandVoiceListProperties,
             ...brandVoiceGetProperties,
             ...brandVoiceCreateProperties,
