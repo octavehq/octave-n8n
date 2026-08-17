@@ -6,12 +6,10 @@ updates:
       interval: "weekly"
     open-pull-requests-limit: 10
     ignore:
-      # uuid is pulled in transitively by n8n-workflow, which currently
-      # pins uuid@10 across every published version. There is no
-      # resolvable upgrade path (uuid >=14 conflicts with the
-      # n8n-workflow peer pin), so Dependabot security updates fail.
-      # uuid is not bundled into our published dist/ tarball —
-      # n8n-workflow is a peerDependency, so consumers receive whatever
-      # uuid n8n itself ships. Ignoring all uuid versions until n8n
-      # upgrades upstream; revisit when their pin moves.
-      - dependency-name: "uuid"
+      # n8n-workflow >=2.30.0 depends on @n8n/utils, which pins an old
+      # nanoid with open advisories and offers no resolvable upgrade
+      # path (and n8n verification disallows package.json overrides for
+      # community nodes). Staying on the 2.29.x line, which ships
+      # patched uuid/form-data, until @n8n/utils moves its nanoid pin.
+      - dependency-name: "n8n-workflow"
+        versions: [">=2.30.0"]
