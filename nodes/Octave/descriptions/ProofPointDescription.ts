@@ -19,6 +19,12 @@ export const proofPointDescription: INodeProperties[] = [
 				description: 'Create a new proof point',
 			},
 			{
+				name: 'Delete',
+				value: 'delete',
+				action: 'Delete a proof point',
+				description: 'Delete a proof point',
+			},
+			{
 				name: 'Generate',
 				value: 'generate',
 				action: 'Generate proof points',

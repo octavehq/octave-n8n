@@ -19,6 +19,12 @@ export const competitorOperations: INodeProperties[] = [
 				action: 'Create a competitor',
 			},
 			{
+				name: 'Delete',
+				value: 'delete',
+				description: 'Delete a competitor',
+				action: 'Delete a competitor',
+			},
+			{
 				name: 'Generate',
 				value: 'generate',
 				description: 'Generate competitors from source materials using AI',

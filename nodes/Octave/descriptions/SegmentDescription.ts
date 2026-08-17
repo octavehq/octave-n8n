@@ -19,6 +19,12 @@ export const segmentOperations: INodeProperties[] = [
 				action: 'Create a segment',
 			},
 			{
+				name: 'Delete',
+				value: 'delete',
+				description: 'Delete a segment',
+				action: 'Delete a segment',
+			},
+			{
 				name: 'Generate',
 				value: 'generate',
 				description: 'Generate segments from source materials using AI',
