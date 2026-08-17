@@ -76,16 +76,24 @@ const HEADERS = {
 
 const RESOURCES = [
 	{ name: 'agent', listPath: '/api/v2/agents/list', getPath: '/api/v2/agents/get' },
+	{ name: 'alternative', listPath: '/api/v2/alternative/list', getPath: '/api/v2/alternative/get' },
 	{ name: 'brandVoice', listPath: '/api/v2/brand-voice/list', getPath: '/api/v2/brand-voice/get' },
 	{ name: 'buyingTrigger', listPath: '/api/v2/buying-trigger/list', getPath: '/api/v2/buying-trigger/get' },
 	{ name: 'competitor', listPath: '/api/v2/competitor/list', getPath: '/api/v2/competitor/get' },
+	{ name: 'coreFeature', listPath: '/api/v2/core-feature/list', getPath: '/api/v2/core-feature/get' },
+	{ name: 'motion', listPath: '/api/v2/motion/list', getPath: '/api/v2/motion/get' },
+	{ name: 'motionPlaybook', listPath: '/api/v2/motion-playbook/list', getPath: '/api/v2/motion-playbook/get' },
+	{ name: 'objection', listPath: '/api/v2/objection/list', getPath: '/api/v2/objection/get' },
 	{ name: 'persona', listPath: '/api/v2/persona/list', getPath: '/api/v2/persona/get' },
 	{ name: 'playbook', listPath: '/api/v2/playbook/list', getPath: '/api/v2/playbook/get' },
 	{ name: 'product', listPath: '/api/v2/product/list', getPath: '/api/v2/product/get' },
 	{ name: 'proofPoint', listPath: '/api/v2/proof-point/list', getPath: '/api/v2/proof-point/get' },
 	{ name: 'reference', listPath: '/api/v2/reference/list', getPath: '/api/v2/reference/get' },
+	{ name: 'reportGroup', listPath: '/api/v2/report-group/list' },
 	{ name: 'resource', listPath: '/api/v2/resource/list', getPath: '/api/v2/resource/get' },
+	{ name: 'revision', listPath: '/api/v2/revision/list', dataKey: 'revisions' },
 	{ name: 'segment', listPath: '/api/v2/segment/list', getPath: '/api/v2/segment/get' },
+	{ name: 'suggestion', listPath: '/api/v2/suggestion/list', dataKey: 'suggestions' },
 	{ name: 'service', listPath: '/api/v2/service/list', getPath: '/api/v2/service/get' },
 	{ name: 'solution', listPath: '/api/v2/solution/list', getPath: '/api/v2/solution/get' },
 	{ name: 'useCase', listPath: '/api/v2/use-case/list', getPath: '/api/v2/use-case/get' },
@@ -137,14 +145,14 @@ async function runTest(name, fn) {
 	}
 }
 
-function assertListShape(body, resourceName) {
+function assertListShape(body, resourceName, dataKey = 'data') {
 	if (!body || typeof body !== 'object') {
 		throw new Error(`expected object response, got ${typeof body}`);
 	}
-	if (!Array.isArray(body.data)) {
-		throw new Error(`expected body.data to be an array, got ${typeof body.data}`);
+	if (!Array.isArray(body[dataKey])) {
+		throw new Error(`expected body.${dataKey} to be an array, got ${typeof body[dataKey]}`);
 	}
-	debug(`${resourceName} list returned ${body.data.length} item(s); hasNext=${body.hasNext}`);
+	debug(`${resourceName} list returned ${body[dataKey].length} item(s); hasNext=${body.hasNext}`);
 }
 
 async function main() {
@@ -165,13 +173,40 @@ async function main() {
 		return 'ok';
 	});
 
+	// Singleton / non-standard read-only endpoints
+	await runTest('workspaceCompany: GET /api/v2/workspace-company/get', async () => {
+		const body = await octaveRequest('GET', '/api/v2/workspace-company/get');
+		if (!body || typeof body !== 'object') throw new Error('expected object response');
+		return 'ok';
+	});
+
+	await runTest('insights: GET /api/v2/insights/workspace-baseline', async () => {
+		const body = await octaveRequest('GET', '/api/v2/insights/workspace-baseline');
+		if (!body || typeof body !== 'object') throw new Error('expected object response');
+		return 'ok';
+	});
+
+	await runTest('event: GET /api/v2/event/list', async () => {
+		const startDate = new Date(Date.now() - 30 * 24 * 60 * 60 * 1000).toISOString();
+		const body = await octaveRequest('GET', '/api/v2/event/list', { startDate, limit: 5 });
+		if (!body || typeof body !== 'object') throw new Error('expected object response');
+		return 'ok';
+	});
+
+	await runTest('finding: GET /api/v2/finding/list', async () => {
+		const body = await octaveRequest('GET', '/api/v2/finding/list', { limit: 5 });
+		if (!body || typeof body !== 'object') throw new Error('expected object response');
+		return 'ok';
+	});
+
 	for (const resource of RESOURCES) {
+		const dataKey = resource.dataKey || 'data';
 		let firstOId;
 		await runTest(`${resource.name}: GET ${resource.listPath}`, async () => {
 			const body = await octaveRequest('GET', resource.listPath, { limit: 5, offset: 0 });
-			assertListShape(body, resource.name);
-			if (body.data.length > 0) firstOId = body.data[0].oId;
-			return `${body.data.length} item(s)`;
+			assertListShape(body, resource.name, dataKey);
+			if (body[dataKey].length > 0) firstOId = body[dataKey][0].oId;
+			return `${body[dataKey].length} item(s)`;
 		});
 
 		if (resource.getPath && firstOId) {

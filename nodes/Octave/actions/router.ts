@@ -132,6 +132,93 @@ import * as resourceStatusOp from './resource/status.operation';
 import * as workflowRunOp from './workflow/run.operation';
 import * as workflowRunStatusOp from './workflow/runStatus.operation';
 
+// Alternative Operations
+import * as alternativeListOp from './alternative/list.operation';
+import * as alternativeGetOp from './alternative/get.operation';
+import * as alternativeCreateOp from './alternative/create.operation';
+import * as alternativeUpdateOp from './alternative/update.operation';
+import * as alternativeGenerateOp from './alternative/generate.operation';
+import * as alternativeDeleteOp from './alternative/delete.operation';
+
+// Core Feature Operations
+import * as coreFeatureListOp from './coreFeature/list.operation';
+import * as coreFeatureGetOp from './coreFeature/get.operation';
+import * as coreFeatureCreateOp from './coreFeature/create.operation';
+import * as coreFeatureUpdateOp from './coreFeature/update.operation';
+import * as coreFeatureGenerateOp from './coreFeature/generate.operation';
+import * as coreFeatureDeleteOp from './coreFeature/delete.operation';
+
+// Objection Operations
+import * as objectionListOp from './objection/list.operation';
+import * as objectionGetOp from './objection/get.operation';
+import * as objectionCreateOp from './objection/create.operation';
+import * as objectionUpdateOp from './objection/update.operation';
+import * as objectionGenerateOp from './objection/generate.operation';
+import * as objectionDeleteOp from './objection/delete.operation';
+
+// Motion Operations
+import * as motionListOp from './motion/list.operation';
+import * as motionGetOp from './motion/get.operation';
+import * as motionCreateOp from './motion/create.operation';
+import * as motionUpdateOp from './motion/update.operation';
+import * as motionDeleteOp from './motion/delete.operation';
+
+// Motion Playbook Operations
+import * as motionPlaybookListOp from './motionPlaybook/list.operation';
+import * as motionPlaybookGetOp from './motionPlaybook/get.operation';
+import * as motionPlaybookCreateOp from './motionPlaybook/create.operation';
+import * as motionPlaybookUpdateOp from './motionPlaybook/update.operation';
+import * as motionPlaybookDeleteOp from './motionPlaybook/delete.operation';
+
+// Motion ICP Operations
+import * as motionIcpListOp from './motionIcp/list.operation';
+import * as motionIcpGetOp from './motionIcp/get.operation';
+import * as motionIcpListElementsOp from './motionIcp/listElements.operation';
+import * as motionIcpListLearningsOp from './motionIcp/listLearnings.operation';
+import * as motionIcpGetLearningOp from './motionIcp/getLearning.operation';
+
+// Workspace Company Operations
+import * as workspaceCompanyGetOp from './workspaceCompany/get.operation';
+import * as workspaceCompanyGenerateOp from './workspaceCompany/generate.operation';
+import * as workspaceCompanyUpdateOp from './workspaceCompany/update.operation';
+
+// Suggestion Operations
+import * as suggestionListOp from './suggestion/list.operation';
+import * as suggestionGetOp from './suggestion/get.operation';
+import * as suggestionCreateOp from './suggestion/create.operation';
+import * as suggestionUpdateOp from './suggestion/update.operation';
+import * as suggestionAcceptOp from './suggestion/accept.operation';
+import * as suggestionRejectOp from './suggestion/reject.operation';
+
+// Context Operations
+import * as contextSearchOp from './context/search.operation';
+
+// Insights Operations
+import * as insightsCompetitiveOp from './insights/competitive.operation';
+import * as insightsEntityStatsOp from './insights/entityStats.operation';
+import * as insightsEntityTimeSeriesOp from './insights/entityTimeSeries.operation';
+import * as insightsLibraryHealthOp from './insights/libraryHealth.operation';
+import * as insightsTopEntitiesOp from './insights/topEntities.operation';
+import * as insightsWorkspaceBaselineOp from './insights/workspaceBaseline.operation';
+
+// Event Operations
+import * as eventListOp from './event/list.operation';
+
+// Finding Operations
+import * as findingListOp from './finding/list.operation';
+
+// Revision Operations
+import * as revisionListOp from './revision/list.operation';
+import * as revisionGetOp from './revision/get.operation';
+
+// Report Operations
+import * as reportConfigListOp from './reportConfig/list.operation';
+import * as reportConfigGetOp from './reportConfig/get.operation';
+import * as reportGroupListOp from './reportGroup/list.operation';
+import * as reportGroupGetOp from './reportGroup/get.operation';
+import * as reportRunListOp from './reportRun/list.operation';
+import * as reportRunGetOp from './reportRun/get.operation';
+
 export async function router(this: IExecuteFunctions, itemIndex: number): Promise<INodeExecutionData[][] | null> {
     const resource = this.getNodeParameter('resource', itemIndex) as string;
     const operation = this.getNodeParameter('operation', itemIndex) as string;
@@ -267,6 +354,97 @@ export async function router(this: IExecuteFunctions, itemIndex: number): Promis
     else if (resource === 'workflow') {
         if (operation === 'run') return workflowRunOp.execute.call(this, itemIndex);
         if (operation === 'runStatus') return workflowRunStatusOp.execute.call(this, itemIndex);
+    }
+    else if (resource === 'alternative') {
+        if (operation === 'list') return alternativeListOp.execute.call(this, itemIndex);
+        if (operation === 'get') return alternativeGetOp.execute.call(this, itemIndex);
+        if (operation === 'create') return alternativeCreateOp.execute.call(this, itemIndex);
+        if (operation === 'update') return alternativeUpdateOp.execute.call(this, itemIndex);
+        if (operation === 'generate') return alternativeGenerateOp.execute.call(this, itemIndex);
+        if (operation === 'delete') return alternativeDeleteOp.execute.call(this, itemIndex);
+    }
+    else if (resource === 'coreFeature') {
+        if (operation === 'list') return coreFeatureListOp.execute.call(this, itemIndex);
+        if (operation === 'get') return coreFeatureGetOp.execute.call(this, itemIndex);
+        if (operation === 'create') return coreFeatureCreateOp.execute.call(this, itemIndex);
+        if (operation === 'update') return coreFeatureUpdateOp.execute.call(this, itemIndex);
+        if (operation === 'generate') return coreFeatureGenerateOp.execute.call(this, itemIndex);
+        if (operation === 'delete') return coreFeatureDeleteOp.execute.call(this, itemIndex);
+    }
+    else if (resource === 'objection') {
+        if (operation === 'list') return objectionListOp.execute.call(this, itemIndex);
+        if (operation === 'get') return objectionGetOp.execute.call(this, itemIndex);
+        if (operation === 'create') return objectionCreateOp.execute.call(this, itemIndex);
+        if (operation === 'update') return objectionUpdateOp.execute.call(this, itemIndex);
+        if (operation === 'generate') return objectionGenerateOp.execute.call(this, itemIndex);
+        if (operation === 'delete') return objectionDeleteOp.execute.call(this, itemIndex);
+    }
+    else if (resource === 'motion') {
+        if (operation === 'list') return motionListOp.execute.call(this, itemIndex);
+        if (operation === 'get') return motionGetOp.execute.call(this, itemIndex);
+        if (operation === 'create') return motionCreateOp.execute.call(this, itemIndex);
+        if (operation === 'update') return motionUpdateOp.execute.call(this, itemIndex);
+        if (operation === 'delete') return motionDeleteOp.execute.call(this, itemIndex);
+    }
+    else if (resource === 'motionPlaybook') {
+        if (operation === 'list') return motionPlaybookListOp.execute.call(this, itemIndex);
+        if (operation === 'get') return motionPlaybookGetOp.execute.call(this, itemIndex);
+        if (operation === 'create') return motionPlaybookCreateOp.execute.call(this, itemIndex);
+        if (operation === 'update') return motionPlaybookUpdateOp.execute.call(this, itemIndex);
+        if (operation === 'delete') return motionPlaybookDeleteOp.execute.call(this, itemIndex);
+    }
+    else if (resource === 'motionIcp') {
+        if (operation === 'list') return motionIcpListOp.execute.call(this, itemIndex);
+        if (operation === 'get') return motionIcpGetOp.execute.call(this, itemIndex);
+        if (operation === 'listElements') return motionIcpListElementsOp.execute.call(this, itemIndex);
+        if (operation === 'listLearnings') return motionIcpListLearningsOp.execute.call(this, itemIndex);
+        if (operation === 'getLearning') return motionIcpGetLearningOp.execute.call(this, itemIndex);
+    }
+    else if (resource === 'workspaceCompany') {
+        if (operation === 'get') return workspaceCompanyGetOp.execute.call(this, itemIndex);
+        if (operation === 'generate') return workspaceCompanyGenerateOp.execute.call(this, itemIndex);
+        if (operation === 'update') return workspaceCompanyUpdateOp.execute.call(this, itemIndex);
+    }
+    else if (resource === 'suggestion') {
+        if (operation === 'list') return suggestionListOp.execute.call(this, itemIndex);
+        if (operation === 'get') return suggestionGetOp.execute.call(this, itemIndex);
+        if (operation === 'create') return suggestionCreateOp.execute.call(this, itemIndex);
+        if (operation === 'update') return suggestionUpdateOp.execute.call(this, itemIndex);
+        if (operation === 'accept') return suggestionAcceptOp.execute.call(this, itemIndex);
+        if (operation === 'reject') return suggestionRejectOp.execute.call(this, itemIndex);
+    }
+    else if (resource === 'context') {
+        if (operation === 'search') return contextSearchOp.execute.call(this, itemIndex);
+    }
+    else if (resource === 'insights') {
+        if (operation === 'competitive') return insightsCompetitiveOp.execute.call(this, itemIndex);
+        if (operation === 'entityStats') return insightsEntityStatsOp.execute.call(this, itemIndex);
+        if (operation === 'entityTimeSeries') return insightsEntityTimeSeriesOp.execute.call(this, itemIndex);
+        if (operation === 'libraryHealth') return insightsLibraryHealthOp.execute.call(this, itemIndex);
+        if (operation === 'topEntities') return insightsTopEntitiesOp.execute.call(this, itemIndex);
+        if (operation === 'workspaceBaseline') return insightsWorkspaceBaselineOp.execute.call(this, itemIndex);
+    }
+    else if (resource === 'event') {
+        if (operation === 'list') return eventListOp.execute.call(this, itemIndex);
+    }
+    else if (resource === 'finding') {
+        if (operation === 'list') return findingListOp.execute.call(this, itemIndex);
+    }
+    else if (resource === 'revision') {
+        if (operation === 'list') return revisionListOp.execute.call(this, itemIndex);
+        if (operation === 'get') return revisionGetOp.execute.call(this, itemIndex);
+    }
+    else if (resource === 'reportConfig') {
+        if (operation === 'list') return reportConfigListOp.execute.call(this, itemIndex);
+        if (operation === 'get') return reportConfigGetOp.execute.call(this, itemIndex);
+    }
+    else if (resource === 'reportGroup') {
+        if (operation === 'list') return reportGroupListOp.execute.call(this, itemIndex);
+        if (operation === 'get') return reportGroupGetOp.execute.call(this, itemIndex);
+    }
+    else if (resource === 'reportRun') {
+        if (operation === 'list') return reportRunListOp.execute.call(this, itemIndex);
+        if (operation === 'get') return reportRunGetOp.execute.call(this, itemIndex);
     }
 
     throw new NodeOperationError(this.getNode(), `The combination of resource '${resource}' and operation '${operation}' is not supported for routing.`, { itemIndex });
