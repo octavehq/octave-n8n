@@ -19,6 +19,12 @@ export const referenceOperations: INodeProperties[] = [
                 description: 'Create a new reference',
             },
             {
+                name: 'Delete',
+                value: 'delete',
+                action: 'Delete a reference',
+                description: 'Delete a reference',
+            },
+            {
                 name: 'Generate',
                 value: 'generate',
                 action: 'Generate references',

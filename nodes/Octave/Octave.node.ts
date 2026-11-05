@@ -28,6 +28,22 @@ import { segmentOperations } from './descriptions/SegmentDescription';
 import { experimentOperations } from './descriptions/ExperimentDescription';
 import { proofPointDescription } from './descriptions/ProofPointDescription';
 import { workflowOperations } from './descriptions/WorkflowDescription';
+import { alternativeOperations } from './descriptions/AlternativeDescription';
+import { coreFeatureOperations } from './descriptions/CoreFeatureDescription';
+import { objectionOperations } from './descriptions/ObjectionDescription';
+import { motionOperations } from './descriptions/MotionDescription';
+import { motionPlaybookOperations } from './descriptions/MotionPlaybookDescription';
+import { motionIcpOperations } from './descriptions/MotionIcpDescription';
+import { workspaceCompanyOperations } from './descriptions/WorkspaceCompanyDescription';
+import { suggestionOperations } from './descriptions/SuggestionDescription';
+import { contextOperations } from './descriptions/ContextDescription';
+import { insightsOperations } from './descriptions/InsightsDescription';
+import { eventOperations } from './descriptions/EventDescription';
+import { findingOperations } from './descriptions/FindingDescription';
+import { revisionOperations } from './descriptions/RevisionDescription';
+import { reportConfigOperations } from './descriptions/ReportConfigDescription';
+import { reportGroupOperations } from './descriptions/ReportGroupDescription';
+import { reportRunOperations } from './descriptions/ReportRunDescription';
 
 // Operation Property imports
 // Agent
@@ -57,24 +73,28 @@ import { exportedProperties as productListProperties } from './actions/product/l
 import { exportedProperties as productCreateProperties } from './actions/product/create.operation';
 import { exportedProperties as productUpdateProperties } from './actions/product/update.operation';
 import { exportedProperties as productGenerateProperties } from './actions/product/generate.operation';
+import { exportedProperties as productDeleteProperties } from './actions/product/delete.operation';
 // Persona
 import { exportedProperties as personaGetProperties } from './actions/persona/get.operation';
 import { exportedProperties as personaListProperties } from './actions/persona/list.operation';
 import { exportedProperties as personaCreateProperties } from './actions/persona/create.operation';
 import { exportedProperties as personaUpdateProperties } from './actions/persona/update.operation';
 import { exportedProperties as personaGenerateProperties } from './actions/persona/generate.operation';
+import { exportedProperties as personaDeleteProperties } from './actions/persona/delete.operation';
 // Reference
 import { exportedProperties as referenceCreateProperties } from './actions/reference/create.operation';
 import { exportedProperties as referenceGetProperties } from './actions/reference/get.operation';
 import { exportedProperties as referenceListProperties } from './actions/reference/list.operation';
 import { exportedProperties as referenceUpdateProperties } from './actions/reference/update.operation';
 import { exportedProperties as referenceGenerateProperties } from './actions/reference/generate.operation';
+import { exportedProperties as referenceDeleteProperties } from './actions/reference/delete.operation';
 // UseCase
 import { exportedProperties as useCaseGetProperties } from './actions/useCase/get.operation';
 import { exportedProperties as useCaseListProperties } from './actions/useCase/list.operation';
 import { exportedProperties as useCaseCreateProperties } from './actions/useCase/create.operation';
 import { exportedProperties as useCaseUpdateProperties } from './actions/useCase/update.operation';
 import { exportedProperties as useCaseGenerateProperties } from './actions/useCase/generate.operation';
+import { exportedProperties as useCaseDeleteProperties } from './actions/useCase/delete.operation';
 // Async
 import { exportedProperties as asyncRunAgentProperties } from './actions/async/runAgent.operation';
 import { exportedProperties as asyncRunAgentStatusProperties } from './actions/async/runAgentStatus.operation';
@@ -84,12 +104,14 @@ import { exportedProperties as competitorListProperties } from './actions/compet
 import { exportedProperties as competitorCreateProperties } from './actions/competitor/create.operation';
 import { exportedProperties as competitorUpdateProperties } from './actions/competitor/update.operation';
 import { exportedProperties as competitorGenerateProperties } from './actions/competitor/generate.operation';
+import { exportedProperties as competitorDeleteProperties } from './actions/competitor/delete.operation';
 // Segment
 import { exportedProperties as segmentGetProperties } from './actions/segment/get.operation';
 import { exportedProperties as segmentListProperties } from './actions/segment/list.operation';
 import { exportedProperties as segmentCreateProperties } from './actions/segment/create.operation';
 import { exportedProperties as segmentUpdateProperties } from './actions/segment/update.operation';
 import { exportedProperties as segmentGenerateProperties } from './actions/segment/generate.operation';
+import { exportedProperties as segmentDeleteProperties } from './actions/segment/delete.operation';
 // Experiment
 import { exportedProperties as experimentCreateProperties } from './actions/experiment/create.operation';
 // Proof Point
@@ -98,6 +120,7 @@ import { exportedProperties as proofPointGetProperties } from './actions/proofPo
 import { exportedProperties as proofPointListProperties } from './actions/proofPoint/list.operation';
 import { exportedProperties as proofPointUpdateProperties } from './actions/proofPoint/update.operation';
 import { exportedProperties as proofPointGenerateProperties } from './actions/proofPoint/generate.operation';
+import { exportedProperties as proofPointDeleteProperties } from './actions/proofPoint/delete.operation';
 // Brand Voice
 import { exportedProperties as brandVoiceListProperties } from './actions/brandVoice/list.operation';
 import { exportedProperties as brandVoiceGetProperties } from './actions/brandVoice/get.operation';
@@ -137,6 +160,79 @@ import { exportedProperties as resourceStatusProperties } from './actions/resour
 // Workflow
 import { exportedProperties as workflowRunProperties } from './actions/workflow/run.operation';
 import { exportedProperties as workflowRunStatusProperties } from './actions/workflow/runStatus.operation';
+// Alternative
+import { exportedProperties as alternativeListProperties } from './actions/alternative/list.operation';
+import { exportedProperties as alternativeGetProperties } from './actions/alternative/get.operation';
+import { exportedProperties as alternativeCreateProperties } from './actions/alternative/create.operation';
+import { exportedProperties as alternativeUpdateProperties } from './actions/alternative/update.operation';
+import { exportedProperties as alternativeGenerateProperties } from './actions/alternative/generate.operation';
+import { exportedProperties as alternativeDeleteProperties } from './actions/alternative/delete.operation';
+// Core Feature
+import { exportedProperties as coreFeatureListProperties } from './actions/coreFeature/list.operation';
+import { exportedProperties as coreFeatureGetProperties } from './actions/coreFeature/get.operation';
+import { exportedProperties as coreFeatureCreateProperties } from './actions/coreFeature/create.operation';
+import { exportedProperties as coreFeatureUpdateProperties } from './actions/coreFeature/update.operation';
+import { exportedProperties as coreFeatureGenerateProperties } from './actions/coreFeature/generate.operation';
+import { exportedProperties as coreFeatureDeleteProperties } from './actions/coreFeature/delete.operation';
+// Objection
+import { exportedProperties as objectionListProperties } from './actions/objection/list.operation';
+import { exportedProperties as objectionGetProperties } from './actions/objection/get.operation';
+import { exportedProperties as objectionCreateProperties } from './actions/objection/create.operation';
+import { exportedProperties as objectionUpdateProperties } from './actions/objection/update.operation';
+import { exportedProperties as objectionGenerateProperties } from './actions/objection/generate.operation';
+import { exportedProperties as objectionDeleteProperties } from './actions/objection/delete.operation';
+// Motion
+import { exportedProperties as motionListProperties } from './actions/motion/list.operation';
+import { exportedProperties as motionGetProperties } from './actions/motion/get.operation';
+import { exportedProperties as motionCreateProperties } from './actions/motion/create.operation';
+import { exportedProperties as motionUpdateProperties } from './actions/motion/update.operation';
+import { exportedProperties as motionDeleteProperties } from './actions/motion/delete.operation';
+// Motion Playbook
+import { exportedProperties as motionPlaybookListProperties } from './actions/motionPlaybook/list.operation';
+import { exportedProperties as motionPlaybookGetProperties } from './actions/motionPlaybook/get.operation';
+import { exportedProperties as motionPlaybookCreateProperties } from './actions/motionPlaybook/create.operation';
+import { exportedProperties as motionPlaybookUpdateProperties } from './actions/motionPlaybook/update.operation';
+import { exportedProperties as motionPlaybookDeleteProperties } from './actions/motionPlaybook/delete.operation';
+// Motion ICP
+import { exportedProperties as motionIcpListProperties } from './actions/motionIcp/list.operation';
+import { exportedProperties as motionIcpGetProperties } from './actions/motionIcp/get.operation';
+import { exportedProperties as motionIcpListElementsProperties } from './actions/motionIcp/listElements.operation';
+import { exportedProperties as motionIcpListLearningsProperties } from './actions/motionIcp/listLearnings.operation';
+import { exportedProperties as motionIcpGetLearningProperties } from './actions/motionIcp/getLearning.operation';
+// Workspace Company
+import { exportedProperties as workspaceCompanyGetProperties } from './actions/workspaceCompany/get.operation';
+import { exportedProperties as workspaceCompanyGenerateProperties } from './actions/workspaceCompany/generate.operation';
+import { exportedProperties as workspaceCompanyUpdateProperties } from './actions/workspaceCompany/update.operation';
+// Suggestion
+import { exportedProperties as suggestionListProperties } from './actions/suggestion/list.operation';
+import { exportedProperties as suggestionGetProperties } from './actions/suggestion/get.operation';
+import { exportedProperties as suggestionCreateProperties } from './actions/suggestion/create.operation';
+import { exportedProperties as suggestionUpdateProperties } from './actions/suggestion/update.operation';
+import { exportedProperties as suggestionAcceptProperties } from './actions/suggestion/accept.operation';
+import { exportedProperties as suggestionRejectProperties } from './actions/suggestion/reject.operation';
+// Context
+import { exportedProperties as contextSearchProperties } from './actions/context/search.operation';
+// Insights
+import { exportedProperties as insightsCompetitiveProperties } from './actions/insights/competitive.operation';
+import { exportedProperties as insightsEntityStatsProperties } from './actions/insights/entityStats.operation';
+import { exportedProperties as insightsEntityTimeSeriesProperties } from './actions/insights/entityTimeSeries.operation';
+import { exportedProperties as insightsLibraryHealthProperties } from './actions/insights/libraryHealth.operation';
+import { exportedProperties as insightsTopEntitiesProperties } from './actions/insights/topEntities.operation';
+import { exportedProperties as insightsWorkspaceBaselineProperties } from './actions/insights/workspaceBaseline.operation';
+// Event
+import { exportedProperties as eventListProperties } from './actions/event/list.operation';
+// Finding
+import { exportedProperties as findingListProperties } from './actions/finding/list.operation';
+// Revision
+import { exportedProperties as revisionListProperties } from './actions/revision/list.operation';
+import { exportedProperties as revisionGetProperties } from './actions/revision/get.operation';
+// Report
+import { exportedProperties as reportConfigListProperties } from './actions/reportConfig/list.operation';
+import { exportedProperties as reportConfigGetProperties } from './actions/reportConfig/get.operation';
+import { exportedProperties as reportGroupListProperties } from './actions/reportGroup/list.operation';
+import { exportedProperties as reportGroupGetProperties } from './actions/reportGroup/get.operation';
+import { exportedProperties as reportRunListProperties } from './actions/reportRun/list.operation';
+import { exportedProperties as reportRunGetProperties } from './actions/reportRun/get.operation';
 
 export class Octave implements INodeType {
     description: INodeTypeDescription = {
@@ -171,6 +267,10 @@ export class Octave implements INodeType {
                         value: 'agent',
                     },
                     {
+                        name: 'Alternative',
+                        value: 'alternative',
+                    },
+                    {
                         name: 'Async',
                         value: 'async',
                     },
@@ -187,8 +287,44 @@ export class Octave implements INodeType {
                         value: 'competitor',
                     },
                     {
+                        name: 'Context',
+                        value: 'context',
+                    },
+                    {
+                        name: 'Core Feature',
+                        value: 'coreFeature',
+                    },
+                    {
+                        name: 'Event',
+                        value: 'event',
+                    },
+                    {
                         name: 'Experiment',
                         value: 'experiment',
+                    },
+                    {
+                        name: 'Finding',
+                        value: 'finding',
+                    },
+                    {
+                        name: 'Insight',
+                        value: 'insights',
+                    },
+                    {
+                        name: 'Motion',
+                        value: 'motion',
+                    },
+                    {
+                        name: 'Motion ICP',
+                        value: 'motionIcp',
+                    },
+                    {
+                        name: 'Motion Playbook',
+                        value: 'motionPlaybook',
+                    },
+                    {
+                        name: 'Objection',
+                        value: 'objection',
                     },
                     {
                         name: 'Persona',
@@ -211,8 +347,24 @@ export class Octave implements INodeType {
                         value: 'reference',
                     },
                     {
+                        name: 'Report Config',
+                        value: 'reportConfig',
+                    },
+                    {
+                        name: 'Report Group',
+                        value: 'reportGroup',
+                    },
+                    {
+                        name: 'Report Run',
+                        value: 'reportRun',
+                    },
+                    {
                         name: 'Resource',
                         value: 'resource',
+                    },
+                    {
+                        name: 'Revision',
+                        value: 'revision',
                     },
                     {
                         name: 'Segment',
@@ -227,12 +379,20 @@ export class Octave implements INodeType {
                         value: 'solution',
                     },
                     {
+                        name: 'Suggestion',
+                        value: 'suggestion',
+                    },
+                    {
                         name: 'Use Case',
                         value: 'useCase',
                     },
                     {
                         name: 'Workflow',
                         value: 'workflow',
+                    },
+                    {
+                        name: 'Workspace Company',
+                        value: 'workspaceCompany',
                     },
                 ],
                 default: 'agent',
@@ -255,6 +415,22 @@ export class Octave implements INodeType {
             ...serviceOperations,
             ...resourceOperations,
             ...workflowOperations,
+            ...alternativeOperations,
+            ...coreFeatureOperations,
+            ...objectionOperations,
+            ...motionOperations,
+            ...motionPlaybookOperations,
+            ...motionIcpOperations,
+            ...workspaceCompanyOperations,
+            ...suggestionOperations,
+            ...contextOperations,
+            ...insightsOperations,
+            ...eventOperations,
+            ...findingOperations,
+            ...revisionOperations,
+            ...reportConfigOperations,
+            ...reportGroupOperations,
+            ...reportRunOperations,
             // Resource Fields (now from individual operation files)
             ...agentListProperties,
             ...agentGetProperties,
@@ -280,21 +456,25 @@ export class Octave implements INodeType {
             ...productCreateProperties,
             ...productUpdateProperties,
             ...productGenerateProperties,
+            ...productDeleteProperties,
             ...personaListProperties,
             ...personaGetProperties,
             ...personaCreateProperties,
             ...personaUpdateProperties,
             ...personaGenerateProperties,
+            ...personaDeleteProperties,
             ...referenceListProperties,
             ...referenceGetProperties,
             ...referenceCreateProperties,
             ...referenceUpdateProperties,
             ...referenceGenerateProperties,
+            ...referenceDeleteProperties,
             ...useCaseListProperties,
             ...useCaseGetProperties,
             ...useCaseCreateProperties,
             ...useCaseUpdateProperties,
             ...useCaseGenerateProperties,
+            ...useCaseDeleteProperties,
             ...asyncRunAgentProperties,
             ...asyncRunAgentStatusProperties,
             ...competitorListProperties,
@@ -302,17 +482,20 @@ export class Octave implements INodeType {
             ...competitorCreateProperties,
             ...competitorUpdateProperties,
             ...competitorGenerateProperties,
+            ...competitorDeleteProperties,
             ...segmentListProperties,
             ...segmentGetProperties,
             ...segmentCreateProperties,
             ...segmentUpdateProperties,
             ...segmentGenerateProperties,
+            ...segmentDeleteProperties,
             ...experimentCreateProperties,
             ...proofPointListProperties,
             ...proofPointGetProperties,
             ...proofPointCreateProperties,
             ...proofPointUpdateProperties,
             ...proofPointGenerateProperties,
+            ...proofPointDeleteProperties,
             ...brandVoiceListProperties,
             ...brandVoiceGetProperties,
             ...brandVoiceCreateProperties,
@@ -346,6 +529,65 @@ export class Octave implements INodeType {
             ...resourceStatusProperties,
             ...workflowRunProperties,
             ...workflowRunStatusProperties,
+            ...alternativeListProperties,
+            ...alternativeGetProperties,
+            ...alternativeCreateProperties,
+            ...alternativeUpdateProperties,
+            ...alternativeGenerateProperties,
+            ...alternativeDeleteProperties,
+            ...coreFeatureListProperties,
+            ...coreFeatureGetProperties,
+            ...coreFeatureCreateProperties,
+            ...coreFeatureUpdateProperties,
+            ...coreFeatureGenerateProperties,
+            ...coreFeatureDeleteProperties,
+            ...objectionListProperties,
+            ...objectionGetProperties,
+            ...objectionCreateProperties,
+            ...objectionUpdateProperties,
+            ...objectionGenerateProperties,
+            ...objectionDeleteProperties,
+            ...motionListProperties,
+            ...motionGetProperties,
+            ...motionCreateProperties,
+            ...motionUpdateProperties,
+            ...motionDeleteProperties,
+            ...motionPlaybookListProperties,
+            ...motionPlaybookGetProperties,
+            ...motionPlaybookCreateProperties,
+            ...motionPlaybookUpdateProperties,
+            ...motionPlaybookDeleteProperties,
+            ...motionIcpListProperties,
+            ...motionIcpGetProperties,
+            ...motionIcpListElementsProperties,
+            ...motionIcpListLearningsProperties,
+            ...motionIcpGetLearningProperties,
+            ...workspaceCompanyGetProperties,
+            ...workspaceCompanyGenerateProperties,
+            ...workspaceCompanyUpdateProperties,
+            ...suggestionListProperties,
+            ...suggestionGetProperties,
+            ...suggestionCreateProperties,
+            ...suggestionUpdateProperties,
+            ...suggestionAcceptProperties,
+            ...suggestionRejectProperties,
+            ...contextSearchProperties,
+            ...insightsCompetitiveProperties,
+            ...insightsEntityStatsProperties,
+            ...insightsEntityTimeSeriesProperties,
+            ...insightsLibraryHealthProperties,
+            ...insightsTopEntitiesProperties,
+            ...insightsWorkspaceBaselineProperties,
+            ...eventListProperties,
+            ...findingListProperties,
+            ...revisionListProperties,
+            ...revisionGetProperties,
+            ...reportConfigListProperties,
+            ...reportConfigGetProperties,
+            ...reportGroupListProperties,
+            ...reportGroupGetProperties,
+            ...reportRunListProperties,
+            ...reportRunGetProperties,
         ],
     };
 

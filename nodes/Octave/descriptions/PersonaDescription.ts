@@ -19,6 +19,12 @@ export const personaOperations: INodeProperties[] = [
                 description: 'Create a new persona',
             },
             {
+                name: 'Delete',
+                value: 'delete',
+                action: 'Delete a persona',
+                description: 'Delete a persona',
+            },
+            {
                 name: 'Generate',
                 value: 'generate',
                 action: 'Generate personas',
